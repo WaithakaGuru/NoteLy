@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
 
-export default function (req: Request, res: Response, next: NextFunction) {
+export default function verifyJWebToken(req: Request, res: Response, next: NextFunction) {
     const jwtKey = process.env.JWT_SECRET_KEY;
     try{
         const tokenString = req.headers.authorization;
