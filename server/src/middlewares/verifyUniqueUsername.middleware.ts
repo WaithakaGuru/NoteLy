@@ -1,0 +1,21 @@
+import { Response, Request, NextFunction } from "express";
+import client from "../utils/prismaClient.ts";  
+import handleErrors from "../utils/handleErrors.ts";
+
+export default async function verifyUniqueEmail(req: Request, res: Response, next: NextFunction){
+    const {userName} = req.body;
+    const {id} = res.locals.validUserData;
+    
+    try{
+        const uniqueUsername = await client.users.findFirst({
+            where: {userName, NOT:{id}},
+        })
+        if(uniqueUsername) return res.status(400).json({message: "Username is taken:"})
+        else{
+            res.locals.uniqueUsername = userName;
+            next();
+        }
+    }catch(err){
+        handleErrors(err, "Update user infor 'userName' later", req, res);
+    }
+}
