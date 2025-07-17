@@ -16,7 +16,7 @@ datasource db {
 
 model Users {
   id String @id @default(uuid())
-  avatarUrl String @map("avatar_image_url")
+  avatarUrl String? @default("")  @map("avatar_image_url")
   firstName String @map("first_name")
   lastName String @map("last_name")
   userName String @unique  @map("user_name")

@@ -27,4 +27,4 @@ app.use("/api/entries", entriesRouter);
 app.use("/api/entry", entryRouter);
 app.use("/api/user", userRouter)
 
-app.listen(5567, `Server listening on port ${port}`)
+app.listen(port, ()=> console.log(`Server listening on port ${port}`))
