@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import client from "../utils/prismaClient.ts";
 import isCorrectPassword from "../utils/verifyPassword.ts";
 
-export default async function updatePassword(req: Request, res: Response, next: NextFunction){
+export default async function verifyCurrentPassword(req: Request, res: Response, next: NextFunction){
     const {currentPassword, newPassword} = req.body;
     const {id} = res.locals.validUserData;
     try{
