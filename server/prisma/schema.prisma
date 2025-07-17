@@ -36,6 +36,7 @@ model Notes {
   dateCreated DateTime @default(now()) @map("date_created")
   lastUpdated DateTime @updatedAt
   isDeleted Boolean @default(false) @map("is_deleted") 
+  isPublic Boolean @default(false) @map("is_public")
 
   creator String @map("note_creator")
 
