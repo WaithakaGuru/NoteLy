@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id String @id @default(uuid())
+  avatarUrl String @map("avatar_image_url")
+  firstName String @map("first_name")
+  lastName String @map("last_name")
+  userName String @unique  @map("user_name")
+  emailAddress String @unique @map("email_address")
+  password String 
+
+  notes Notes[] 
+
+  @@map("users")
+}
+
+model Notes {
+  id String @id @default(uuid())
+  title String @map("note_title")
+  synopsis String @map("note_synopsis")
+  content String 
+  dateCreated DateTime @default(now()) @map("date_created")
+  lastUpdated DateTime @updatedAt
+  isDeleted Boolean @default(false) @map("is_deleted") 
+
+  creator String @map("note_creator")
+
+  NoteCreator Users @relation(fields: [creator], references: [id])
+  @@map("notes")
+}
