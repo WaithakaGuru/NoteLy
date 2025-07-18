@@ -6,7 +6,9 @@ export default async function getUserNotes(req: Request, res: Response) {
     const {id} = res.locals.validUserData;
     try{
         const allUserNotes = await client.notes.findMany({
-            where: {creator: id}
+            where: {
+                OR: [{creator: id},{isPublic:true}]
+            }
         })
         if(allUserNotes) res.status(200).json(allUserNotes);
     }catch(err){

@@ -4,11 +4,11 @@ import handleErrors from "../utils/handleErrors.ts";
 
 export default async function updateNote(req: Request, res: Response) {
     const id = req.params.id;
-    const {title, synopsis, content} = req.body;
+    const {title, synopsis, content, isPublic} = req.body;
     try{
         const updatedNote = await client.notes.update({
             where: {id}, 
-            data: {title, synopsis, content}
+            data: {title, synopsis, content, isPublic}
         })
         if(updatedNote) res.status(201).json(updatedNote)
     }catch(err){
