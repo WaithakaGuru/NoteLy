@@ -27,4 +27,4 @@ app.use("/api/notes", notesRouter);
 app.use("/api/note", noteRouter);
 app.use("/api/user", userRouter)
 
-app.listen(port, ()=> console.log(`Server listening on port ${port}`))
+app.listen(port, ()=>{ console.log(`Server listening on port ${port}`)})

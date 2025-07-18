@@ -1,17 +1,15 @@
-import './index.css'
-function App() {
 
+function App() {
 
   return (
     <>
-      Welcome to Notely
     <div className="min-h-screen bg-gray-50 text-gray-800 flex flex-col items-center justify-center p-6">
       <h1 className="text-4xl font-bold mb-4">📝 Notely</h1>
       <p className="text-xl text-center max-w-md mb-6">
         Take notes. Stay sharp. A beautifully minimal app to capture, organize, and sync your thoughts.
       </p>
       <div className="flex gap-4 mb-10">
-        <button className="bg-blue-600 text-white px-6 py-2 rounded-xl shadow hover:bg-blue-700">
+        <button className="bg-blue-600 text-red-200 px-6 py-2 rounded-xl shadow hover:bg-blue-700">
           Try It Free
         </button>
         <button className="text-blue-600 hover:underline">Learn More</button>
@@ -36,6 +34,7 @@ function App() {
       </div>
     </div>
     </>
-  );
+  )
 }
+
 export default App
