@@ -13,7 +13,10 @@ export default async function verifyUniqueEmail(req: Request, res: Response, nex
                 NOT:{ id}
             }
         })
-        if(invalidEmail) return res.status(400).json({message: "Email already exists: Choose a unique and valid email"})
+        if(invalidEmail) {
+            res.status(400).json({message: "Email already exists: Choose a unique and valid email"})
+            return 
+        }
         else {
             res.locals.uniqueEmail = email;
             next();

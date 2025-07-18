@@ -10,7 +10,10 @@ export default async function verifyUniqueUsername(req: Request, res: Response, 
         const uniqueUsername = await client.users.findFirst({
             where: {userName, NOT:{id}},
         })
-        if(uniqueUsername) return res.status(400).json({message: "Username is taken:"})
+        if(uniqueUsername){
+            res.status(400).json({message: "Username is taken:"})
+            return
+        }
         else{
             res.locals.uniqueUsername = userName;
             next();
