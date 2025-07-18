@@ -2,8 +2,8 @@ import express, {Request, Response} from "express";
 import CORS from 'cors';
 import {configDotenv} from 'dotenv'
 import userRouter from "./routes/userRouter.ts";
-import entriesRouter from "./routes/entriesRouter.ts";
-import entryRouter from "./routes/entryRouter.ts";
+import notesRouter from "./routes/notesRouter.ts";
+import noteRouter from "./routes/noteRouter.ts";
 import authRouter from "./routes/authRouter.ts";
 
 configDotenv()
@@ -23,8 +23,8 @@ app.use(CORS({
 }))
 
 app.use("/api/auth", authRouter);
-app.use("/api/entries", entriesRouter);
-app.use("/api/entry", entryRouter);
+app.use("/api/notes", notesRouter);
+app.use("/api/note", noteRouter);
 app.use("/api/user", userRouter)
 
 app.listen(port, ()=> console.log(`Server listening on port ${port}`))
