@@ -5,8 +5,15 @@ export default function verifyJWebToken(req: Request, res: Response, next: NextF
     const jwtKey = process.env.JWT_SECRET_KEY;
     try{
         const tokenString = req.headers.authorization;
-        if(!tokenString) return res.status(400).json({message: "Missing Token"});
-        if(! tokenString.startsWith("Author")) return res.status(400).json({message: "Wrong token!!"})
+        if(!tokenString){
+         res.status(400).json({message: "Missing Token"});
+         return
+        }
+            
+        if(! tokenString.startsWith("Author")) {
+            res.status(400).json({message: "Wrong token!!"})
+            return
+        }
         const token = tokenString.split(" ")[1];
         const tokenData = jwt.verify(token, jwtKey!);
         res.locals.validUserData = tokenData

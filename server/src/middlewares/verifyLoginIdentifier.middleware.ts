@@ -13,7 +13,10 @@ export default async function verifyIdentifier(req: Request, res: Response, next
              res.locals.validUser = validUser;
              next();
         }
-        else return res.status(400).json({message: "Wrong Log in credentials"})
+        else{
+            res.status(400).json({message: "Wrong Log in credentials"});
+            return
+        }
     }catch(err){
         console.log(err);
         res.status(500).json({message: "Something went wrong!! Login later"})

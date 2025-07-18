@@ -9,7 +9,10 @@ export default async function verifyCurrentPassword(req: Request, res: Response,
         const data = await client.users.findFirst({
             where: id, select:{password: true}
         })
-        if(!isCorrectPassword(currentPassword, data?.password!)) return res.status(400).json({message: "Wrong current password"})
+        if(!isCorrectPassword(currentPassword, data?.password!)) {
+            res.status(400).json({message: "Wrong current password"})
+            return 
+        }
         else{
             res.locals.newPassword = newPassword;
             next();

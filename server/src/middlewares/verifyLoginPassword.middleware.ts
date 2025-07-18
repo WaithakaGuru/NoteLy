@@ -9,7 +9,10 @@ export default async function verifyLoginPassword(req: Request, res: Response, n
             res.locals.userTokenDetails = otherInfo;
             next();
         }
-        else return res.status(400).json({message: "Wrong Log in Credentials"})
+        else{
+         res.status(400).json({message: "Wrong Log in Credentials"})
+         return
+        }
     }catch(err){
         console.log(err);
         res.status(500).json({message: "Something went wrong!! Log in later"})
