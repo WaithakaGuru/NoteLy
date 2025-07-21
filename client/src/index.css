@@ -11,3 +11,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+
+.btn{
+  @apply transition-all duration-400
+}
