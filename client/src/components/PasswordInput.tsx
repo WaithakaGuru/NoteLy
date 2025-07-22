@@ -9,7 +9,8 @@ function PasswordInput({onChange, value, v="#f9f9f9", label="Password"}: T) {
 
 
   return (
-    <TextField type={showPassword? "text": "password"} label={label} variant="outlined"
+    <TextField type={showPassword? "text": "password"} label={label}
+     variant="outlined" required
      placeholder="****" fullWidth value={value} onChange={onChange}
      sx={{ bgcolor: "#fafaf8",
         borderRadius: 1, outline: "none", color: "darkgrey",

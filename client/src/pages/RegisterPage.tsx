@@ -66,7 +66,7 @@ function RegisterPage() {
         dispatch({type: "HandleInput", payload: {input: "lastName", value: e.target.value}})
     }
 
-    function handleSubmitLogin(e: React.FormEvent<HTMLFormElement>) {
+    function handleSubmitRegister(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
 
@@ -80,7 +80,7 @@ function RegisterPage() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            p: 2,
+            p: 2, pt: 0
         }}
         >
             <Paper
@@ -93,6 +93,7 @@ function RegisterPage() {
                 height: { md: "max-content" },
                 overflow: "hidden",
                 borderRadius: 4,
+                m:2
                 }}
             >
                 <Box
@@ -116,31 +117,35 @@ function RegisterPage() {
 
                 {error && <Alert severity="error">{error}</Alert>}
 
-                <Stack direction="row" spacing={2}>
-                    <TextInput label="First name" onChange={handleFirstName} value={state.firstName} v="#333"/>
-                    <TextInput label="Last name" onChange={handleLastName} value={state.lastName} v="#333"/>
-                </Stack>
-                <TextInput label="User name" onChange={handleUserName} value={state.userName} placeholder="Enter a unique username" v="#333"/>
-                <TextInput label="Email" onChange={handleEmail} value={state.email} placeholder="Enter a valid email" v="#333"/>
-                <PasswordInput label="Password" onChange={handlePassword} value={state.password} v="#333"/>
-                <PasswordInput label="Confirm password" onChange={handleConfirmPassword} value={state.confirmPassword} v="#333"/>
-
-                <Button
-                    variant="contained"
-                    size="large"
-                    type="submit"
-                    fullWidth
-                    sx={{ textTransform: "none", backgroundColor: "#314653", fontWeight: 600 }}
+                <Paper component={"form"}  sx={{p: 1, bgcolor: "transparent", width:{xs: "95%", sm: "85%", md: "85%"}}}
+                    elevation={0} onSubmit={handleSubmitRegister}  className="flex flex-col gap-6"
                 >
-                    Sign up
-                </Button>
-
-                <Typography variant="body2" align="center">
-                    Already have an account?{" "}
-                    <Link to="/login" className="text-[#10b981] font-semibold hover:underline">
-                    Sign in
-                    </Link>
-                </Typography>
+                    <Stack direction="row" spacing={2}>
+                        <TextInput label="First name" onChange={handleFirstName} value={state.firstName} v="#333"/>
+                        <TextInput label="Last name" onChange={handleLastName} value={state.lastName} v="#333"/>
+                    </Stack>
+                    <TextInput label="User name" onChange={handleUserName} value={state.userName} placeholder="Enter a unique username" v="#333"/>
+                    <TextInput label="Email" onChange={handleEmail} value={state.email} placeholder="Enter a valid email" v="#333"/>
+                    <PasswordInput label="Password" onChange={handlePassword} value={state.password} v="#333"/>
+                    <PasswordInput label="Confirm password" onChange={handleConfirmPassword} value={state.confirmPassword} v="#333"/>
+    
+                    <Button
+                        variant="contained"
+                        size="large"
+                        type="submit"
+                        fullWidth
+                        sx={{ textTransform: "none", backgroundColor: "#314653", fontWeight: 600 }}
+                    >
+                        Sign up
+                    </Button>
+    
+                    <Typography variant="body2" align="center">
+                        Already have an account?{" "}
+                        <Link to="/login" className="text-[#10b981] font-semibold hover:underline">
+                        Sign in
+                        </Link>
+                    </Typography>
+                </Paper>
                 </Box>
                 <Box
                 sx={{

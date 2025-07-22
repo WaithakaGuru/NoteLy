@@ -5,7 +5,7 @@ type T = TextFieldProps & {v?: string};
 function TextInput({onChange, value, v="#f9f9f9", label="Username or Email", placeholder}: T) {
   return (
     <TextField placeholder={placeholder} label={label} 
-        fullWidth onChange={onChange} value={value} 
+        fullWidth onChange={onChange} value={value} required
          sx={{outline: "none", border: "none", bgcolor: "#fafaf8",
             borderRadius: 1,
         "& .MuiOutlinedInput-root": {
