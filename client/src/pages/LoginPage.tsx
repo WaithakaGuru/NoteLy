@@ -85,7 +85,7 @@ function LoginPage() {
                     backgroundImage: `url(NotelySignin.png)`, 
                     backgroundSize: "cover",
                     backgroundPosition: "center",
-                    display: { xs: "none", md: "block" },
+                    display: { xs: "none", sm: "block" },
                 }}
             />
        </Paper>

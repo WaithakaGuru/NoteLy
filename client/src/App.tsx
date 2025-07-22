@@ -7,6 +7,7 @@ import DashboardPage from "./pages/DashboardPage"
 import CreateNote from "./pages/CreateNote"
 import ProfilePage from "./pages/ProfilePage"
 import UpdateNote from "./pages/UpdateNote"
+import Restricted from "./components/Restricted"
 function App() {
 
   return (
@@ -15,10 +16,27 @@ function App() {
     <Navbar/>
       <Routes>
         <Route loader path="/" Component={Homepage}/>
-        <Route loader path="/dashboard" Component={DashboardPage}/>
-        <Route loader path="/dashboard/create" Component={CreateNote}/>
-        <Route loader path="/dashboard/profile" Component={ProfilePage}/>
-        <Route loader path="/dashboard/update" Component={UpdateNote}/>
+        <Route loader path="/dashboard" element={
+          <Restricted><DashboardPage/></Restricted>
+        }/>
+        <Route loader path="/dashboard/create" element={
+          <Restricted>
+            <CreateNote/>
+          </Restricted>
+          }
+        />
+        <Route loader path="/dashboard/profile" element={
+         <Restricted>
+           <ProfilePage/>
+         </Restricted>
+          }
+        />
+        <Route loader path="/dashboard/update" element={
+          <Restricted>
+            <UpdateNote/>
+          </Restricted>
+        }
+        />
         <Route loader path="/login" Component={LoginPage}/>
         <Route loader path="/register" Component={RegisterPage}/>
       </Routes>

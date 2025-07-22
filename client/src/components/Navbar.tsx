@@ -45,7 +45,7 @@ function Navbar() {
                 )}
            </Button>
         
-        {!loggedIn?
+        {loggedIn?
             (<>
                <Stack direction={"row"} gap={2}>
                     <NavButton startIcon={<Dashboard/>} label="Home" href="/dashboard" title="Go to Dashboard"/>

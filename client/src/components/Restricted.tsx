@@ -1,14 +1,13 @@
 import type { ReactNode } from "react"
 import useNote from "../store/notelyStore"
-import { useNavigate } from "react-router-dom";
+import {Navigate } from "react-router-dom";
 
-function Restricted(child: ReactNode) {
+function Restricted({children}: {children: ReactNode}) {
     const {token} = useNote();
-    const navigate = useNavigate(); 
     if(!token) {
-       return  navigate("/", {replace: true})
+        return <Navigate to={"/"} replace/>
     }
-    return {child}
+    return <>{children}</>
 }
 
 export default Restricted
