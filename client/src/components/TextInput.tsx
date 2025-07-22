@@ -1,9 +1,9 @@
-import { TextField } from "@mui/material"
+import { TextField, type TextFieldProps } from "@mui/material"
 
-function TextInput(onchange: ()=>void, value: string) {
+function TextInput({onChange, value}: TextFieldProps) {
   return (
     <TextField placeholder="Username or Email" label="Username or Email" 
-        fullWidth onChange={onchange} value={value}
+        fullWidth onChange={onChange} value={value}
          sx={{outline: "none", border: "none", bgcolor: "#fafaf8",
             borderRadius: 1,  color: "darkgrey",
         "& .MuiOutlinedInput-root": {

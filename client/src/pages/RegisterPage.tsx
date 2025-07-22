@@ -1,12 +1,10 @@
-import { Alert, Button, Paper, Stack, TextField, Typography } from "@mui/material"
-import PasswordInput from "../components/PasswordInput"
-import { useState } from "react";
+import { useState,  } from "react";
+import { Typography, Stack, Paper, Button, Alert } from "@mui/material";
 import { Link } from "react-router-dom";
 import TextInput from "../components/TextInput";
+import PasswordInput from "../components/PasswordInput";
 
-
-
-function LoginPage() {
+function RegisterPage() {
     const [error, setError] =  useState("");
     const [identifier, setIdentifier] = useState("")
     const [password, setPassword] = useState("")
@@ -21,6 +19,7 @@ function LoginPage() {
     function handleSubmitLogin(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
+
     }
   return (
     <Stack mx={"auto"} my={"auto"} p={2} sx={{
@@ -29,7 +28,7 @@ function LoginPage() {
         <img src="Notely1.png" width={"300px"} className="mx-auto" />
         
         <Typography variant="h6" fontSize={"2rem"} gutterBottom color="info" fontWeight={600}>
-            Welcome Back
+            
         </Typography>
         {
             error && ( <Alert severity="error" variant="outlined" >{error}</Alert>)
@@ -59,4 +58,4 @@ function LoginPage() {
   )
 }
 
-export default LoginPage
+export default RegisterPage
