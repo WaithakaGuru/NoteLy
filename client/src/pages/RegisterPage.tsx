@@ -76,7 +76,7 @@ function RegisterPage() {
         sx={{
             width: "100%",
             minHeight: "100vh",
-            background: "linear-gradient(135deg, #f3f4f6, #e5e7eb)",
+            background: "linear-gradient(135deg, #f3f4f6, #05070b)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -137,7 +137,7 @@ function RegisterPage() {
 
                 <Typography variant="body2" align="center">
                     Already have an account?{" "}
-                    <Link to="/login" style={{ color: "#10b981", fontWeight: 600 }}>
+                    <Link to="/login" className="text-[#10b981] font-semibold hover:underline">
                     Sign in
                     </Link>
                 </Typography>
