@@ -1,7 +1,10 @@
-import { Button, Paper, Stack, TextField } from "@mui/material"
+import { Alert, Button, Paper, Stack, TextField, Typography } from "@mui/material"
 import PasswordInput from "../components/PasswordInput"
+import { useState } from "react";
 
 function LoginPage() {
+    const [error, setError] =  useState("")
+
     function handleSubmitLogin(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
@@ -11,6 +14,13 @@ function LoginPage() {
         background:"#e7edf6ff", placeSelf: "center", alignItems: "center"
     }}>
         <img src="Notely1.png" width={"300px"} className="mx-auto" />
+        
+        <Typography variant="h6" fontSize={"2rem"} gutterBottom color="info" fontWeight={600}>
+            Welcome Back
+        </Typography>
+        {
+            error && ( <Alert severity="error" variant="outlined" >{error}</Alert>)
+        }
         <Paper component={"form"}  sx={{p: 1, bgcolor: "transparent", width:{xs: "95%", sm: "85%", md: "65%"}}}
             elevation={0} onSubmit={handleSubmitLogin}  
         >
