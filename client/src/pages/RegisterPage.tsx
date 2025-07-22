@@ -44,13 +44,13 @@ function RegisterPage() {
             }}
                 variant="contained"  size="large" fullWidth 
             >
-                Sign in 
+                Sign up
             </Button>
 
             <Typography variant="subtitle1" gutterBottom mt={2}>
-                New to NoteLy? 
+                Already have an Account? 
                 <div className="text-lime-500 inline-flex font-bold ml-1 hover:underline">
-                    <Link to={"/register"} title="Create New NoteLy account">Sign Up Now</Link>
+                    <Link to={"/login"} title="Create New NoteLy account">Sign In</Link>
                 </div>
             </Typography>
         </Paper>

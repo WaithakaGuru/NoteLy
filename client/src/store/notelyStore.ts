@@ -16,8 +16,11 @@ const storeModel: StateCreator<StoreType> = (set)=> {
         loggedIn: Boolean(localStorage.getItem("loggedIn")) || false,
         token: localStorage.getItem("token"),
 
-        addToken(token) {
-            set({token})
+        addToken(token: string) {
+            if(token === ""){
+                set({token: null})
+            }
+            else set({token})
         },
         setIsLoggedIn(val) {
             if(val === 0){

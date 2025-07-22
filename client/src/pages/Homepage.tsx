@@ -18,7 +18,7 @@ function Homepage() {
                 </button>
                 <button className="text-xl border-gray-400 border cursor-pointer
                 p-2 rounded-sm hover:bg-gray-700 hover:text-gray-50 px-10 btn">
-                    <a>Learn More</a>
+                    <a href="#about">Learn More</a>
                 </button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-center text-sm">

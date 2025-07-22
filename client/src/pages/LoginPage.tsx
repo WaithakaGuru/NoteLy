@@ -24,9 +24,9 @@ function LoginPage() {
     }
   return (
     <Stack mx={"auto"} my={"auto"} p={2} sx={{
-        background:"#e7edf6ff", placeSelf: "center", alignItems: "center"
+        background:"#0d1726", placeSelf: "center", alignItems: "center"
     }}>
-        <img src="Notely1.png" width={"300px"} className="mx-auto" />
+        <img src="NotelyWhite.png" width={"300px"} className="mx-auto" />
         
         <Typography variant="h6" fontSize={"2rem"} gutterBottom color="info" fontWeight={600}>
             Welcome Back
@@ -48,7 +48,7 @@ function LoginPage() {
                 Sign in 
             </Button>
 
-            <Typography variant="subtitle1" gutterBottom mt={2}>
+            <Typography variant="subtitle1" gutterBottom mt={2} color="info">
                 New to NoteLy? 
                 <div className="text-lime-500 inline-flex font-bold ml-1 hover:underline">
                     <Link to={"/register"} title="Create New NoteLy account">Sign Up Now</Link>

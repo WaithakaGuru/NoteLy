@@ -1,13 +1,16 @@
 import { Button, Drawer, IconButton, Stack} from "@mui/material";
-import {AppRegistration, Dashboard, Login, Logout, NoteAdd, Person} from "@mui/icons-material"
+import {AppRegistration, Dashboard, Home, Login, Logout, NoteAdd, Person} from "@mui/icons-material"
 import useNote from "../store/notelyStore"
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import NavButton from "./NavButton";
 
 function Navbar() {
     const path = useLocation().pathname;
     const {loggedIn} = useNote();
     const [isOpen, setIsOpen] = useState(false);
+    const {addToken} = useNote();
+    const navigate = useNavigate();
     console.log(path);
 
     const [imageAvailable, setImageAvailable] = useState(false);
@@ -26,6 +29,10 @@ function Navbar() {
 
     function handleLogOut () {
         setIsOpen(false)
+
+        localStorage.removeItem("token");
+        addToken("");
+        navigate("/", {replace: true});
     }
 
     return (
@@ -35,35 +42,23 @@ function Navbar() {
                 {imageAvailable ? (
                     <img src={imageUrl} width="100px" alt="Notely" />
                 ) : (
-                    <span>Notely</span>
+                    <span><Home/>Notely</span>
                 )}
            </Button>
         
         {loggedIn?
             (<>
                <Stack direction={"row"} gap={2}>
-                    <Button startIcon={<Dashboard/>} variant="outlined" title="Go to Dashboard" href="/dashboard"
-                        sx={{color: "#364153", borderColor: "#364153", '&:hover':{background: "linear-gradient(45deg, #dce6f6, #a9b6ca)", border:"none" }}}
-                    >
-                        Home
-                    </Button>
-                    <Button startIcon={<NoteAdd/>} variant="outlined" title="Create a new note" href="dashboard/create"
-                        sx={{color: "#364153", borderColor: "#364153", '&:hover':{background: "linear-gradient(45deg, #dce6f6, #a9b6ca)", border: "none" } }}
-                    >
-                        New Note
-                    </Button>
-                    <IconButton sx={{color: "#364153", border: "1px solid #364153", '&:hover':{background: "linear-gradient(45deg, #dce6f6, #a9b6ca)", border:"none" } }}
+                    <NavButton startIcon={<Dashboard/>} label="Home" href="/dashboard" title="Go to Dashboard"/>
+                    <NavButton startIcon={<NoteAdd/>} label="New note"  href="/dashboard/create" title="Create a new note" />
+                    <IconButton sx={{color: "#364153", border: "1px solid #364153", transition: "border-color .4s ease-in-out",
+                    '&:hover':{background: "linear-gradient(45deg, #dce6f6, #a9b6ca)", borderColor:"transparent" } }}
                         title="Profile settings" onClick={handleToggleProfile} 
                     >
                         <Person/>
                     </IconButton>
                     <Drawer open={isOpen} anchor="right" sx={{p:2, height: "10rem"}} onClick={()=>setIsOpen(false)}>
-                        <Button startIcon={<Person/>} onClick={handleLogOut} title="Go to profile settings"
-                            variant="outlined" color="primary" href="/dashboard/profile"
-                             sx={{mx:2, my: 1, '&:hover': { background: "linear-gradient(45deg, #dce6f6, #a9b6ca)", border: "none"}}}
-                        >
-                            My Profile
-                        </Button>
+                       <NavButton label="My profile" startIcon={<Person/>} href="/dashboard/profile" m={2}/>
                         <Button startIcon={<Logout/>} onClick={handleLogOut} title="Sign Out"
                             variant="outlined" sx={{m:2}} color="error"
                         >
@@ -72,7 +67,6 @@ function Navbar() {
                     </Drawer>
                </Stack>
             </>)
-
         : 
         (<>
             <Stack direction={"row"} gap={2} >
