@@ -1,22 +1,34 @@
 import { TextField, type TextFieldProps } from "@mui/material"
 
-function TextInput({onChange, value}: TextFieldProps) {
+type T = TextFieldProps & {v?: string};
+
+function TextInput({onChange, value, v="#f9f9f9", label="Username or Email", placeholder}: T) {
   return (
-    <TextField placeholder="Username or Email" label="Username or Email" 
-        fullWidth onChange={onChange} value={value}
+    <TextField placeholder={placeholder} label={label} 
+        fullWidth onChange={onChange} value={value} 
          sx={{outline: "none", border: "none", bgcolor: "#fafaf8",
-            borderRadius: 1,  color: "darkgrey",
+            borderRadius: 1,
         "& .MuiOutlinedInput-root": {
-        "& fieldset": {
-            borderColor: "#859ec3",
+            "& fieldset": {
+                borderColor: "#859ec3",
+            },
+            "&:hover fieldset": {
+                borderColor: "#84aeec", 
+            },
+            "&.Mui-focused fieldset": {
+                borderColor: "#859ec3", 
+                borderWidth: "2px", 
+
+            },
         },
-        "&:hover fieldset": {
-            borderColor: "#84aeec", 
+        "& label": {
+            fontSize: "0.9rem",
         },
-        "&.Mui-focused fieldset": {
-            borderColor: "#859ec3", 
-            borderWidth: "2px", 
-        },}
+        "& label.Mui-focused": {
+            color: v,
+            fontSize: "1rem",
+            mt: "-.3rem"
+        }
         }} 
     />
   )

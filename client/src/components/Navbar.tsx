@@ -71,16 +71,19 @@ function Navbar() {
         (<>
             <Stack direction={"row"} gap={2} >
                 <Button startIcon={<Login/>} 
-                 title="login" href="/login"
-                 sx={{ color: "#364153", boxShadow: "0 0 2rem rgba(0,0,0,.2)", '&:hover': {
-                     background: "linear-gradient(45deg, #dce6f6, #a9b6ca)", color: "#222"}}}
+                 title="login" href="/login" 
+                 sx={{ color: "#364153", boxShadow: "0 0 2rem rgba(0,0,0,.2)", 
+                     background: path==="/login" ? "linear-gradient(45deg, #dce6f6, #a9b6ca)": "",
+                     '&:hover': {background: "linear-gradient(45deg, #dce6f6, #a9b6ca)", color: "#222"}
+                    }}
                  className="hover:opacity-90" 
                 >
                     Login
                 </Button>
                 <Button startIcon={<AppRegistration/>}  
                     title="Create new Notely account"  href="/register"
-                    sx={{color: "#364153", bgcolor:"#e7f0fc", '&:hover': {opacity: ".95"}}}
+                    sx={{color: "#364153", bgcolor:"#e7f0fc", background: path==="/register" ? "linear-gradient(45deg, #dce6f6, #a9b6ca)" : "",
+                        '&:hover': {opacity: ".95"}}}
                 >
                     Register
                 </Button>

@@ -23,24 +23,24 @@ function LoginPage() {
 
     }
   return (
-    <Stack mx={"auto"} my={"auto"} p={2} sx={{
-        background:"#0d1726", placeSelf: "center", alignItems: "center"
-    }}>
+    <Stack mx={"auto"} my={"auto"} p={2} mt={2} sx={{
+        background: "linear-gradient(135deg, #0f172a, #1e293b)", placeSelf: "center", alignItems: "center"
+    }} className="md:min-w-1/3 min-w-[25rem]">
         <img src="NotelyWhite.png" width={"300px"} className="mx-auto" />
         
         <Typography variant="h6" fontSize={"2rem"} gutterBottom color="info" fontWeight={600}>
             Welcome Back
         </Typography>
         {
-            error && ( <Alert severity="error" variant="outlined" >{error}</Alert>)
+            error && ( <Alert severity="error">{error}</Alert>)
         }
-        <Paper component={"form"}  sx={{p: 1, bgcolor: "transparent", width:{xs: "95%", sm: "85%", md: "65%"}}}
-            elevation={0} onSubmit={handleSubmitLogin}  
+        <Paper component={"form"}  sx={{p: 1, bgcolor: "transparent", width:{xs: "95%", sm: "85%", md: "85%"}}}
+            elevation={0} onSubmit={handleSubmitLogin}  className="flex flex-col gap-4"
         >
            <TextInput onChange ={handleIdentifier} value={identifier}/>
             <PasswordInput onChange={handlePassword} value={password}/>
             
-            <Button type="submit" sx={{textTransform: "none", mx:"auto", background: "#637899",
+            <Button type="submit" sx={{textTransform: "none", mx:"auto", background: "linear-gradient(135deg, #0f170a, #1e293b)",
                 fontWeight: 600, fontSize: "1.1rem"
             }}
                 variant="contained"  size="large" fullWidth 
