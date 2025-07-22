@@ -1,6 +1,7 @@
 import { Alert, Button, Paper, Stack, TextField, Typography } from "@mui/material"
 import PasswordInput from "../components/PasswordInput"
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function LoginPage() {
     const [error, setError] =  useState("")
@@ -30,24 +31,33 @@ function LoginPage() {
                      borderRadius: 1,  color: "darkgrey",
                     "& .MuiOutlinedInput-root": {
                     "& fieldset": {
-                        borderColor: "#859ec3", // default border
+                        borderColor: "#859ec3",
                     },
                     "&:hover fieldset": {
-                        borderColor: "#84aeec", // border on hover
+                        borderColor: "#84aeec", 
                     },
                     "&.Mui-focused fieldset": {
-                        borderColor: "#859ec3", // border on focus
-                        borderWidth: "2px", // optional: make it thicker
+                        borderColor: "#859ec3", 
+                        borderWidth: "2px", 
                     },}
                  }} 
             />
             <PasswordInput/>
             
-            <Button type="submit" sx={{textTransform: "none", mx:"auto", background: "#a9b6ca"}}
-                variant="contained"  size="large" fullWidth
+            <Button type="submit" sx={{textTransform: "none", mx:"auto", background: "#637899",
+                fontWeight: 600, fontSize: "1.1rem"
+            }}
+                variant="contained"  size="large" fullWidth 
             >
                 Sign in 
             </Button>
+
+            <Typography variant="subtitle1" gutterBottom mt={2}>
+                New to NoteLy? 
+                <div className="text-lime-500 inline-flex font-bold ml-1 hover:underline">
+                    <Link to={"/register"} title="Create New NoteLy account">Sign Up Now</Link>
+                </div>
+            </Typography>
         </Paper>
     </Stack>
   )
