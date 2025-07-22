@@ -46,7 +46,7 @@ function Homepage() {
             fontWeight="bold"
             sx={{
             textAlign: "center",
-            mb: 6,
+            mb: 4,
             background: "linear-gradient(135deg, #606e83 50%, #6D28D9 0%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
@@ -93,7 +93,7 @@ function Homepage() {
         <Paper
             elevation={6}
             sx={{
-            mt: 10,
+            mt: 4,
             p: { xs: 4, md: 6 },
             borderRadius: 6,
             maxWidth: "100%",
@@ -117,7 +117,7 @@ function Homepage() {
             <Typography
             variant="body1"
             sx={{
-                fontSize: "1.1rem",
+                fontSize: "1rem",
                 color: "#374151",
                 lineHeight: 1.75
             }}
@@ -136,7 +136,6 @@ function Homepage() {
             </Typography>
         </Paper>
         </Stack>
-
     </>
   )
 }
