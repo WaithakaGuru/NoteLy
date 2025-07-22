@@ -10,6 +10,9 @@ const theme = createTheme({
         },
         text:{
 
+        },
+        info: {
+            main:"#859ec3"
         }
     },
     typography: {

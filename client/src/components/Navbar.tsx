@@ -2,10 +2,13 @@ import { Button, Drawer, IconButton, Stack} from "@mui/material";
 import {AppRegistration, Dashboard, Login, Logout, NoteAdd, Person} from "@mui/icons-material"
 import useNote from "../store/notelyStore"
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 function Navbar() {
+    const path = useLocation().pathname;
     const {loggedIn} = useNote();
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    console.log(path);
 
     const [imageAvailable, setImageAvailable] = useState(false);
     const imageUrl = "Notely1.png";
@@ -35,7 +38,8 @@ function Navbar() {
                     <span>Notely</span>
                 )}
            </Button>
-        {!loggedIn?
+        
+        {loggedIn?
             (<>
                <Stack direction={"row"} gap={2}>
                     <Button startIcon={<Dashboard/>} variant="outlined" title="Go to Dashboard" href="/dashboard"
@@ -55,7 +59,7 @@ function Navbar() {
                     </IconButton>
                     <Drawer open={isOpen} anchor="right" sx={{p:2, height: "10rem"}} onClick={()=>setIsOpen(false)}>
                         <Button startIcon={<Person/>} onClick={handleLogOut} title="Go to profile settings"
-                            variant="outlined" color="primary" href="dashboard/profile"
+                            variant="outlined" color="primary" href="/dashboard/profile"
                              sx={{mx:2, my: 1, '&:hover': { background: "linear-gradient(45deg, #dce6f6, #a9b6ca)", border: "none"}}}
                         >
                             My Profile
@@ -73,7 +77,7 @@ function Navbar() {
         (<>
             <Stack direction={"row"} gap={2} >
                 <Button startIcon={<Login/>} 
-                 title="login"
+                 title="login" href="/login"
                  sx={{ color: "#364153", boxShadow: "0 0 2rem rgba(0,0,0,.2)", '&:hover': {
                      background: "linear-gradient(45deg, #dce6f6, #a9b6ca)", color: "#222"}}}
                  className="hover:opacity-90" 
@@ -81,15 +85,14 @@ function Navbar() {
                     Login
                 </Button>
                 <Button startIcon={<AppRegistration/>}  
-                    title="Create new Notely account" variant="contained" 
-                    sx={{bgcolor: "#364153", color: "#364153", background: "linear-gradient(45deg, #dce6f6, #a9b6ca)",
-                        '&:hover': {opacity: ".95", }}}
+                    title="Create new Notely account"  href="/register"
+                    sx={{color: "#364153", bgcolor:"#e7f0fc", '&:hover': {opacity: ".95"}}}
                 >
                     Register
                 </Button>
             </Stack>
         </> )
-        }
+}
         </Stack>
     )
 }

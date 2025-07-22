@@ -16,3 +16,9 @@
 .btn{
   @apply transition-all duration-400
 }
+
+.input{
+  color: #84aeec!important;
+
+  @apply text-red-500 
+}
