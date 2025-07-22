@@ -11,7 +11,6 @@ function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const {addToken} = useNote();
     const navigate = useNavigate();
-    console.log(path);
 
     const [imageAvailable, setImageAvailable] = useState(false);
     const imageUrl = "Notely1.png";

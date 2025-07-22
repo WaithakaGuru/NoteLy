@@ -72,54 +72,88 @@ function RegisterPage() {
 
     }
   return (
-   <Box component={"div"} width={"100%"} className="bg-[#e7edf6ff]">
-        <Stack mx={"auto"} my={"auto"} p={2} sx={{
-            placeSelf: "center", alignItems: "center", maxWidth: "60rem"
-        }} className="md:min-w-5/12">
-            <img src="Notely1.png" width={"300px"} className="mx-auto" />
-            
-            <Typography variant="h6" fontSize={"2rem"} gutterBottom color="info" fontWeight={600}>
-                Register New Account
-            </Typography>
-            {
-                error && ( <Alert severity="error" variant="outlined" >{error}</Alert>)
-            }
-            <Paper component={"form"}  sx={{p: 3, bgcolor: "#f9f9f9", gap: 2,
-            width:{xs: "95%", sm: "85%", md: "95%"}}}
-                elevation={2} onSubmit={handleSubmitLogin}  className="flex flex-col justify-center gap-2"
-            >   
-                <Typography variant="body1" gutterBottom align="center">
-                    Set up you account in a few quick steps
-                </Typography>
-               <Stack direction={"row"} gap={1}>
-                   <TextInput onChange ={handleFirstName} value={state.firstName} v="#555" label="First name"/>
-                   <TextInput onChange ={handleLastName} value={state.lastName} v="#555" label="Last name"/>
-               </Stack>
-                <TextInput onChange ={handleUserName} value={state.userName} v="#555" label="User Name" 
-                placeholder="Enter a unique username"/>
-                <TextInput onChange ={handleEmail} value={state.email} v="#555" label="Email" 
-                placeholder="Enter a valid email"/>
-                <PasswordInput onChange={handlePassword} value={state.password} v="#333"/>
-                <PasswordInput onChange={handleConfirmPassword} value={state.confirmPassword} v="#333" label="Confirm password"/>
-                
-                <Button type="submit" sx={{textTransform: "none", mx:"auto", background: "#314653",
-                    fontWeight: 600, fontSize: "1.1rem"
+        <Box
+        sx={{
+            width: "100%",
+            minHeight: "100vh",
+            background: "linear-gradient(135deg, #f3f4f6, #e5e7eb)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            p: 2,
+        }}
+        >
+            <Paper
+                elevation={3}
+                sx={{
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                width: { xs: "100%", sm: "90%", md: "80%" },
+                maxWidth: "70rem",
+                height: { md: "max-content" },
+                overflow: "hidden",
+                borderRadius: 4,
                 }}
-                    variant="contained"  size="large" fullWidth 
+            >
+                <Box
+                sx={{
+                    flex: 1,
+                    p:3,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    gap: 2,
+                    bgcolor: "#f9f9f9",
+                }}
+                >
+                <img src="Notely1.png" width="150px" alt="Notely logo" className="mb-[-1rem]" />
+                <Typography variant="h5" fontWeight={600}>
+                    Get Started Now
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    Set up your account in a few quick steps
+                </Typography>
+
+                {error && <Alert severity="error">{error}</Alert>}
+
+                <Stack direction="row" spacing={2}>
+                    <TextInput label="First name" onChange={handleFirstName} value={state.firstName} v="#333"/>
+                    <TextInput label="Last name" onChange={handleLastName} value={state.lastName} v="#333"/>
+                </Stack>
+                <TextInput label="User name" onChange={handleUserName} value={state.userName} placeholder="Enter a unique username" v="#333"/>
+                <TextInput label="Email" onChange={handleEmail} value={state.email} placeholder="Enter a valid email" v="#333"/>
+                <PasswordInput label="Password" onChange={handlePassword} value={state.password} v="#333"/>
+                <PasswordInput label="Confirm password" onChange={handleConfirmPassword} value={state.confirmPassword} v="#333"/>
+
+                <Button
+                    variant="contained"
+                    size="large"
+                    type="submit"
+                    fullWidth
+                    sx={{ textTransform: "none", backgroundColor: "#314653", fontWeight: 600 }}
                 >
                     Sign up
                 </Button>
-    
-                <Typography variant="subtitle1" gutterBottom mt={2}>
-                    Already have an Account? 
-                    <div className="text-lime-500 inline-flex font-bold ml-1 hover:underline">
-                        <Link to={"/login"} title="Create New NoteLy account">Sign In</Link>
-                    </div>
+
+                <Typography variant="body2" align="center">
+                    Already have an account?{" "}
+                    <Link to="/login" style={{ color: "#10b981", fontWeight: 600 }}>
+                    Sign in
+                    </Link>
                 </Typography>
+                </Box>
+                <Box
+                sx={{
+                    flex: 1,
+                    backgroundImage: `url(NotelyRegister.png)`, 
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    display: { xs: "none", md: "block" },
+                }}
+                />
             </Paper>
-        </Stack>
-   </Box>
-  )
+        </Box>
+    )
 }
 
 export default RegisterPage

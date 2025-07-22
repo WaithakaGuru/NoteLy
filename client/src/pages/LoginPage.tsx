@@ -29,19 +29,19 @@ function LoginPage() {
         <img src="NotelyWhite.png" width={"300px"} className="mx-auto" />
         
         <Typography variant="h6" fontSize={"2rem"} gutterBottom color="info" fontWeight={600}>
-            Welcome Back
+            Nice to See you again
         </Typography>
         {
             error && ( <Alert severity="error">{error}</Alert>)
         }
         <Paper component={"form"}  sx={{p: 1, bgcolor: "transparent", width:{xs: "95%", sm: "85%", md: "85%"}}}
-            elevation={0} onSubmit={handleSubmitLogin}  className="flex flex-col gap-4"
+            elevation={0} onSubmit={handleSubmitLogin}  className="flex flex-col gap-6"
         >
            <TextInput onChange ={handleIdentifier} value={identifier}/>
             <PasswordInput onChange={handlePassword} value={password}/>
             
             <Button type="submit" sx={{textTransform: "none", mx:"auto", background: "linear-gradient(135deg, #0f170a, #1e293b)",
-                fontWeight: 600, fontSize: "1.1rem"
+                fontWeight: 600, fontSize: "1.1rem", boxShadow: "0 0 .5rem rgba(0,0,0,.9)"
             }}
                 variant="contained"  size="large" fullWidth 
             >
