@@ -1,17 +1,18 @@
 import {Visibility, VisibilityOff } from "@mui/icons-material"
-import {IconButton, InputAdornment, TextField } from "@mui/material"
+import {IconButton, InputAdornment, TextField, type TextFieldProps } from "@mui/material"
 import { useState } from "react"
 
-function PasswordInput() {
+function PasswordInput({onChange, value}: TextFieldProps) {
     const [showPassword, setShowPassword] = useState(false)
 
   return (
     <TextField type={showPassword? "text": "password"} label="Password" variant="outlined"
-     placeholder="****" fullWidth sx={{my:3, bgcolor: "#fafaf8",
+     placeholder="****" fullWidth value={value} onChange={onChange}
+     sx={{my:3, bgcolor: "#fafaf8",
         borderRadius: 1, outline: "none", color: "darkgrey",
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        borderColor: "#859ec3", // default border
+        borderColor: "#859ec3", 
       },
       "&:hover fieldset": {
         borderColor: "#84aeec",

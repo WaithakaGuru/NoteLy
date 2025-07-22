@@ -2,9 +2,23 @@ import { Alert, Button, Paper, Stack, TextField, Typography } from "@mui/materia
 import PasswordInput from "../components/PasswordInput"
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import TextInput from "../components/TextInput";
+
+
 
 function LoginPage() {
-    const [error, setError] =  useState("")
+    const [error, setError] =  useState("");
+    const [identifier, setIdentifier] = useState("")
+    const [password, setPassword] = useState("")
+
+    function handleIdentifier(e: React.ChangeEvent<HTMLInputElement>) {
+        setIdentifier(e.target.value);
+    }
+    function handlePassword(e: React.ChangeEvent<HTMLInputElement>) {
+        setPassword(e.target.value);
+    }
+
+
 
     function handleSubmitLogin(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -25,24 +39,8 @@ function LoginPage() {
         <Paper component={"form"}  sx={{p: 1, bgcolor: "transparent", width:{xs: "95%", sm: "85%", md: "65%"}}}
             elevation={0} onSubmit={handleSubmitLogin}  
         >
-            <TextField placeholder="Username or Email" label="Username or Email" 
-                fullWidth sx={{
-                    outline: "none", border: "none", bgcolor: "#fafaf8",
-                     borderRadius: 1,  color: "darkgrey",
-                    "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                        borderColor: "#859ec3",
-                    },
-                    "&:hover fieldset": {
-                        borderColor: "#84aeec", 
-                    },
-                    "&.Mui-focused fieldset": {
-                        borderColor: "#859ec3", 
-                        borderWidth: "2px", 
-                    },}
-                 }} 
-            />
-            <PasswordInput/>
+           <TextInput onChange ={handleIdentifier} value={identifier}/>
+            <PasswordInput onChange={handlePassword} value={password}/>
             
             <Button type="submit" sx={{textTransform: "none", mx:"auto", background: "#637899",
                 fontWeight: 600, fontSize: "1.1rem"
