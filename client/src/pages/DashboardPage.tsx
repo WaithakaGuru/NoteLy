@@ -24,6 +24,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import ToggleSideBar from "../components/ToggleSideBar";
+import MarkdownGuide from "../components/MarkdownGuide";
 
 function DashboardPage() {
   const [notes, setNotes] = useState();
@@ -441,6 +442,7 @@ function DashboardPage() {
             </Stack>
           </Stack>
         </Box>
+      <MarkdownGuide/>
       </Stack>
     </Box>
   );
