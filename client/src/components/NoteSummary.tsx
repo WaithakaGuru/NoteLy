@@ -1,0 +1,96 @@
+import { Stack, IconButton, Typography, Chip, Button } from "@mui/material"
+import { Edit, DeleteOutline, Person, Topic, PushPin, Visibility } from "@mui/icons-material"
+import getDateString from "../utils/dateFormatter"
+import type { NoteType } from "../utils/Note.type";
+
+type FullNoteType = {noteData:NoteType , currentUserId: string};
+
+function NoteSummary({noteData, currentUserId}: FullNoteType ) {
+  return (
+     <Stack className="w-[30rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
+              <Typography
+                variant="h5"
+                className="text-gray-700 flex justify-between"
+                fontWeight={600}
+              >
+                {noteData.title}
+                <Chip
+                  component={"div"}
+                  label={noteData.isPublic? "Public" : "Personal"}
+                  sx={{ bgcolor: noteData.isPublic? "limegreen": "slategrey", color: "#f9f9f9" }}
+                />
+              </Typography>
+              <Typography
+                variant="body2"
+                className="text-gray-600"
+                mb={"-1rem"}
+                align="left"
+              >
+                <Topic /> Study notes{" "}
+                <IconButton title="Pin this note" sx={{ ml: 20 }}>
+                  <PushPin className="text-gray-500" />
+                </IconButton>
+              </Typography>
+              <Typography variant="body2" className="text-gray-600">
+                <Person /> {noteData.NoteCreator.firstName}{noteData.NoteCreator.userName}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  textOverflow: "ellipsis",
+                  display: "-webkit-box",
+                  overflow: "hidden",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 3,
+                }}
+                gutterBottom
+              >
+               {noteData.synopsis}
+              </Typography>
+              <Stack
+                direction={"row"}
+                className="gap-4 border-t border-gray-300 p-2 pt-8 items-center"
+              >
+                <Typography
+                  variant="body2"
+                  fontSize={".7rem"}
+                  fontWeight={500}
+                  className="text-gray-600"
+                >
+                  Posted {getDateString(noteData.dateCreated)}
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ textTransform: "none" }}
+                  startIcon={<Visibility />}
+                  title="See full blog"
+                  href={`/dashboard/note/${noteData.id}`}
+                >
+                  View
+                </Button>
+                <Button
+                  color="secondary"
+                  startIcon={<Edit />}
+                  sx={{ bgcolor: "#f0e5ff", textTransform: "none" }}
+                  href={`/dashboard/update/${noteData.id}`}
+                  title="Edit this note"
+                >
+                  Edit
+                </Button>
+                <button
+                  className="text-red-700 bg-red-200 p-1 rounded text-nowrap cursor-pointer"
+                  title="Delete this note"
+                  disabled={false}
+                  style={{display:  
+                    noteData.NoteCreator.id === currentUserId ? "flex": "none"
+                   }}
+                >
+                  <DeleteOutline /> Delete
+                </button>
+              </Stack>
+            </Stack>
+  )
+}
+
+export default NoteSummary

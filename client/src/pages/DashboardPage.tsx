@@ -4,7 +4,6 @@ import {
   Delete,
   DeleteOutline,
   Edit,
-  Menu,
   NoteAdd,
   Notes,
   Person,
@@ -17,64 +16,31 @@ import {
   Box,
   Button,
   Chip,
-  Drawer,
   IconButton,
   Paper,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import SideBar from "../components/SideBar";
 import { useState } from "react";
+import ToggleSideBar from "../components/ToggleSideBar";
 
 function DashboardPage() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [notes, setNotes] = useState();
+
+
   return (
     <Box
       component={"main"}
       className="w-full h-[36rem] p-4 gap-2 flex"
       sx={{ background: "#011611" }}
     >
-      <Box component={"aside"} sx={{ display: { xs: "none", sm: "flex" } }}>
-        <Drawer
-          open={isOpen}
-          onClick={() => setIsOpen(false)}
-          sx={{
-            "& .MuiDrawer-paper": {
-              backgroundColor: "#011",
-              color: "#fff",
-              width: "12rem",
-              borderRight: "2px solid #444",
-            },
-            "& .MuiBackdrop-root": {
-              background: "rgba(0,0,0,.2)",
-            },
-          }}
-        >
-          <SideBar />
-        </Drawer>
-        <SideBar />
-      </Box>
+      <ToggleSideBar/>
       <Stack
         component={"section"}
         className="bg-gray-50 w-full h-[35rem] overflow-auto rounded-xl p-6"
         sx={{ ml: { sm: "10rem" } }}
       >
-        <IconButton
-          sx={{
-            bgcolor: "#dce6f6",
-            "&:hover": { bgcolor: "#a9b6ca" },
-            top: "4.4rem",
-            left: ".8rem",
-            position: "absolute",
-            display: { sm: "none" },
-          }}
-          onClick={() => setIsOpen(true)}
-          title="Open Side bar"
-          className="w-11 h-11 z-10"
-        >
-          <Menu className="text-purple-800" />
-        </IconButton>
         <Box
           component={"section"}
           className="flex gap-4 border-b border-gray-300"
@@ -198,7 +164,7 @@ function DashboardPage() {
                   fontSize={".8rem"}
                   fontWeight={700}
                 >
-                  No Notes added for today
+                  No Notes added today
                 </Typography>
               </Box>
             </Paper>
@@ -262,7 +228,7 @@ function DashboardPage() {
           <Typography
             variant="h6"
             className="text-gray-700"
-            sx={{ mb: 6 }}
+            sx={{ mb: 2 }}
             fontWeight={"bold"}
             fontSize={"2rem"}
           >

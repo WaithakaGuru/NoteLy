@@ -1,5 +1,7 @@
 function AllUserNotesPage() {
-  return <></>;
+  return <>
+  thoqt
+  </>;
 }
 
 export default AllUserNotesPage;
