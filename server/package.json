@@ -4,10 +4,10 @@
   "main": "index.js",
   "scripts": {
     "pstudio": "prisma studio",
-    "pinit" : "prisma init",
+    "pinit": "prisma init",
     "pgenerate": "prisma generate --schema=./prisma/schema.prisma",
     "pmigrate": "prisma migrate dev",
-    "pdeploy" : "prisma migrate deploy",
+    "pdeploy": "prisma migrate deploy",
     "start": "node dist/index.js",
     "dev": "nodemon --exec node --loader ts-node/esm src/index.ts"
   },

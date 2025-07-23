@@ -12,7 +12,18 @@ import updateUserInfo from "./updateUserInfo.controller.ts";
 import updatePassword from "./updateUserPassword.controller.ts";
 import logoutUser from "./logoutUser.controller.ts";
 
-export { getUploadInfo, createNote, getUserNotes, getSpecificNote,
-     deleteNote, updateNote, getTrashNotes, restoreDeletedNote, registerNewUser,
-     createJWebToken, updateUserInfo, updatePassword, logoutUser
-}
+export {
+  getUploadInfo,
+  createNote,
+  getUserNotes,
+  getSpecificNote,
+  deleteNote,
+  updateNote,
+  getTrashNotes,
+  restoreDeletedNote,
+  registerNewUser,
+  createJWebToken,
+  updateUserInfo,
+  updatePassword,
+  logoutUser,
+};

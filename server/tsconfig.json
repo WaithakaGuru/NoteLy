@@ -1,5 +1,5 @@
 {
-  "compilerOptions": {         
+  "compilerOptions": {
     "target": "es2023",
     "module": "ESNext",
     "rootDir": "src",
@@ -11,6 +11,5 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src"],
+  "include": ["src"]
 }
-

@@ -1,9 +1,5 @@
-
 function AllUserNotesPage() {
-  return (
-    <>
-    </>
-  )
+  return <></>;
 }
 
-export default AllUserNotesPage
+export default AllUserNotesPage;

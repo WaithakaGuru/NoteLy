@@ -1,8 +1,5 @@
-
 function SingleNotePage() {
-  return (
-    <div>SingleNotePage</div>
-  )
+  return <div>SingleNotePage</div>;
 }
 
-export default SingleNotePage
+export default SingleNotePage;

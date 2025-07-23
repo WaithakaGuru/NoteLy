@@ -1,8 +1,5 @@
-
 function UpdateNote() {
-  return (
-    <div>UpdateNote</div>
-  )
+  return <div>UpdateNote</div>;
 }
 
-export default UpdateNote
+export default UpdateNote;

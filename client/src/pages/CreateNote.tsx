@@ -1,8 +1,5 @@
-
 function CreateNote() {
-  return (
-    <div>CreateNote</div>
-  )
+  return <div>CreateNote</div>;
 }
 
-export default CreateNote
+export default CreateNote;

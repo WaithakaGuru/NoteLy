@@ -1,10 +1,9 @@
-
 @import "tailwindcss";
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  font-weight: 400;  
+  font-weight: 400;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -12,13 +11,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-.btn{
-  @apply transition-all duration-400
+.btn {
+  @apply transition-all duration-400;
 }
 
-.input{
-  color: #0d1726!important;
+.input {
+  color: #0d1726 !important;
 
-  @apply text-red-500 
+  @apply text-red-500;
 }

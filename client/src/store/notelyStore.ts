@@ -1,39 +1,37 @@
-import {create, type StateCreator} from 'zustand';
+import { create, type StateCreator } from "zustand";
 
-type LogInType = 1 | 0
+type LogInType = 1 | 0;
 
 type StoreType = {
-    loggedIn: boolean
-    token: string | null
-    
-    addToken: (token: string) => void;
+  loggedIn: boolean;
+  token: string | null;
 
-    setIsLoggedIn: (val:LogInType) => void;
-}
+  addToken: (token: string) => void;
 
-const storeModel: StateCreator<StoreType> = (set)=> {
-    return {
-        loggedIn: Boolean(localStorage.getItem("loggedIn")) || false,
-        token: localStorage.getItem("token"),
+  setIsLoggedIn: (val: LogInType) => void;
+};
 
-        addToken(token: string) {
-            if(token === ""){
-                set({token: null})
-            }
-            else set({token})
-        },
-        setIsLoggedIn(val) {
-            if(val === 0){
-                localStorage.setItem("loggedIn", "false")
-                set({loggedIn: false});
-            }
-            else if(val === 1){
-                localStorage.setItem("loggedIn", "true")
-                set({loggedIn: true});
-            }
-        }
-    }
-}
+const storeModel: StateCreator<StoreType> = (set) => {
+  return {
+    loggedIn: Boolean(localStorage.getItem("loggedIn")) || false,
+    token: localStorage.getItem("token"),
+
+    addToken(token: string) {
+      if (token === "") {
+        set({ token: null });
+      } else set({ token });
+    },
+    setIsLoggedIn(val) {
+      if (val === 0) {
+        localStorage.setItem("loggedIn", "false");
+        set({ loggedIn: false });
+      } else if (val === 1) {
+        localStorage.setItem("loggedIn", "true");
+        set({ loggedIn: true });
+      }
+    },
+  };
+};
 
 const useNote = create(storeModel);
 export default useNote;

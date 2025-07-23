@@ -1,2 +1,1 @@
-# Notely - Note taking app with sleek UI 
-
+# Notely - Note taking app with sleek UI

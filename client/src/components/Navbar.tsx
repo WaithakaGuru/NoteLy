@@ -1,96 +1,166 @@
-import { Button, Drawer, IconButton, Stack} from "@mui/material";
-import {AppRegistration, Dashboard, Home, Login, Logout, NoteAdd, Person} from "@mui/icons-material"
-import useNote from "../store/notelyStore"
+import { Button, Drawer, IconButton, Stack } from "@mui/material";
+import {
+  AppRegistration,
+  Dashboard,
+  Home,
+  Login,
+  Logout,
+  NoteAdd,
+  Person,
+} from "@mui/icons-material";
+import useNote from "../store/notelyStore";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavButton from "./NavButton";
 
 function Navbar() {
-    const path = useLocation().pathname;
-    const {loggedIn} = useNote();
-    const [isOpen, setIsOpen] = useState(false);
-    const {addToken} = useNote();
-    const navigate = useNavigate();
+  const path = useLocation().pathname;
+  const { loggedIn } = useNote();
+  const [isOpen, setIsOpen] = useState(false);
+  const { addToken } = useNote();
+  const navigate = useNavigate();
 
-    const [imageAvailable, setImageAvailable] = useState(false);
-    const imageUrl = "Notely1.png";
+  const [imageAvailable, setImageAvailable] = useState(false);
+  const imageUrl = "Notely1.png";
 
-    useEffect(() => {
-        const img = new Image();
-        img.src = imageUrl;
-        img.onload = () => setImageAvailable(true);
-        img.onerror = () => setImageAvailable(false);
-    }, []);
-     
-    function handleToggleProfile(){
-        setIsOpen(true);
-    }
+  useEffect(() => {
+    const img = new Image();
+    img.src = imageUrl;
+    img.onload = () => setImageAvailable(true);
+    img.onerror = () => setImageAvailable(false);
+  }, []);
 
-    function handleLogOut () {
-        setIsOpen(false)
+  function handleToggleProfile() {
+    setIsOpen(true);
+  }
 
-        localStorage.removeItem("token");
-        addToken("");
-        navigate("/", {replace: true});
-    }
+  function handleLogOut() {
+    setIsOpen(false);
 
-    return (
-        <Stack component={"nav"} className="bg-gray-50 border-0 border-b-gray-400 p-2 h-14 sticky
-         top-0 shadow min-w-[100%]"  direction={"row"} justifyContent={"space-between"} zIndex={2}>
-           <Button href="/"  title="Go to Homepage">
-                {imageAvailable ? (
-                    <img src={imageUrl} width="100px" alt="Notely" />
-                ) : (
-                    <span><Home/>Notely</span>
-                )}
-           </Button>
-        
-        {loggedIn?
-            (<>
-               <Stack direction={"row"} gap={2}>
-                    <NavButton startIcon={<Dashboard/>} label="Home" href="/dashboard" title="Go to Dashboard"/>
-                    <NavButton startIcon={<NoteAdd/>} label="New note"  href="/dashboard/create" title="Create a new note" />
-                    <IconButton sx={{color: "#364153", border: "1px solid #364153", transition: "border-color .4s ease-in-out",
-                    '&:hover':{background: "linear-gradient(45deg, #dce6f6, #a9b6ca)", borderColor:"transparent" } }}
-                        title="Profile settings" onClick={handleToggleProfile} 
-                    >
-                        <Person/>
-                    </IconButton>
-                    <Drawer open={isOpen} anchor="right" sx={{p:2, height: "10rem"}} onClick={()=>setIsOpen(false)}>
-                       <NavButton label="My profile" startIcon={<Person/>} href="/dashboard/profile" m={2}/>
-                        <Button startIcon={<Logout/>} onClick={handleLogOut} title="Sign Out"
-                            variant="outlined" sx={{m:2}} color="error"
-                        >
-                            Logout
-                        </Button>
-                    </Drawer>
-               </Stack>
-            </>)
-        : 
-        (<>
-            <Stack direction={"row"} gap={2} >
-                <Button startIcon={<Login/>} 
-                 title="login" href="/login" 
-                 sx={{ color: "#364153", boxShadow: "0 0 2rem rgba(0,0,0,.2)", 
-                     background: path==="/login" ? "linear-gradient(45deg, #dce6f6, #a9b6ca)": "",
-                     '&:hover': {background: "linear-gradient(45deg, #dce6f6, #a9b6ca)", color: "#222"}
-                    }}
-                 className="hover:opacity-90" 
-                >
-                    Login
-                </Button>
-                <Button startIcon={<AppRegistration/>}  
-                    title="Create new Notely account"  href="/register"
-                    sx={{color: "#364153", bgcolor:"#e7f0fc", background: path==="/register" ? "linear-gradient(45deg, #dce6f6, #a9b6ca)" : "",
-                        '&:hover': {opacity: ".95"}}}
-                >
-                    Register
-                </Button>
-            </Stack>
-        </> )
+    localStorage.removeItem("token");
+    addToken("");
+    navigate("/", { replace: true });
+  }
+
+  return (
+    <Stack
+      component={"nav"}
+      className="bg-gray-50 border-0 border-b-gray-400 p-2 h-14 sticky
+         top-0 shadow min-w-[100%]"
+      direction={"row"}
+      justifyContent={"space-between"}
+      zIndex={2}
+    >
+      <Button href="/" title="Go to Homepage">
+        {imageAvailable ? (
+          <img src={imageUrl} width="100px" alt="Notely" />
+        ) : (
+          <span>
+            <Home />
+            Notely
+          </span>
+        )}
+      </Button>
+
+      {loggedIn ? (
+        <>
+          <Stack direction={"row"} gap={2}>
+            <NavButton
+              startIcon={<Dashboard />}
+              label="Home"
+              href="/dashboard"
+              title="Go to Dashboard"
+            />
+            <NavButton
+              startIcon={<NoteAdd />}
+              label="New note"
+              href="/dashboard/create"
+              title="Create a new note"
+            />
+            <IconButton
+              sx={{
+                color: "#364153",
+                border: "1px solid #364153",
+                transition: "border-color .4s ease-in-out",
+                "&:hover": {
+                  background: "linear-gradient(45deg, #dce6f6, #a9b6ca)",
+                  borderColor: "transparent",
+                },
+              }}
+              title="Profile settings"
+              onClick={handleToggleProfile}
+            >
+              <Person />
+            </IconButton>
+            <Drawer
+              open={isOpen}
+              anchor="right"
+              sx={{ p: 2, height: "10rem" }}
+              onClick={() => setIsOpen(false)}
+            >
+              <NavButton
+                label="My profile"
+                startIcon={<Person />}
+                href="/dashboard/profile"
+                m={2}
+              />
+              <Button
+                startIcon={<Logout />}
+                onClick={handleLogOut}
+                title="Sign Out"
+                variant="outlined"
+                sx={{ m: 2 }}
+                color="error"
+              >
+                Logout
+              </Button>
+            </Drawer>
+          </Stack>
+        </>
+      ) : (
+        <>
+          <Stack direction={"row"} gap={2}>
+            <Button
+              startIcon={<Login />}
+              title="login"
+              href="/login"
+              sx={{
+                color: "#364153",
+                boxShadow: "0 0 2rem rgba(0,0,0,.2)",
+                background:
+                  path === "/login"
+                    ? "linear-gradient(45deg, #dce6f6, #a9b6ca)"
+                    : "",
+                "&:hover": {
+                  background: "linear-gradient(45deg, #dce6f6, #a9b6ca)",
+                  color: "#222",
+                },
+              }}
+              className="hover:opacity-90"
+            >
+              Login
+            </Button>
+            <Button
+              startIcon={<AppRegistration />}
+              title="Create new Notely account"
+              href="/register"
+              sx={{
+                color: "#364153",
+                bgcolor: "#e7f0fc",
+                background:
+                  path === "/register"
+                    ? "linear-gradient(45deg, #dce6f6, #a9b6ca)"
+                    : "",
+                "&:hover": { opacity: ".95" },
+              }}
+            >
+              Register
+            </Button>
+          </Stack>
+        </>
+      )}
+    </Stack>
+  );
 }
-        </Stack>
-    )
-}
 
-export default Navbar
+export default Navbar;

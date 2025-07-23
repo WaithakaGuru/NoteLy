@@ -1,6 +1,9 @@
-import b from 'bcrypt';
+import b from "bcrypt";
 
-export default function isCorrectPassword(enteredPassword: string, storedPassword: string){
-    const correctPassword = b.compareSync(enteredPassword, storedPassword);
-    return correctPassword 
+export default function isCorrectPassword(
+  enteredPassword: string,
+  storedPassword: string,
+) {
+  const correctPassword = b.compareSync(enteredPassword, storedPassword);
+  return correctPassword;
 }
