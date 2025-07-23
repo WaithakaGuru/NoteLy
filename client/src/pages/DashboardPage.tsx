@@ -25,6 +25,7 @@ import {
 import { useState } from "react";
 import ToggleSideBar from "../components/ToggleSideBar";
 import MarkdownGuide from "../components/MarkdownGuide";
+import NoNote from "../components/NoNote";
 
 function DashboardPage() {
   const [notes, setNotes] = useState();
@@ -406,40 +407,7 @@ function DashboardPage() {
                 </button>
               </Stack>
             </Stack>
-            <Stack
-              className="min-w-96  p-4 items-center gap-4 shadow-xl h-54 border-gray-300 border
-            rounded-xl justify-center bg-white"
-            >
-              <NoteAdd className="text-purple-900 text-3xl" />
-              <Typography variant="h5" gutterBottom className="text-gray-700">
-                No notes added yet
-              </Typography>
-              <Button
-                variant="contained"
-                color="secondary"
-                title="Add a new title"
-                href="/dashboard/create"
-              >
-                Create a new note
-              </Button>
-            </Stack>
-            <Stack className="min-w-96 p-4 items-center gap-4 shadow-xl h-54 border-gray-300 border rounded-xl justify-center">
-              <DeleteOutline className="text-red-700 text-3xl" />
-              <Typography variant="h5" className="text-gray-700">
-                Nothing to see here
-              </Typography>
-              <Typography variant="caption" color="error" gutterBottom>
-                Note Trash is Empty
-              </Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                href="/dashboard"
-                title="Go to Dashboard"
-              >
-                Dashboard
-              </Button>
-            </Stack>
+            <NoNote/>
           </Stack>
         </Box>
       <MarkdownGuide/>
