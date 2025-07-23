@@ -8,6 +8,8 @@ import CreateNote from "./pages/CreateNote"
 import ProfilePage from "./pages/ProfilePage"
 import UpdateNote from "./pages/UpdateNote"
 import Restricted from "./components/Restricted"
+import SingleNotePage from "./pages/SingleNotePage"
+import AllUserNotesPage from "./pages/AllUserNotes"
 function App() {
 
   return (
@@ -31,9 +33,21 @@ function App() {
          </Restricted>
           }
         />
-        <Route loader path="/dashboard/update" element={
+        <Route loader path="/dashboard/update/:id" element={
           <Restricted>
             <UpdateNote/>
+          </Restricted>
+        }
+        />
+        <Route loader path="/dashboard/note" element={
+          <Restricted>
+            <AllUserNotesPage/>
+          </Restricted>
+        }
+        />
+        <Route loader path="/dashboard/note/:id" element={
+          <Restricted>
+            <SingleNotePage/>
           </Restricted>
         }
         />
