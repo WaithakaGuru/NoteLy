@@ -15,7 +15,7 @@ function MarkdownPreview(info: MarkdownContent) {
      <Box component={"section"} className="border border-gray-300 
                 rounded bg-white p-4 m-1 gap-2 flex flex-col shadow-md min-h-[34rem]" 
     > 
-        <Typography variant="body1" gutterBottom fontWeight={"bold"} fontStyle={"italic"}>
+        <Typography variant="body1" gutterBottom fontWeight={"bold"} fontStyle={"italic"} color="secondary">
             Visibility:   { <Chip
             component={"div"}
             label={info.visibility==="public"? "Public" : "Private"}
@@ -25,7 +25,7 @@ function MarkdownPreview(info: MarkdownContent) {
 
         <Divider flexItem/>
 
-        <Typography variant="body1" fontWeight={"bold"} fontStyle={"italic"} gutterBottom>
+        <Typography variant="body1" fontWeight={"bold"} fontStyle={"italic"} gutterBottom color="secondary">
             Title:
         </Typography>
         <Markdown>
@@ -34,7 +34,7 @@ function MarkdownPreview(info: MarkdownContent) {
 
         <Divider flexItem/>
 
-        <Typography variant="body1" fontWeight={"bold"} fontStyle={"italic"} gutterBottom>
+        <Typography variant="body1" fontWeight={"bold"} fontStyle={"italic"} gutterBottom color="secondary">
             Synopsis:
         </Typography>
         <Markdown>
@@ -43,7 +43,7 @@ function MarkdownPreview(info: MarkdownContent) {
 
         <Divider flexItem/>
 
-        <Typography variant="body1" fontWeight={"bold"} fontStyle={"italic"} gutterBottom>
+        <Typography variant="body1" fontWeight={"bold"} fontStyle={"italic"} gutterBottom color="secondary">
             Content:
         </Typography>
         <Markdown>

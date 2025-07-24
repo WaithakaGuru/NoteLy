@@ -58,17 +58,17 @@ function SideBar() {
             Dashboard
           </Typography>
         </Link>
-        <Link to={"/dashboard"}>
+        <Link to={"/dashboard/note"}>
           <Typography className="text-gray-50" fontWeight={"bold"}>
             My notes
           </Typography>
         </Link>
-        <Link to={"/trash"}>
+        <Link to={"/dashboard/trash"}>
           <Typography className="text-gray-50" fontWeight={"bold"}>
             Trash Notes
           </Typography>
         </Link>
-        <Link to={"/profile"}>
+        <Link to={"/dashboard/profile"}>
           <Typography className="text-gray-50" fontWeight={"bold"}>
             Profile
           </Typography>
