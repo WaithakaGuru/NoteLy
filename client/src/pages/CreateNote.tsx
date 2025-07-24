@@ -46,14 +46,14 @@ function CreateNote() {
   return (
   <Box
       component={"main"}
-      className="w-full h-[36rem]  gap-2 flex"
+      className="w-full gap-2 flex h-[36rem] py-2"
       sx={{ background: "#011611", height: {xs: "max-content"} }}
     >
       <ToggleSideBar/>
       <Stack
         component={"section"}
-        className="bg-gray-50 w-full h-[35rem] overflow-auto rounded-xl p-6"
-        sx={{ ml: { sm: "10rem" }, height: {xs: "100dvh"}}}
+        className="bg-gray-50 w-full overflow-auto rounded-xl p-6"
+        sx={{ ml: { sm: "10rem" }, height: {xs: "100dvh",  md:"35rem"}}}
       >
         <Box
           component={"section"}
@@ -115,7 +115,7 @@ function CreateNote() {
                   Trash
                 </Button>
                 <Button
-                  href="/dashboard/notes"
+                  href="/dashboard/note"
                   color="success"
                   startIcon={<Notes className="mr-[-.5rem]" />}
                   variant="outlined"
@@ -186,19 +186,19 @@ function CreateNote() {
                 Create Note
               </Button>
             </Stack>
-            </Stack>
-            <Stack className="bg-gray-50  min-w-[45%]" sx={{width: {xs: "28rem", sm: "45%"}}}> 
-              <Typography
-                variant="h6"
-                className="text-gray-700"
-                fontWeight={"bold"}
-                fontSize={"1.5rem"}
-                gutterBottom
-              >
-                Live preview your work
-              </Typography>
-             <MarkdownPreview state={state} visibility={visibility}/>
-            </Stack>
+          </Stack>
+          <Stack className="bg-gray-50 border-2" sx={{width: {xs: "88rem", md: "45%"}}}> 
+            <Typography
+              variant="h6"
+              className="text-gray-700"
+              fontWeight={"bold"}
+              fontSize={"1.5rem"}
+              gutterBottom
+            >
+              Live preview your work
+            </Typography>
+            <MarkdownPreview state={state} visibility={visibility}/>
+          </Stack>
         </Box>
       </Stack>
     </Box>

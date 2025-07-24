@@ -8,13 +8,13 @@ function AllUserNotesPage() {
      <Box
       component={"main"}
       className="w-full h-[36rem] py-2 gap-2 flex"
-      sx={{ background: "#011611" }}
+      sx={{ background: "#011611", height: {xs: "max-content"}  }}
     >
       <ToggleSideBar/>
       <Stack
         component={"section"}
         className="bg-gray-50 w-full h-[35rem] overflow-auto rounded-xl p-4"
-        sx={{ ml: { sm: "9rem" } }}
+        sx={{ ml: { sm: "9rem" }, height: {xs: "100dvh",  md:"35rem"}}}
       >
         <Box
           component={"section"}
