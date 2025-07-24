@@ -1,5 +1,9 @@
 function UpdateNote() {
-  return <div>UpdateNote</div>;
+  return (
+    <>
+      fh9ui
+    </>
+  )
 }
 
 export default UpdateNote;

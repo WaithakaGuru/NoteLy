@@ -1,11 +1,10 @@
 import {Stack, Box, Typography, Button, TextField,FormControl, InputLabel, Select,
-   MenuItem, type SelectChangeEvent, Divider, Chip} from "@mui/material"
+   MenuItem, type SelectChangeEvent} from "@mui/material"
 import { Dashboard, Delete, Notes } from "@mui/icons-material";
 import ToggleSideBar from "../components/ToggleSideBar";
 import MarkdownGuide from "../components/MarkdownGuide";
-// import Markdown from "react-markdown";
 import { useReducer, useState } from "react";
-import Markdown from "react-markdown";
+import MarkdownPreview from "../components/MarkdownPreview";
 
 type ActionType = {
   type: "input",
@@ -136,7 +135,7 @@ function CreateNote() {
           </Stack>
           <MarkdownGuide/>                   
         </Box>
-        <Box component={"section"} className="w-full p-2 flex gap-8 my-12"  sx={{flexDirection: {xs: "column", md: "row"}}}>
+        <Box component={"section"} className="w-full p-2 flex gap-6 my-12"  sx={{flexDirection: {xs: "column", md: "row"}}}>
           <Stack fontFamily={"cursive"} className="min-w-[55%]">
             <Typography
               variant="h6"
@@ -198,42 +197,7 @@ function CreateNote() {
               >
                 Live preview your work
               </Typography>
-              <Box component={"section"} className="border border-gray-300 
-                rounded bg-white p-4 m-1 gap-2 flex flex-col shadow-md min-h-[34rem]" 
-              > 
-                <Typography variant="body1" fontWeight={"bold"} fontStyle={"italic"} gutterBottom>
-                  Title:
-                </Typography>
-                <Markdown>
-                  {state.title || "No title written yet!!"}
-                </Markdown>
-
-                <Divider flexItem/>
-
-                <Typography variant="body1" fontWeight={"bold"} fontStyle={"italic"} gutterBottom>
-                  Synopsis:
-                </Typography>
-                <Markdown>
-                  {state.synopsis || "No synopsis writen yet!!"}
-                </Markdown>
-
-                <Divider flexItem/>
-
-                <Typography variant="body1" fontWeight={"bold"} fontStyle={"italic"} gutterBottom>
-                  Content:
-                </Typography>
-                <Markdown>
-                  {state.content || "No content written yet !!"}
-                </Markdown>
-                <Divider flexItem/>
-                <Typography variant="body1" gutterBottom fontWeight={"bold"} fontStyle={"italic"}>
-                  Visibility:   { <Chip
-                  component={"div"}
-                  label={visibility==="public"? "Public" : "Private"}
-                  sx={{ bgcolor: visibility==="public" ? "limegreen": "slategrey", color: "#f9f9f9" }}
-                />}
-                </Typography>
-              </Box>
+             <MarkdownPreview state={state} visibility={visibility}/>
             </Stack>
         </Box>
       </Stack>
