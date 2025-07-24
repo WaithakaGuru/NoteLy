@@ -12,17 +12,18 @@ type MarkdownContent = {
 
 function MarkdownPreview(info: MarkdownContent) {
   return (
-     <Box component={"section"} sx={{minWidth: {xs: "28rem", sm: "full"}, placeSelf: "center"}}
+     <Box component={"section"} sx={{minWidth: {xs: "28rem", sm: "98%"}, placeSelf: "center"}}
      className="border border-gray-300 rounded bg-white p-4 m-1 gap-2 flex flex-col shadow-md min-h-[34rem]" 
     > 
-        <Typography variant="body1" gutterBottom fontWeight={"bold"} fontStyle={"italic"} color="secondary">
-            Visibility:   { <Chip
-            component={"div"}
-            label={info.visibility==="public"? "Public" : "Private"}
-            sx={{ bgcolor: info.visibility==="public" ? "limegreen": "slategrey", color: "#f9f9f9" }}
-            />}
-        </Typography>
-
+        <Box component={"div"}>
+            <Typography variant="body1" gutterBottom fontWeight={"bold"} fontStyle={"italic"} color="secondary">
+                Visibility:  
+            </Typography>
+             { <Chip
+                label={info.visibility==="public"? "Public" : "Private"}
+                sx={{ bgcolor: info.visibility==="public" ? "limegreen": "slategrey", color: "#f9f9f9" }}
+                />}
+        </Box>
         <Divider flexItem/>
 
         <Typography variant="body1" fontWeight={"bold"} fontStyle={"italic"} gutterBottom color="secondary">

@@ -99,7 +99,7 @@ function CreateNote() {
                   Dashboard
                 </Button>
                 <Button
-                  href="dashboard/trash"
+                  href="/dashboard/trash"
                   color="warning"
                   startIcon={<Delete className="mr-[-.5rem]" />}
                   variant="outlined"
@@ -187,7 +187,7 @@ function CreateNote() {
               </Button>
             </Stack>
           </Stack>
-          <Stack className="bg-gray-50 border-2" sx={{width: {xs: "88rem", md: "45%"}}}> 
+          <Stack className="bg-gray-50" sx={{width: {xs: "88rem", md: "50%"}}}> 
             <Typography
               variant="h6"
               className="text-gray-700"

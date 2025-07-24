@@ -31,6 +31,7 @@ function AllUserNotesPage() {
                   fontSize={"1.8rem"}
                   fontWeight={"bold"}
                   className="text-gray-700"
+                  sx={{ml: {xs: "1rem", sm: "auto"}}}
                 >
                  Notes Collection for: 
                 </Typography>
@@ -211,7 +212,8 @@ function AllUserNotesPage() {
            Your Recent Notes
           </Typography>
           <Stack direction={"row"} className="justify-left gap-2 flex-wrap">
-            <Stack className="w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
+            <Stack sx={{width: {xs: "30rem", sm: "23.8rem"}}}
+            className="bg-[#f9f9f9] w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
               <Typography
                 variant="h6"
                 className="text-gray-700 flex justify-between h-16 overflow-y-hidden"
@@ -295,7 +297,8 @@ function AllUserNotesPage() {
                 </button>
               </Stack>
             </Stack>
-            <Stack className="w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
+            <Stack sx={{width: {xs: "30rem", sm: "23.8rem"}}}
+            className="bg-[#f9f9f9] w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
               <Typography
                 variant="h6"
                 className="text-gray-700 flex justify-between h-16 overflow-y-hidden"
@@ -379,7 +382,8 @@ function AllUserNotesPage() {
                 </button>
               </Stack>
             </Stack>
-            <Stack className="w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
+            <Stack sx={{width: {xs: "30rem", sm: "23.8rem"}}}
+              className="bg-[#f9f9f9] w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
               <Typography
                 variant="h6"
                 className="text-gray-700 flex justify-between"

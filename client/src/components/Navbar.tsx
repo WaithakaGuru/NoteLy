@@ -16,11 +16,9 @@ import NavButton from "./NavButton";
 
 function Navbar() {
   const path = useLocation().pathname;
-  const { loggedIn } = useNote();
+  const { loggedIn, addToken, setPath } = useNote();
   const [isOpen, setIsOpen] = useState(false);
-  const { addToken } = useNote();
   const navigate = useNavigate();
-
   const [imageAvailable, setImageAvailable] = useState(false);
   const imageUrl = "/Notely1.png";
 
@@ -29,7 +27,10 @@ function Navbar() {
     img.src = imageUrl;
     img.onload = () => setImageAvailable(true);
     img.onerror = () => setImageAvailable(false);
+    setPath(path)
   }, []);
+
+  // useEffect(() => {;}, [path]);
 
   function handleToggleProfile() {
     setIsOpen(true);

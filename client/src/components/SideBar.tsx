@@ -1,7 +1,11 @@
 import { Card, CardMedia, Typography, Stack, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
+import useNote from "../store/notelyStore";
 
 function SideBar() {
+  const {path}= useNote();
+  console.log(path);
+
   return (
     <Stack
       component={"aside"}
@@ -33,45 +37,62 @@ function SideBar() {
         >
           waithakaoffices@gmail.com
         </Typography>
-         <Button href={"/dashboard"} className="p-0" sx={{my:".5rem"}} variant="outlined">
-          <Typography
-            className="text-gray-50 text-nowrap"
-            fontWeight={"bold"}
-            textTransform={"none"}
-            sx={{ml: "-.9rem"}}
-          >
-            Pinned Notes
-          </Typography>
-        </Button>
-        <Button href={"/dashboard"} variant="outlined">
-          <Typography
-            className="text-gray-50 text-nowrap"
-            fontWeight={"bold"}
-            textTransform={"none"}
-            sx={{ml: "-.9rem"}}
-          >
-            Public Notes
-          </Typography>
-        </Button>
+        {(path !== "/dashboard/create" && path !== "/dashboard/update" && path !== "/dashboard/profile")?  (
+          <>
+        <Button href={"/dashboard"} className="p-0" sx={{my:".5rem"}} variant="outlined">
+        <Typography
+          className="text-gray-50 text-nowrap"
+          fontWeight={"bold"}
+          textTransform={"none"}
+          sx={{ml: "-.9rem"}}
+        >
+          Pinned Notes
+        </Typography>
+      </Button>
+      <Button href={"/dashboard"} variant="outlined">
+        <Typography
+          className="text-gray-50 text-nowrap"
+          fontWeight={"bold"}
+          textTransform={"none"}
+          sx={{ml: "-.9rem"}}
+        >
+          Public Notes
+        </Typography>
+      </Button></>) : "" }
       </Card>
       <Stack component={"div"} className="justify-center gap-4 p-6">
         <Link to={"/dashboard"}>
-          <Typography className="text-gray-50" fontWeight={"bold"}>
+          <Typography fontWeight={"bold"}
+            sx={{color: path==="/dashboard"? "#f9fafb" : "#99a1af"}}
+          >
             Dashboard
           </Typography>
         </Link>
+        <Link to={"/dashboard/create"}>
+          <Typography fontWeight={"bold"}
+            sx={{color: path==="/dashboard/create"? "#f9fafb" : "#99a1af"}}
+          >
+            New Note
+          </Typography>
+        </Link>
         <Link to={"/dashboard/note"}>
-          <Typography className="text-gray-50" fontWeight={"bold"}>
+          <Typography fontWeight={"bold"}
+            sx={{color: path==="/dashboard/note"? "#f9fafb" : "#99a1af"}}
+          >
             My notes
           </Typography>
         </Link>
         <Link to={"/dashboard/trash"}>
-          <Typography className="text-gray-50" fontWeight={"bold"}>
+          <Typography fontWeight={"bold"}
+            sx={{color: path==="/dashboard/trash"? "#f9fafb" : "#99a1af"}}
+          >
             Trash Notes
           </Typography>
         </Link>
         <Link to={"/dashboard/profile"}>
-          <Typography className="text-gray-50" fontWeight={"bold"}>
+          <Typography fontWeight={"bold"}
+            sx={{color: path==="/dashboard/profile"? "#f9fafb" : "#99a1af"}}
+          >
             Profile
           </Typography>
         </Link>
