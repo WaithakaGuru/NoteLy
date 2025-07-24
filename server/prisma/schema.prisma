@@ -37,6 +37,7 @@ model Notes {
   lastUpdated DateTime @updatedAt
   isDeleted Boolean @default(false) @map("is_deleted") 
   isPublic Boolean @default(false) @map("is_public")
+  isPinned Boolean @default(false) @map("is_pinned")
 
   creator String @map("note_creator")
 
