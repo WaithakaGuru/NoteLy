@@ -24,7 +24,7 @@ function LoginPage() {
       sx={{
         width: "100%",
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #f3f4f6, #05070b)",
+        background: "linear-gradient(135deg, #05070b, #f3f4f6)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -47,18 +47,18 @@ function LoginPage() {
           my={"auto"}
           p={2}
           sx={{
-            background: "linear-gradient(135deg, #0f172a, #1e293b)",
+            background: "#f9f9f9",
             alignItems: "center",
           }}
           className="sm:min-w-11/12 md:min-w-5/12"
         >
-          <img src="NotelyWhite.png" width={"300px"} className="mx-auto" />
+          <img src="Notely1.png" width={"300px"} className="mx-auto" />
 
           <Typography
             variant="h6"
             fontSize={"2rem"}
             gutterBottom
-            color="info"
+            className="text-gray-700"
             fontWeight={600}
           >
             Nice to See you again
@@ -83,10 +83,9 @@ function LoginPage() {
               sx={{
                 textTransform: "none",
                 mx: "auto",
-                background: "linear-gradient(135deg, #0f170a, #1e293b)",
+                background: "#314653",
                 fontWeight: 600,
                 fontSize: "1.1rem",
-                boxShadow: "0 0 .5rem rgba(0,0,0,.9)",
               }}
               variant="contained"
               size="large"
@@ -95,7 +94,7 @@ function LoginPage() {
               Sign in
             </Button>
 
-            <Typography variant="subtitle1" gutterBottom mt={2} color="info">
+            <Typography variant="subtitle1" gutterBottom mt={2} color="text-gray-700">
               New to NoteLy?
               <div className="text-lime-500 inline-flex font-bold ml-1 hover:underline">
                 <Link to={"/register"} title="Create New NoteLy account">

@@ -31,8 +31,8 @@ function ToggleSideBar() {
           sx={{
             bgcolor: "#dce6f6",
             "&:hover": { bgcolor: "#a9b6ca" },
-            top: "4.4rem",
-            left: ".8rem",
+            top: "3.5rem",
+            left: 0,
             position: "absolute",
             display: { sm: "none" },
           }}

@@ -5,17 +5,17 @@ function SideBar() {
   return (
     <Stack
       component={"aside"}
-      className="max-w-44 fixed top-20 left-2 h-full w-64"
+      className="max-w-42 fixed top-20 h-full w-64 overflow-hidden ml-[-1.2rem]"
       sx={{ zIndex: { xs: -1, sm: 1 } }}
     >
       <Card
-        className="rounded-2xl bg-transparent mb-20 p-6"
+        className="rounded-2xl bg-transparent p-6"
         elevation={0}
         sx={{ bgcolor: "transparent" }}
       >
         <CardMedia
           component={"img"}
-          image="./me.png"
+          image="/me.png"
           alt="DP"
           className="h-20 max-w-20 rounded-2xl"
         />
@@ -33,9 +33,7 @@ function SideBar() {
         >
           waithakaoffices@gmail.com
         </Typography>
-      </Card>
-      <Stack component={"div"} className="justify-center gap-4 p-6">
-        <Button href={"/dashboard"} className="p-0" variant="outlined">
+         <Button href={"/dashboard"} className="p-0" sx={{my:".5rem"}} variant="outlined">
           <Typography
             className="text-gray-50 text-nowrap"
             fontWeight={"bold"}
@@ -53,6 +51,8 @@ function SideBar() {
             Public Notes
           </Typography>
         </Button>
+      </Card>
+      <Stack component={"div"} className="justify-center gap-4 p-6">
         <Link to={"/dashboard"}>
           <Typography className="text-gray-50" fontWeight={"bold"}>
             Dashboard

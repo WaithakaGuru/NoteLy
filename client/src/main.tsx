@@ -6,7 +6,7 @@ import App from "./App.tsx";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./themes/theme.ts";
 
-const client = new QueryClient();
+export const client = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

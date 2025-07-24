@@ -28,20 +28,20 @@ import MarkdownGuide from "../components/MarkdownGuide";
 import NoNote from "../components/NoNote";
 
 function DashboardPage() {
-  const [notes, setNotes] = useState();
+  // const [notes, setNotes] = useState();
 
 
   return (
     <Box
       component={"main"}
-      className="w-full h-[36rem] p-4 gap-2 flex"
+      className="w-full h-[36rem] py-2 gap-2 flex"
       sx={{ background: "#011611" }}
     >
       <ToggleSideBar/>
       <Stack
         component={"section"}
-        className="bg-gray-50 w-full h-[35rem] overflow-auto rounded-xl p-6"
-        sx={{ ml: { sm: "10rem" } }}
+        className="bg-gray-50 w-full h-[35rem] overflow-auto rounded-xl p-4"
+        sx={{ ml: { sm: "9rem" } }}
       >
         <Box
           component={"section"}
@@ -236,11 +236,11 @@ function DashboardPage() {
           >
             Recent Notes
           </Typography>
-          <Stack direction={"row"} className="justify-center gap-4 flex-wrap">
-            <Stack className="w-[30rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
+          <Stack direction={"row"} className="justify-left gap-2 flex-wrap">
+            <Stack className="w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
               <Typography
-                variant="h5"
-                className="text-gray-700 flex justify-between"
+                variant="h6"
+                className="text-gray-700 flex justify-between h-16 overflow-y-hidden"
                 fontWeight={600}
               >
                 Fisheries in Kenyan facilities{" "}
@@ -283,7 +283,7 @@ function DashboardPage() {
               </Typography>
               <Stack
                 direction={"row"}
-                className="gap-4 border-t border-gray-300 p-2 pt-8 items-center"
+                className="gap-2 border-t border-gray-300 p-2 pt-8 items-center"
               >
                 <Typography
                   variant="body2"
@@ -321,9 +321,93 @@ function DashboardPage() {
                 </button>
               </Stack>
             </Stack>
-            <Stack className="w-[30rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
+            <Stack className="w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
               <Typography
-                variant="h5"
+                variant="h6"
+                className="text-gray-700 flex justify-between h-16 overflow-y-hidden"
+                fontWeight={600}
+              >
+                Fisheries in Kenyan facilities {" "}
+                <Chip
+                  component={"div"}
+                  label="Public"
+                  sx={{ bgcolor: "limegreen", color: "#f9f9f9" }}
+                />
+              </Typography>
+              <Typography
+                variant="body2"
+                className="text-gray-600"
+                mb={"-1rem"}
+                align="left"
+              >
+                <Topic /> Business{" "}
+                <IconButton title="Pin this note" sx={{ ml: 20 }}>
+                  <PushPin className="text-gray-500" />
+                </IconButton>
+              </Typography>
+              <Typography variant="body2" className="text-gray-600">
+                <Person /> Waithaka
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  textOverflow: "ellipsis",
+                  display: "-webkit-box",
+                  overflow: "hidden",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 3,
+                }}
+                gutterBottom
+              >
+                The farming of fish in Kenya is one of the most undervalued yet
+                profitable business. Lake fishing and pond fish farming are two
+                different approaches with different challenges. Rearing fish in
+                pond is more time demading and has a contraint on resource but
+                it is well paying
+              </Typography>
+              <Stack
+                direction={"row"}
+                className="gap-2 border-t border-gray-300 p-2 pt-8 items-center"
+              >
+                <Typography
+                  variant="body2"
+                  fontSize={".7rem"}
+                  fontWeight={500}
+                  className="text-gray-600"
+                >
+                  Posted July 23, 2025
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ textTransform: "none" }}
+                  startIcon={<Visibility />}
+                  title="See full blog"
+                  href="/dashboard/note/1"
+                >
+                  View
+                </Button>
+                <Button
+                  color="secondary"
+                  startIcon={<Edit />}
+                  sx={{ bgcolor: "#f0e5ff", textTransform: "none" }}
+                  href="/dashboard/update/1"
+                  title="Edit this note"
+                >
+                  Edit
+                </Button>
+                <button
+                  className="text-red-700 bg-red-200 p-1 rounded text-nowrap cursor-pointer"
+                  title="Delete this note"
+                  disabled={false}
+                >
+                  <DeleteOutline /> Delete
+                </button>
+              </Stack>
+            </Stack>
+            <Stack className="w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
+              <Typography
+                variant="h6"
                 className="text-gray-700 flex justify-between"
                 fontWeight={600}
               >
@@ -369,7 +453,7 @@ function DashboardPage() {
               </Typography>
               <Stack
                 direction={"row"}
-                className="gap-4 border-t border-gray-300 p-2 pt-8 items-center"
+                className="gap-2 border-t border-gray-300 p-2 pt-8 items-center"
               >
                 <Typography
                   variant="body2"

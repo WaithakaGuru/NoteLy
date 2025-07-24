@@ -31,7 +31,7 @@ function App() {
             path="/dashboard/create"
             element={
               <Restricted>
-                <CreateNote />
+                <CreateNote/>
               </Restricted>
             }
           />

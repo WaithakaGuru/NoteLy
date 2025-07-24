@@ -21,7 +21,7 @@ function Navbar() {
   const navigate = useNavigate();
 
   const [imageAvailable, setImageAvailable] = useState(false);
-  const imageUrl = "Notely1.png";
+  const imageUrl = "/Notely1.png";
 
   useEffect(() => {
     const img = new Image();

@@ -5,7 +5,7 @@ type T = TextFieldProps & { v?: string };
 function TextInput({
   onChange,
   value,
-  v = "#f9f9f9",
+  v = "#333",
   label = "Username or Email",
   placeholder,
 }: T) {

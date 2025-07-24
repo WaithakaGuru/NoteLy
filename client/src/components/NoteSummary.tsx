@@ -16,7 +16,7 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
                 {noteData.title}
                 <Chip
                   component={"div"}
-                  label={noteData.isPublic? "Public" : "Personal"}
+                  label={noteData.isPublic? "Public" : "Private"}
                   sx={{ bgcolor: noteData.isPublic? "limegreen": "slategrey", color: "#f9f9f9" }}
                 />
               </Typography>
