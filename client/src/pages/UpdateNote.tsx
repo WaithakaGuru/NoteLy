@@ -48,13 +48,13 @@ function UpdateNote() {
   <Box
       component={"main"}
       className="w-full h-[36rem]  gap-2 flex"
-      sx={{ background: "#011611" }}
+      sx={{ background: "#011611", height: {xs: "max-content"} }}
     >
       <ToggleSideBar/>
       <Stack
         component={"section"}
         className="bg-gray-50 w-full h-[35rem] overflow-auto rounded-xl p-6"
-        sx={{ ml: { sm: "10rem" } }}
+        sx={{ ml: { sm: "10rem" }, height: {xs: "100dvh"} }}
       >
         <Box
           component={"section"}
@@ -137,8 +137,8 @@ function UpdateNote() {
           </Stack>
           <MarkdownGuide/>                   
         </Box>
-        <Box component={"section"} className="w-full p-2 flex gap-6 my-12"  sx={{flexDirection: {xs: "column", md: "row"}}}>
-          <Stack fontFamily={"cursive"} className="min-w-[55%]">
+        <Box component={"section"} className="w-full p-2 flex items-center gap-6 my-12"  sx={{flexDirection: {xs: "column", md: "row"}}}>
+          <Stack fontFamily={"cursive"} className="min-w-[55%]" sx={{width: {xs: "28rem", sm: "45%"}}}>
             <Typography
               variant="h6"
               className="text-gray-700"
@@ -148,7 +148,8 @@ function UpdateNote() {
             >
               Update this Note (use Markdown)
             </Typography>
-            <Stack component={"form"} onSubmit={handleCreateNote} className="bg-white border border-gray-300 p-4 m-1 gap-2 rounded shadow-md" >
+            <Stack component={"form"} onSubmit={handleCreateNote} 
+            className="bg-white border border-gray-300 p-4 m-1 gap-2 rounded shadow-md" >
               <TextField required sx={{my: ".4rem"}} label="Enter a title for your notes"  
                 value={state.title}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
@@ -189,7 +190,7 @@ function UpdateNote() {
               </Button>
             </Stack>
             </Stack>
-            <Stack className="bg-gray-50  min-w-[45%]"> 
+            <Stack className="bg-gray-50  min-w-[45%]" sx={{width: {xs: "28rem", sm: "45%"}}}> 
               <Typography
                 variant="h6"
                 className="text-gray-700"

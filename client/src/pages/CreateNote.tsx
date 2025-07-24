@@ -47,13 +47,13 @@ function CreateNote() {
   <Box
       component={"main"}
       className="w-full h-[36rem]  gap-2 flex"
-      sx={{ background: "#011611" }}
+      sx={{ background: "#011611", height: {xs: "max-content"} }}
     >
       <ToggleSideBar/>
       <Stack
         component={"section"}
         className="bg-gray-50 w-full h-[35rem] overflow-auto rounded-xl p-6"
-        sx={{ ml: { sm: "10rem" } }}
+        sx={{ ml: { sm: "10rem" }, height: {xs: "100dvh"}}}
       >
         <Box
           component={"section"}
@@ -135,8 +135,8 @@ function CreateNote() {
           </Stack>
           <MarkdownGuide/>                   
         </Box>
-        <Box component={"section"} className="w-full p-2 flex gap-6 my-12"  sx={{flexDirection: {xs: "column", md: "row"}}}>
-          <Stack fontFamily={"cursive"} className="min-w-[55%]">
+        <Box component={"section"} className="w-full p-2 items-center flex gap-6 my-12"  sx={{flexDirection: {xs: "column", md: "row"}}}>
+          <Stack fontFamily={"cursive"} className="min-w-[55%]" sx={{width: {xs: "28rem", sm: "55%"}}}>
             <Typography
               variant="h6"
               className="text-gray-700"
@@ -187,7 +187,7 @@ function CreateNote() {
               </Button>
             </Stack>
             </Stack>
-            <Stack className="bg-gray-50  min-w-[45%]"> 
+            <Stack className="bg-gray-50  min-w-[45%]" sx={{width: {xs: "28rem", sm: "45%"}}}> 
               <Typography
                 variant="h6"
                 className="text-gray-700"

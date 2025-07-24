@@ -35,13 +35,13 @@ function DashboardPage() {
     <Box
       component={"main"}
       className="w-full h-[36rem] py-2 gap-2 flex"
-      sx={{ background: "#011611" }}
+      sx={{ background: "#011611", height: {xs: "max-content"} }}
     >
       <ToggleSideBar/>
       <Stack
         component={"section"}
         className="bg-gray-50 w-full h-[35rem] overflow-auto rounded-xl p-4"
-        sx={{ ml: { sm: "9rem" } }}
+        sx={{ ml: { sm: "9rem" }, height: {xs: "100dvh"} }}
       >
         <Box
           component={"section"}
@@ -237,7 +237,9 @@ function DashboardPage() {
             Recent Notes
           </Typography>
           <Stack direction={"row"} className="justify-left gap-2 flex-wrap">
-            <Stack className="w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
+            <Stack  sx={{width: {xs: "30rem", sm: "23.8rem"}}}
+              className="bg-[#f9f9f9] w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center"
+            >
               <Typography
                 variant="h6"
                 className="text-gray-700 flex justify-between h-16 overflow-y-hidden"
@@ -321,7 +323,9 @@ function DashboardPage() {
                 </button>
               </Stack>
             </Stack>
-            <Stack className="w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
+            <Stack sx={{width: {xs: "30rem", sm: "23.8rem"}}}
+             className="bg-[#f9f9f9]  w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center"
+            >
               <Typography
                 variant="h6"
                 className="text-gray-700 flex justify-between h-16 overflow-y-hidden"
@@ -405,7 +409,8 @@ function DashboardPage() {
                 </button>
               </Stack>
             </Stack>
-            <Stack className="w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
+            <Stack sx={{width: {xs: "30rem", sm: "23.8rem"}}}
+              className="bg-[#f9f9f9] w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
               <Typography
                 variant="h6"
                 className="text-gray-700 flex justify-between"
@@ -494,7 +499,6 @@ function DashboardPage() {
             <NoNote/>
           </Stack>
         </Box>
-      <MarkdownGuide/>
       </Stack>
     </Box>
   );
