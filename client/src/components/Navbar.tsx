@@ -30,8 +30,6 @@ function Navbar() {
     setPath(path)
   }, []);
 
-  // useEffect(() => {;}, [path]);
-
   function handleToggleProfile() {
     setIsOpen(true);
   }
@@ -90,6 +88,7 @@ function Navbar() {
                 color: "#364153",
                 border: "1px solid #364153",
                 transition: "border-color .4s ease-in-out",
+                background: path==="/dashboard/profile"? "linear-gradient(45deg, #dce6f6, #a9b6ca)" : "",
                 "&:hover": {
                   background: "linear-gradient(45deg, #dce6f6, #a9b6ca)",
                   borderColor: "transparent",

@@ -52,8 +52,8 @@ function CreateNote() {
       <ToggleSideBar/>
       <Stack
         component={"section"}
-        className="bg-gray-50 w-full overflow-auto rounded-xl p-6"
-        sx={{ ml: { sm: "10rem" }, height: {xs: "100dvh",  md:"35rem"}}}
+        className="bg-gray-50 w-full overflow-auto rounded-xl p-4"
+        sx={{ ml: { sm: "9rem" }, height: {xs: "100dvh",  md:"35rem"}}}
       >
         <Box
           component={"section"}

@@ -44,7 +44,7 @@ function TrashNotesPage() {
                 />
                 <Stack direction={"row"} gap={1} p={1}>
                     <Button
-                    href="dashboard/create"
+                    href="/dashboard/note"
                     color="secondary"
                     variant="contained"
                     startIcon={<Notes />}
