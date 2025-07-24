@@ -20,8 +20,10 @@ function NavButton({
       variant="outlined"
       title={title}
       href={href}
+      size="small"
       sx={{
         color: "#364153",
+        textWrap: "nowrap",
         background:
           href === path ? "linear-gradient(45deg, #dce6f6, #a9b6ca)" : "",
         m: m,

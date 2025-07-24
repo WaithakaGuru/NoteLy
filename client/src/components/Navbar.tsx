@@ -6,6 +6,7 @@ import {
   Login,
   Logout,
   NoteAdd,
+  Notes,
   Person,
 } from "@mui/icons-material";
 import useNote from "../store/notelyStore";
@@ -62,14 +63,20 @@ function Navbar() {
         )}
       </Button>
 
-      {loggedIn ? (
+      {!loggedIn ? (
         <>
-          <Stack direction={"row"} gap={2}>
+          <Stack direction={"row"} gap={1}>
             <NavButton
               startIcon={<Dashboard />}
               label="Home"
               href="/dashboard"
               title="Go to Dashboard"
+            />
+            <NavButton
+              startIcon={<Notes />}
+              label="My Notes"
+              href="/dashboard/note"
+              title="See all your notes"
             />
             <NavButton
               startIcon={<NoteAdd />}

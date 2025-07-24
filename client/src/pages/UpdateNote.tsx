@@ -117,7 +117,7 @@ function UpdateNote() {
                   Trash
                 </Button>
                 <Button
-                  href="/dashboard/notes"
+                  href="/dashboard/note"
                   color="success"
                   startIcon={<Notes className="mr-[-.5rem]" />}
                   variant="outlined"

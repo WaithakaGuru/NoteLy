@@ -110,7 +110,7 @@ function DashboardPage() {
                   Trash
                 </Button>
                 <Button
-                  href="/dashboard/notes"
+                  href="/dashboard/note"
                   color="success"
                   startIcon={<Notes className="mr-[-.5rem]" />}
                   variant="outlined"
@@ -121,9 +121,9 @@ function DashboardPage() {
                     fontWeight: "bold",
                     fontSize: "1.1rem",
                   }}
-                  className="w-24 text-gray-50"
+                  className="w-28 text-gray-50 text-nowrap"
                 >
-                  Notes
+                  My Notes
                 </Button>
               </Stack>
               <TextField

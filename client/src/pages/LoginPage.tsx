@@ -24,7 +24,7 @@ function LoginPage() {
       sx={{
         width: "100%",
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #05070b, #f3f4f6)",
+        background: "linear-gradient(135deg, #2e323d, #f3f4f6)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

@@ -7,7 +7,7 @@ type FullNoteType = {noteData:NoteType , currentUserId: string};
 
 function NoteSummary({noteData, currentUserId}: FullNoteType ) {
   return (
-     <Stack className="w-[30rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
+     <Stack className="w-[30rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center bg-white">
               <Typography
                 variant="h5"
                 className="text-gray-700 flex justify-between"

@@ -38,6 +38,7 @@ function SideBar() {
             className="text-gray-50 text-nowrap"
             fontWeight={"bold"}
             textTransform={"none"}
+            sx={{ml: "-.9rem"}}
           >
             Pinned Notes
           </Typography>
@@ -47,6 +48,7 @@ function SideBar() {
             className="text-gray-50 text-nowrap"
             fontWeight={"bold"}
             textTransform={"none"}
+            sx={{ml: "-.9rem"}}
           >
             Public Notes
           </Typography>
