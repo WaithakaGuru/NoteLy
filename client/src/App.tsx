@@ -10,6 +10,7 @@ import UpdateNote from "./pages/UpdateNote";
 import Restricted from "./components/Restricted";
 import SingleNotePage from "./pages/SingleNotePage";
 import AllUserNotesPage from "./pages/AllUserNotes";
+import TrashNotesPage from "./pages/TrashNotesPage";
 function App() {
   return (
     <>
@@ -50,6 +51,15 @@ function App() {
             element={
               <Restricted>
                 <UpdateNote />
+              </Restricted>
+            }
+          />
+          <Route
+            loader
+            path="/dashboard/Trash"
+            element={
+              <Restricted>
+                <TrashNotesPage/>
               </Restricted>
             }
           />

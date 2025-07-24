@@ -1,5 +1,5 @@
-import { Notes, Delete, CalendarMonth, CalendarToday, Today} from "@mui/icons-material";
-import {Button, Box, Stack, Typography, Paper} from "@mui/material"
+import { Notes, Delete, CalendarMonth, CalendarToday, Today, PushPin} from "@mui/icons-material";
+import {Button, Box, Stack, Typography, Paper, IconButton} from "@mui/material"
 import ToggleSideBar from "../components/ToggleSideBar";
 import MarkdownPreview from "../components/MarkdownPreview";
 
@@ -67,7 +67,6 @@ function SingleNotePage() {
                   My notes
                 </Button>
                 <Button
-                  href="dashboard/trash"
                   color="warning"
                   startIcon={<Delete className="mr-[-.5rem]" />}
                   variant="outlined"
@@ -77,17 +76,17 @@ function SingleNotePage() {
                     fontWeight: "bold",
                     fontSize: "1.1rem",
                   }}
-                  className="w-20 text-gray-50"
-                  title="See deleted notes"
+                  className="w-40 text-gray-50 text-nowrap"
+                  title="Delete this note"
                 >
-                  Trash
+                  Move to Trash
                 </Button>
                 <Button
                   href="/dashboard/update/1"
                   color="success"
                   startIcon={<Notes className="mr-[-.5rem]" />}
                   variant="outlined"
-                  title="All my notes"
+                  title="Update this note"
                   sx={{
                     my: "1rem",
                     textTransform: "none",
@@ -197,12 +196,12 @@ function SingleNotePage() {
         <Box component={"section"} className="w-full p-2 mt-8">
           <Typography
             variant="h6"
-            className="text-gray-700"
+            className="text-gray-700 flex justify-between"
             sx={{ mb: 2 }}
             fontWeight={"bold"}
             fontSize={"2rem"}
           >
-            Detailed note
+            Detailed note <Box fontSize={"1rem"}> Pin this note <IconButton><PushPin/></IconButton></Box>
           </Typography>
           <MarkdownPreview state={MockNote} visibility="public"/>
         </Box>

@@ -24,7 +24,6 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import ToggleSideBar from "../components/ToggleSideBar";
-import MarkdownGuide from "../components/MarkdownGuide";
 import NoNote from "../components/NoNote";
 
 function DashboardPage() {
