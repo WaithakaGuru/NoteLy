@@ -1,13 +1,22 @@
 import { Alert, Box, Button, Paper, Stack, Typography } from "@mui/material";
 import PasswordInput from "../components/PasswordInput";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TextInput from "../components/TextInput";
+import { useLogin } from "../services/postRequests";
+import { isAxiosError } from "axios";
+import useNote from "../store/notelyStore";
 
 function LoginPage() {
   const [error, setError] = useState("");
+  const [isLoginBtnloading, setIsLoginBtnloading] = useState(false)
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const {mutateAsync: login, isPending} = useLogin();
+  const {addToken, setIsLoggedIn} = useNote();
+  const navigate = useNavigate();
+
+  // client.invalidateQueries({queryKey:["Register"], exact: true})
 
   function handleIdentifier(e: React.ChangeEvent<HTMLInputElement>) {
     setIdentifier(e.target.value);
@@ -16,8 +25,28 @@ function LoginPage() {
     setPassword(e.target.value);
   }
 
-  function handleSubmitLogin(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmitLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError("");
+    try{
+      isPending? setIsLoginBtnloading(true) : setIsLoginBtnloading(false);
+      const validUser = await login({identifier, password});
+      if(validUser){
+        console.log(validUser.data);
+        addToken(validUser.data);
+        setIsLoggedIn(1);
+        navigate('/dashboard', {replace: true})
+      }
+
+    }catch(err){
+        if(isAxiosError(err)){
+        setError(err.response?.data.message)
+      }
+      else {
+        console.log(err);
+        setError("Something went wrong!!")
+      }
+    }
   }
   return (
     <Box
@@ -80,6 +109,7 @@ function LoginPage() {
 
             <Button
               type="submit"
+              loading={isLoginBtnloading}
               sx={{
                 textTransform: "none",
                 mx: "auto",

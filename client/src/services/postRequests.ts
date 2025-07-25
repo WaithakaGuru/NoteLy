@@ -10,6 +10,10 @@ type RegisterData = {
     password: string
 }
 
+type LoginData = Pick<RegisterData, "password"> &{
+    identifier: string
+}
+
 const useRegister = () => {
     const {token} = useNote();
     return useMutation({
@@ -28,7 +32,7 @@ const useLogin = () => {
     return useMutation(
         {
             mutationKey: ["LogIn"],
-            mutationFn: async (data) => {
+            mutationFn: async (data: LoginData) => {
                 const loggedUser = await ax.post("/auth/login", data, {
                     headers: {Authorization: `Author ${token}`}
                 })

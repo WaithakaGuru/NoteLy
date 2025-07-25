@@ -3,7 +3,6 @@ import useNote from "../store/notelyStore";
 
 function SideBar() {
   const {path}= useNote();
-  console.log(path);
 
   return (
     <Stack

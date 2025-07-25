@@ -16,7 +16,7 @@ import NavButton from "./NavButton";
 
 function Navbar() {
   const path = useLocation().pathname;
-  const { loggedIn, addToken, setPath } = useNote();
+  const { loggedIn, addToken, setPath, setIsLoggedIn } = useNote();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [imageAvailable, setImageAvailable] = useState(false);
@@ -38,6 +38,7 @@ function Navbar() {
     setIsOpen(false);
 
     localStorage.removeItem("token");
+    setIsLoggedIn(0)
     addToken("");
     navigate("/", { replace: true });
   }

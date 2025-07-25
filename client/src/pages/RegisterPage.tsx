@@ -68,7 +68,7 @@ function RegisterPage() {
       }
       isPending ? setIsLoading(true) : setIsLoading(false);
       const user = await register(state);
-      if(user) navigate("/login")
+      if(user) navigate("/login", {replace: true})
     }catch(err){
       if(isAxiosError(err)){
         setError(err.response?.data.message)
