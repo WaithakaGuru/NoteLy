@@ -30,7 +30,6 @@ function LoginPage() {
       isPending? setIsLoginBtnloading(true) : setIsLoginBtnloading(false);
       const validUser = await login({identifier, password});
       if(validUser){
-        console.log(validUser.data);
         addToken(validUser.data);
         setIsLoggedIn(1);
         navigate('/dashboard', {replace: true})
