@@ -73,7 +73,9 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
         <Button
           color="secondary"
           startIcon={<Edit />}
-          sx={{ bgcolor: "#f0e5ff", textTransform: "none" }}
+          sx={{ bgcolor: "#f0e5ff", textTransform: "none", display:  
+            noteData.NoteCreator.id === currentUserId ? "flex": "none"
+            }} 
           href={`/dashboard/update/${noteData.id}`}
           title="Edit this note"
         >

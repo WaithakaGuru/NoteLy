@@ -1,38 +1,51 @@
-import { Stack } from "@mui/material"
+import { Stack, Button} from "@mui/material"
+import { Delete, Edit } from "@mui/icons-material"
 
+type FullNoteOwnerInfo = {
+  creatorId: string,
+  userId: string 
+}
 
-function FullNote() {
+function FullNoteActionButtons({creatorId, userId}: FullNoteOwnerInfo) {
   return (
     <>
-        <Stack component={"main"} className="">
-            
+        <Stack component={"div"} direction={"row"}>
+            <Button
+              color="warning"
+              startIcon={<Delete className="mr-[-.5rem]" />}
+              variant="outlined"
+              sx={{
+                my: "1rem",
+                textTransform: "none",
+                fontWeight: "bold",
+                fontSize: "1.1rem",
+                display: creatorId === userId ? "flex" : "none"
+              }}
+              className="w-40 text-gray-50 text-nowrap"
+              title="Delete this note"
+            >
+              Move to Trash
+            </Button>
+            <Button
+              href="/dashboard/update/1"
+              color="success"
+              startIcon={<Edit className="mr-[-.5rem]" />}
+              variant="outlined"
+              title="Update this note"
+              sx={{
+                my: "1rem",
+                textTransform: "none",
+                fontWeight: "bold",
+                fontSize: "1.1rem",
+                display: creatorId === userId ? "flex" : "none"
+              }}
+              className="w-28 text-gray-50 text-nowrap"
+            >
+              Update
+          </Button> 
         </Stack>
     </>
   )
 }
 
-export default FullNote
-
-// ### 📝 **Markdown Quick Guide**
-
-// | Syntax            | Description         | Example                        |
-// |-------------------|---------------------|--------------------------------|
-// | `#` to `######`   | Headings (H1 → H6)  | `# Title` → `<h1>Title</h1>`   |
-// | `**bold**`        | Bold text           | **bold**                       |
-// | `*italic*`        | Italic text         | *italic*                       |
-// | `~~strike~~`      | Strikethrough       | ~~strike~~                     |
-// | `> quote`         | Blockquote          | > This is a quote              |
-// | `- item`          | Bullet list         | - Item 1                       |
-// | `1. item`         | Numbered list       | 1. First                       |
-// | `` `inline` ``    | Inline code         | `console.log()`                |
-// | ```` ``` ``` ```` | Code block          | ```js\nconsole.log()\n```      |
-// | `[text](url)`     | Link                | [OpenAI](https://openai.com)   |
-// | `![alt](url)`     | Image               | ![alt](image.jpg)              |
-// | `---` or `***`    | Horizontal rule     | ——————————————                |
-
-// ---
-
-// ### ⚡ Pro Tips
-// - Use **`Shift + Enter`** for a new line without a new paragraph.
-// - Use triple backticks \(```\) for multi-line code blocks.
-// - You can **combine** styles: `**_bold italic_**` → **_bold italic_**
+export default FullNoteActionButtons

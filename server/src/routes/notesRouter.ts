@@ -4,11 +4,13 @@ import {
   createNote,
   getTrashNotes,
   getUserNotes,
+  getAllNotes
 } from "../controllers/exports.controller.ts";
 
 const notesRouter = Router();
 
 notesRouter.post("/", verifyJWebToken, createNote);
+notesRouter.get("/all", verifyJWebToken, getAllNotes);
 notesRouter.get("/", verifyJWebToken, getUserNotes);
 notesRouter.get("/trash", verifyJWebToken, getTrashNotes);
 

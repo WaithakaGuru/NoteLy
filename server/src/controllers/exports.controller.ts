@@ -1,5 +1,6 @@
 import getUploadInfo from "./generateCloudinaryUploadInfo.controller.ts";
 import createNote from "./createNote.controller.ts";
+import getAllNotes from "./getAllUserNotes.controller.ts";
 import getUserNotes from "./getAllUserNotes.controller.ts";
 import getSpecificNote from "./getSpecificNote.controller.ts";
 import deleteNote from "./deleteNote.controller.ts";
@@ -15,6 +16,7 @@ import logoutUser from "./logoutUser.controller.ts";
 export {
   getUploadInfo,
   createNote,
+  getAllNotes,
   getUserNotes,
   getSpecificNote,
   deleteNote,

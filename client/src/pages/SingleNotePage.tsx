@@ -14,7 +14,7 @@ function SingleNotePage() {
     <Box
       component={"main"}
       className="w-full h-[36rem] py-2 gap-2 flex"
-      sx={{ background: "#011611", height: {xs: "max-content"} }}
+      sx={{ background: "#011611", height: {xs:"fit-content"} }}
     >
       <ToggleSideBar/>
       <Stack
@@ -65,38 +65,7 @@ function SingleNotePage() {
                   title="Write a new note"
                 >
                   My notes
-                </Button>
-                <Button
-                  color="warning"
-                  startIcon={<Delete className="mr-[-.5rem]" />}
-                  variant="outlined"
-                  sx={{
-                    my: "1rem",
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    fontSize: "1.1rem",
-                  }}
-                  className="w-40 text-gray-50 text-nowrap"
-                  title="Delete this note"
-                >
-                  Move to Trash
-                </Button>
-                <Button
-                  href="/dashboard/update/1"
-                  color="success"
-                  startIcon={<Notes className="mr-[-.5rem]" />}
-                  variant="outlined"
-                  title="Update this note"
-                  sx={{
-                    my: "1rem",
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    fontSize: "1.1rem",
-                  }}
-                  className="w-28 text-gray-50 text-nowrap"
-                >
-                 Update
-                </Button>
+                </Button>                
               </Stack>
             </Box>
           </Stack>
