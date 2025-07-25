@@ -16,8 +16,6 @@ function LoginPage() {
   const {addToken, setIsLoggedIn} = useNote();
   const navigate = useNavigate();
 
-  // client.invalidateQueries({queryKey:["Register"], exact: true})
-
   function handleIdentifier(e: React.ChangeEvent<HTMLInputElement>) {
     setIdentifier(e.target.value);
   }
