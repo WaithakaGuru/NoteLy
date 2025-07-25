@@ -62,7 +62,7 @@ function Navbar() {
         )}
       </Button>
 
-      {!loggedIn ? (
+      {loggedIn ? (
         <>
           <Stack direction={"row"} gap={1}>
             <NavButton

@@ -1,8 +1,11 @@
 import { useReducer, useState } from "react";
 import { Typography, Stack, Paper, Button, Alert, Box } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TextInput from "../components/TextInput";
 import PasswordInput from "../components/PasswordInput";
+import { useRegister } from "../services/postRequests";
+import { isAxiosError } from "axios";
+import isStrongPassword from "../utils/checkPasswordStrength";
 
 type ActionType = {
   type: string;
@@ -16,7 +19,7 @@ type ReducerStateType = {
   firstName: string;
   lastName: string;
   userName: string;
-  email: string;
+  emailAddress: string;
   password: string;
   confirmPassword: string;
 };
@@ -38,15 +41,44 @@ const initialState = {
   firstName: "",
   lastName: "",
   userName: "",
-  email: "",
+  emailAddress: "",
   password: "",
   confirmPassword: "",
 };
 
 function RegisterPage() {
+  const navigate = useNavigate()
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
   const [state, dispatch] = useReducer(reducerFunc, initialState);
+  const {mutateAsync: register, isPending} = useRegister()
 
+  
+  async function handleSubmitRegister(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError("")
+    try{
+      if(!(state.password === state.confirmPassword))  {
+        setError("Password and Confirm Password must match!!");
+        return 
+      }
+      if(!isStrongPassword(state.password)) {
+        setError("Choose a stronger password!!");
+        return
+      }
+      isPending ? setIsLoading(true) : setIsLoading(false);
+      const user = await register(state);
+      if(user) navigate("/login")
+    }catch(err){
+      if(isAxiosError(err)){
+        setError(err.response?.data.message)
+      }
+      else {
+        console.log(err);
+        setError("Something went wrong!!")
+      }
+    }
+  }
   function handlePassword(e: React.ChangeEvent<HTMLInputElement>) {
     dispatch({
       type: "HandleInput",
@@ -62,7 +94,7 @@ function RegisterPage() {
   function handleEmail(e: React.ChangeEvent<HTMLInputElement>) {
     dispatch({
       type: "HandleInput",
-      payload: { input: "email", value: e.target.value },
+      payload: { input: "emailAddress", value: e.target.value },
     });
   }
   function handleFirstName(e: React.ChangeEvent<HTMLInputElement>) {
@@ -80,12 +112,8 @@ function RegisterPage() {
   function handleUserName(e: React.ChangeEvent<HTMLInputElement>) {
     dispatch({
       type: "HandleInput",
-      payload: { input: "lastName", value: e.target.value },
+      payload: { input: "userName", value: e.target.value },
     });
-  }
-
-  function handleSubmitRegister(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
   }
   return (
     <Box
@@ -165,7 +193,7 @@ function RegisterPage() {
               />
             </Stack>
             <TextInput
-              label="User name"
+              label="Username"
               onChange={handleUserName}
               value={state.userName}
               placeholder="Enter a unique username"
@@ -174,7 +202,7 @@ function RegisterPage() {
             <TextInput
               label="Email"
               onChange={handleEmail}
-              value={state.email}
+              value={state.emailAddress}
               placeholder="Enter a valid email"
               v="#333"
             />
@@ -196,6 +224,7 @@ function RegisterPage() {
               size="large"
               type="submit"
               fullWidth
+              loading={isLoading}
               sx={{
                 textTransform: "none",
                 backgroundColor: "#314653",
