@@ -1,8 +1,24 @@
-import {Box, Button, Stack, Typography } from "@mui/material"
-import { Delete, Notes, Dashboard } from "@mui/icons-material";
+import {Box, Button, Card, CardMedia, IconButton, Stack, Typography } from "@mui/material"
+import { Delete, Notes, Dashboard, Edit } from "@mui/icons-material";
 import ToggleSideBar from "../components/ToggleSideBar"
+import { useRef, useState } from "react";
 
 function ProfilePage() {
+  const [image, setImage] = useState<File|undefined>();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function handleCallHiddenInput() {
+    fileInputRef.current?.click();
+    console.log(fileInputRef.current);
+  }
+
+  function handleFileUpload (e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    // if(file?.type)
+    if(file) setImage(file);
+     console.log(image);
+  }
+  
   return (
      <Box
       component={"main"}
@@ -92,6 +108,22 @@ function ProfilePage() {
                 </Button>
               </Stack>
             </Box>
+          </Stack>
+          <Stack component={"section"} className="border border-gray-300 w-full p-2 m-2 rounded-xl shadow-2xs gap-12 items-center" direction={"row"}>
+            <Box className="w-30 h-30 rounded-full bg-transparent shadow relative z-0"  sx={{borderRadius: "50%"}}>
+              <CardMedia component={"img"} image="../../me.png" className="h-30 max-w-30 rounded-full" /> 
+              <IconButton onClick={handleCallHiddenInput} title="Update Profile Photo" className="w-10 h-10 z-50 bottom-[.4rem]" sx={{bgcolor: "#6d28d9", color: "#f9fafb", right: "-.5rem", position:"absolute", '&:hover': {
+                bgcolor: "oklch(52.7% 0.265 303.9)"}, border: ".3rem solid #e5e7eb" 
+              }}>
+                <Edit/>
+                <input type="file" className="hidden" onChange={handleFileUpload} ref={fileInputRef}/>
+              </IconButton>
+            </Box>
+            <Box>
+              <Typography variant="body1" gutterBottom> <strong><i>Name:</i></strong> Waithaka Amos</Typography>
+              <Typography variant="body1" gutterBottom> <strong><i>Username:</i></strong> EdenAdmin</Typography>
+              <Typography variant="body1" gutterBottom> <strong><i>Emali:</i></strong> waithakaoffices@gmail.com</Typography>
+            </Box> 
           </Stack>
         </Box>
       </Stack>
