@@ -14,6 +14,13 @@ type LoginData = Pick<RegisterData, "password"> &{
     identifier: string
 }
 
+type CreateNote = {
+    title: string,
+    synopsis: string,
+    content: string,
+    isPublic: boolean
+}
+
 const useRegister = () => {
     const {token} = useNote();
     return useMutation({
@@ -46,7 +53,7 @@ const useCreateNote = () => {
     const {token} = useNote();
     return useMutation({
         mutationKey: ["CreateNote"],
-        mutationFn: async (data) => {
+        mutationFn: async (data: CreateNote) => {
             const newNote = ax.post("/notes", data, {
                 headers: {Authorization: `Author ${token}`}
             })

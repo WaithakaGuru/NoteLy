@@ -1,4 +1,4 @@
-import { Button, type ButtonProps } from "@mui/material";
+import { Box, Button, type ButtonProps } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
 type NavButtonType = ButtonProps & {
@@ -36,7 +36,7 @@ function NavButton({
         },
       }}
     >
-      {label}
+      <Box sx={{display: {xs: "none", sm: "flex"}}}>{label}</Box>
     </Button>
   );
 }

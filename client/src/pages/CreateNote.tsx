@@ -1,10 +1,13 @@
 import {Stack, Box, Typography, Button, TextField,FormControl, InputLabel, Select,
-   MenuItem, type SelectChangeEvent} from "@mui/material"
-import { Dashboard, Delete, Notes } from "@mui/icons-material";
+   MenuItem, type SelectChangeEvent,
+   Alert} from "@mui/material"
+import { Cancel, Dashboard, Delete, Notes, X } from "@mui/icons-material";
 import ToggleSideBar from "../components/ToggleSideBar";
 import MarkdownGuide from "../components/MarkdownGuide";
 import { useReducer, useState } from "react";
 import MarkdownPreview from "../components/MarkdownPreview";
+import { isAxiosError } from "axios";
+import { useCreateNote } from "../services/postRequests";
 
 type ActionType = {
   type: "input",
@@ -30,12 +33,31 @@ const reducerFunc = (state: CreateNoteStateType, action: ActionType): CreateNote
 
 function CreateNote() {
   const [visibility, setVisibility] = useState<"public" | "private">('public');
+  const [error, setError] = useState("");
+  const [hide, setHide] = useState(false)
   const [state, alter] = useReducer(reducerFunc, {
     title: "", synopsis: "", content: ""
   })
+  const {mutateAsync: createNote, isPending} = useCreateNote();
+  const isPublic = visibility === "public" ? true : false;
 
-  function handleCreateNote(e: React.FormEvent<HTMLFormElement>){
+  async function handleCreateNote(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
+    const newNoteData = {...state, isPublic};
+    try{
+      const newNote = await createNote(newNoteData);
+      if(newNote){
+        setHide(true)
+      }
+    }catch(err){
+      if(isAxiosError(err)) {
+        setError(err.response?.data.message)
+      }
+      else{
+        console.log(err);
+        setError("Something went wrong!!")
+      }
+    }
   }
 
 
@@ -146,6 +168,16 @@ function CreateNote() {
             >
               Write a new Note (use Markdown)
             </Typography>
+            {error && <Alert severity="error">{error}</Alert>}
+            <Alert severity="success" hidden={hide} className="flex items-center"
+              > 
+                Note successfully created :) 
+                <Button onClick={()=> setHide(!hide)} 
+                  className="relative right-0" sx={{position: "relative", right: 0}}
+                >
+                  <Cancel/>
+                </Button>
+              </Alert>
             <Stack component={"form"} onSubmit={handleCreateNote} className="bg-white border border-gray-300 p-4 m-1 gap-2 rounded shadow-md" >
               <TextField required sx={{my: ".4rem"}} label="Enter a title for your notes"  
                 value={state.title}
@@ -182,7 +214,9 @@ function CreateNote() {
                   <MenuItem value="private">Private</MenuItem>
                 </Select>
               </FormControl>
-              <Button type="submit" variant="contained" color="secondary"  size="large">
+              <Button type="submit" variant="contained" 
+                color="secondary"  size="large" loading={isPending}
+              >
                 Create Note
               </Button>
             </Stack>
