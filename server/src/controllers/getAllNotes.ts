@@ -13,7 +13,6 @@ export default async function getAllNotes(req: Request, res: Response) {
     });
     if (allUserNotes) {
       res.status(200).json(allUserNotes);
-      console.log(allUserNotes);
     }
   } catch (err) {
     handleErrors(err, "Failed to fetch Notes", req, res);

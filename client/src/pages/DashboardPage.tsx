@@ -17,9 +17,23 @@ import NoteSummary from "../components/NoteSummary";
 import type { NoteType } from "../utils/Note.type";
 import NotesCreationSummary from "../components/NotesCreationSummary";
 import getNotesPerDuration from "../utils/notesPerDuration";
+import React, { useEffect, useState } from "react";
+import liveSearch from "../utils/liveSearch.";
 
 function DashboardPage() {
-  const {data} = useGetAllNotes();
+  const {data: info} = useGetAllNotes();
+  const summaryInfo = getNotesPerDuration(info);
+  const [data, setData] = useState(info);
+
+  useEffect(()=>{
+    setData(info)
+  }, [info])
+
+  function handleLiveNoteSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    const liveData = liveSearch(info, e.target.value);
+    setData(liveData);
+  }
+
   return (
     <Box
       component={"main"}
@@ -106,11 +120,12 @@ function DashboardPage() {
               <TextField
                 className="min-w-fit w-80"
                 label="Search for notes"
+                onChange={handleLiveNoteSearch}
                 sx={{ my: 2, borderRadius: "1rem" }}
               />
             </Box>
           </Stack>
-          <NotesCreationSummary {...getNotesPerDuration(data)} />
+          <NotesCreationSummary {...summaryInfo!} />
         </Box>
         <Box component={"section"} className="w-full p-2 mt-8">
           <Typography
