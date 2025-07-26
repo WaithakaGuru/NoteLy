@@ -37,11 +37,6 @@ function TrashNotesPage() {
                         Review and restore previously deleted notes
                     </Typography>
                 </Box>
-                <TextField
-                    className="min-w-fit w-80"
-                    label="Search for notes"
-                    sx={{ my: 1, borderRadius: "1rem" }}
-                />
                 <Stack direction={"row"} gap={1} p={1}>
                     <Button
                     href="/dashboard/note"
@@ -77,6 +72,11 @@ function TrashNotesPage() {
                     Dashboard
                     </Button>
                 </Stack>
+                <TextField
+                    className="min-w-fit w-80"
+                    label="Search for notes"
+                    sx={{ my: 1, borderRadius: "1rem" }}
+                />
             </Stack>
             <Box component={"section"} className="w-full p-2 mt-4">
             <Typography

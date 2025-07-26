@@ -1,17 +1,15 @@
-import { useState } from "react";
 import SideBar from "../components/SideBar";
-import { Box, Drawer, IconButton } from "@mui/material";
-import { Menu } from "@mui/icons-material";
+import { Box, Drawer} from "@mui/material";
+import useNote from "../store/notelyStore";
 
 
 function ToggleSideBar() {
-    const [isOpen, setIsOpen] = useState(false);
-    
+    const {sideBarOpen, setSideBarOpen} = useNote()
   return (
     <Box>
         <Drawer
-          open={isOpen}
-          onClick={() => setIsOpen(false)}
+          open={sideBarOpen}
+          onClick={() => setSideBarOpen(false)}
           sx={{
             "& .MuiDrawer-paper": {
               backgroundColor: "#011",
@@ -27,21 +25,6 @@ function ToggleSideBar() {
           <SideBar />
         </Drawer>
         <SideBar />
-        <IconButton
-          sx={{
-            bgcolor: "#dce6f6",
-            "&:hover": { bgcolor: "#a9b6ca" },
-            top: "3.5rem",
-            left: 0,
-            position: "absolute",
-            display: { sm: "none" },
-          }}
-          onClick={() => setIsOpen(true)}
-          title="Open Side bar"
-          className="w-11 h-11 z-10"
-        >
-          <Menu className="text-purple-800" />
-        </IconButton>
       </Box>
   )
 }

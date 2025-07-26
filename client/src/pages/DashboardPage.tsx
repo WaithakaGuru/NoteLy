@@ -22,7 +22,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
 import ToggleSideBar from "../components/ToggleSideBar";
 import NoNote from "../components/NoNote";
 
@@ -39,7 +38,7 @@ function DashboardPage() {
       <ToggleSideBar/>
       <Stack
         component={"section"}
-        className="bg-gray-50 w-full h-[35rem] overflow-auto rounded-xl p-4"
+        className="bg-gray-50 w-full h-[35rem] overflow-auto p-4 rounded"
         sx={{ ml: { sm: "9rem" }, height: {xs: "100dvh", md: "35rem"} }}
       >
         <Box

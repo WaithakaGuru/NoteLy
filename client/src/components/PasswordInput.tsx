@@ -12,7 +12,7 @@ type T = TextFieldProps & { v?: string };
 function PasswordInput({
   onChange,
   value,
-  v = "#f9f9f9",
+  v = "#333",
   label = "Password",
 }: T) {
   const [showPassword, setShowPassword] = useState(false);

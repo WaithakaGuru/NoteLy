@@ -49,7 +49,6 @@ const initialState = {
 function RegisterPage() {
   const navigate = useNavigate()
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false)
   const [state, dispatch] = useReducer(reducerFunc, initialState);
   const {mutateAsync: register, isPending} = useRegister()
 
@@ -66,7 +65,6 @@ function RegisterPage() {
         setError("Choose a stronger password!!");
         return
       }
-      isPending ? setIsLoading(true) : setIsLoading(false);
       const user = await register(state);
       if(user) navigate("/login", {replace: true})
     }catch(err){
@@ -224,7 +222,7 @@ function RegisterPage() {
               size="large"
               type="submit"
               fullWidth
-              loading={isLoading}
+              loading={isPending}
               sx={{
                 textTransform: "none",
                 backgroundColor: "#314653",

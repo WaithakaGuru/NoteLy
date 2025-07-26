@@ -1,7 +1,8 @@
-import { Button, Drawer, IconButton, Stack } from "@mui/material";
+import { Box, Button, Drawer, IconButton, Stack } from "@mui/material";
 import {
   AppRegistration,
   Dashboard,
+  Menu,
   Home,
   Login,
   Logout,
@@ -16,7 +17,7 @@ import NavButton from "./NavButton";
 
 function Navbar() {
   const path = useLocation().pathname;
-  const { loggedIn, addToken, setPath, setIsLoggedIn } = useNote();
+  const { loggedIn, addToken, setPath, setIsLoggedIn, setSideBarOpen, sideBarOpen } = useNote();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [imageAvailable, setImageAvailable] = useState(false);
@@ -52,19 +53,34 @@ function Navbar() {
       justifyContent={"space-between"}
       zIndex={2}
     >
-      <Button href="/" title="Go to Homepage">
-        {imageAvailable ? (
-          <img src={imageUrl} width="100px" alt="Notely" />
-        ) : (
-          <span>
-            <Home />
-            Notely
-          </span>
-        )}
-      </Button>
+      <Box component={"div"} className="max-h-11 flex items-center gap-1" >
+        {loggedIn ?
+          <IconButton
+            sx={{
+            bgcolor: "#364153",
+            "&:hover": { bgcolor: "#4a5565" },
+            display: { sm: "none" },
+            }}
+            onClick={() => setSideBarOpen(!sideBarOpen)}
+            title="Open Side bar"
+            className="w-11 h-11"
+          >
+            <Menu className="text-gray-50" />
+          </IconButton> : ""
+        }
+        <Button href="/" title="Go to Homepage">
+          {imageAvailable ? (
+            <img src={imageUrl} width="100px" alt="Notely" />
+          ) : (
+            <span>
+              <Home />
+              Notely
+            </span>
+          )}
+        </Button>
+      </Box>
 
       {loggedIn ? (
-        <>
           <Stack direction={"row"} gap={1}>
             <NavButton
               startIcon={<Dashboard />}
@@ -124,7 +140,6 @@ function Navbar() {
               </Button>
             </Drawer>
           </Stack>
-        </>
       ) : (
         <>
           <Stack direction={"row"} gap={2}>

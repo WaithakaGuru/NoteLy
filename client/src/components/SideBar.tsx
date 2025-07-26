@@ -1,13 +1,14 @@
+import { Dashboard, Delete, DeleteForever, DeleteSweep, NoteAdd, Notes, Person } from "@mui/icons-material";
 import { Card, CardMedia, Typography, Stack, Button} from "@mui/material";
-import useNote from "../store/notelyStore";
+import { useLocation } from "react-router-dom";
 
 function SideBar() {
-  const {path}= useNote();
+  const {pathname: path}= useLocation();
 
   return (
     <Stack
       component={"aside"}
-      className="max-w-42 fixed top-20 h-full w-64 overflow-hidden ml-[-1.2rem]"
+      className="max-w-42 fixed top-16 h-full w-64 overflow-hidden ml-[-1.2rem] sm:border-r sm:border-t border-gray-400 rounded"
       sx={{ zIndex: { xs: -1, sm: 1 } }}
     >
       <Card
@@ -61,38 +62,43 @@ function SideBar() {
       </Card>
       <Stack component={"div"} className="justify-center gap-4 p-6">
         <a href="/dashboard">
-          <Typography fontWeight={"bold"}
-            sx={{color: path==="/dashboard"? "#f9fafb" : "#99a1af"}}
-          >
-            Dashboard
+          <Typography fontWeight={"bold"} className="flex items-center gap-1 w-max p-1 rounded"
+            sx={{color: path==="/dashboard"? "#f9fafb" : "#99a1af", '&:hover': {bgcolor: "#1e2939"},
+               bgcolor: path==="/dashboard"? "#1e2939" : "none"}}
+            >
+            <Dashboard/> Dashboard
           </Typography>
         </a>
        < a href="/dashboard/create">
-          <Typography fontWeight={"bold"}
-            sx={{color: path==="/dashboard/create"? "#f9fafb" : "#99a1af"}}
+          <Typography fontWeight={"bold"} className="flex items-center gap-1 p-1 rounded"
+            sx={{color: path==="/dashboard/create"? "#f9fafb" : "#99a1af", '&:hover': {bgcolor: "#1e2939"},
+               bgcolor: path==="/dashboard/create"? "#1e2939" : "none"}}
           >
-            New Note
+            <NoteAdd/> New Note
           </Typography>
         </a>
         <a href="/dashboard/note">
-          <Typography fontWeight={"bold"}
-            sx={{color: path==="/dashboard/note"? "#f9fafb" : "#99a1af"}}
+          <Typography fontWeight={"bold"} className="flex items-center gap-1 p-1 rounded"
+            sx={{color: path==="/dashboard/note"? "#f9fafb" : "#99a1af", '&:hover': {bgcolor: "#1e2939"},
+               bgcolor: path==="/dashboard/note"? "#1e2939" : "none"}}
           >
-            My notes
+           <Notes/>  My notes
           </Typography>
         </a>
         <a href="/dashboard/trash">
-          <Typography fontWeight={"bold"}
-            sx={{color: path==="/dashboard/trash"? "#f9fafb" : "#99a1af"}}
+          <Typography fontWeight={"bold"} className="flex items-center w-max gap-1 p-1 rounded"
+            sx={{color: path==="/dashboard/trash"? "#f9fafb" : "#99a1af", '&:hover': {bgcolor: "#1e2939"},
+               bgcolor: path==="/dashboard/trash"? "#1e2939" : "none"}}
           >
-            Trash Notes
+            <Delete/> Trash Notes
           </Typography>
         </a>
         <a href="/dashboard/profile">
-          <Typography fontWeight={"bold"}
-            sx={{color: path==="/dashboard/profile"? "#f9fafb" : "#99a1af"}}
+          <Typography fontWeight={"bold"} className="flex items-center gap-1 p-1 rounded"
+            sx={{color: path==="/dashboard/profile"? "#f9fafb" : "#99a1af", '&:hover': {bgcolor: "#1e2939"},
+               bgcolor: path==="/dashboard/profile"? "#1e2939" : "none"}}
           >
-            Profile
+            <Person/> Profile
           </Typography>
         </a>
       </Stack>

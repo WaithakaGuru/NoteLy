@@ -9,7 +9,6 @@ import useNote from "../store/notelyStore";
 
 function LoginPage() {
   const [error, setError] = useState("");
-  const [isLoginBtnloading, setIsLoginBtnloading] = useState(false)
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const {mutateAsync: login, isPending} = useLogin();
@@ -27,7 +26,6 @@ function LoginPage() {
     e.preventDefault();
     setError("");
     try{
-      isPending? setIsLoginBtnloading(true) : setIsLoginBtnloading(false);
       const validUser = await login({identifier, password});
       if(validUser){
         addToken(validUser.data);
@@ -106,7 +104,7 @@ function LoginPage() {
 
             <Button
               type="submit"
-              loading={isLoginBtnloading}
+              loading={isPending}
               sx={{
                 textTransform: "none",
                 mx: "auto",
