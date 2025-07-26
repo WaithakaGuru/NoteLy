@@ -13,7 +13,7 @@ function TrashNotesPage() {
         <ToggleSideBar/>
         <Stack
             component={"section"}
-            className="bg-gray-50 w-full overflow-auto rounded-xl p-4"
+            className="bg-gray-50 w-full overflow-auto rounded p-4"
             sx={{ ml: { sm: "9rem" }, height: {xs: "100dvh", md: "35rem"} }}
         >
             <Stack direction={{md:"row"}} className="justify-around min-w-1/2">

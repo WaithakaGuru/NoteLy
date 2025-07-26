@@ -1,7 +1,7 @@
 import {Stack, Box, Typography, Button, TextField,FormControl, InputLabel, Select,
    MenuItem, type SelectChangeEvent,
    Alert} from "@mui/material"
-import { Cancel, Dashboard, Delete, Notes, X } from "@mui/icons-material";
+import { Cancel, Dashboard, Delete, Notes} from "@mui/icons-material";
 import ToggleSideBar from "../components/ToggleSideBar";
 import MarkdownGuide from "../components/MarkdownGuide";
 import { useReducer, useState } from "react";
@@ -47,7 +47,7 @@ function CreateNote() {
     try{
       const newNote = await createNote(newNoteData);
       if(newNote){
-        setHide(true)
+        setHide(false)
       }
     }catch(err){
       if(isAxiosError(err)) {
@@ -74,7 +74,7 @@ function CreateNote() {
       <ToggleSideBar/>
       <Stack
         component={"section"}
-        className="bg-gray-50 w-full overflow-auto rounded-xl p-4"
+        className="bg-gray-50 w-full overflow-auto rounded p-4"
         sx={{ ml: { sm: "9rem" }, height: {xs: "100dvh",  md:"35rem"}}}
       >
         <Box
@@ -158,7 +158,7 @@ function CreateNote() {
           <MarkdownGuide/>                   
         </Box>
         <Box component={"section"} className="w-full p-2 items-center flex gap-6 my-12"  sx={{flexDirection: {xs: "column", md: "row"}}}>
-          <Stack fontFamily={"cursive"} className="min-w-[55%]" sx={{width: {xs: "28rem", sm: "55%"}}}>
+          <Stack fontFamily={"cursive"} className="min-w-[55%]" sx={{width: {xs: "100%", md: "50%"}}}>
             <Typography
               variant="h6"
               className="text-gray-700"
@@ -170,7 +170,8 @@ function CreateNote() {
             </Typography>
             {error && <Alert severity="error">{error}</Alert>}
             <Alert severity="success" hidden={hide} className="flex items-center"
-              > 
+              id="success"
+            > 
                 Note successfully created :) 
                 <Button onClick={()=> setHide(!hide)} 
                   className="relative right-0" sx={{position: "relative", right: 0}}
@@ -178,9 +179,10 @@ function CreateNote() {
                   <Cancel/>
                 </Button>
               </Alert>
-            <Stack component={"form"} onSubmit={handleCreateNote} className="bg-white border border-gray-300 p-4 m-1 gap-2 rounded shadow-md" >
+            <Stack component={"form"} onSubmit={handleCreateNote}  
+              className="bg-white border border-gray-300 p-4 m-1 gap-2 rounded shadow-md" >
               <TextField required sx={{my: ".4rem"}} label="Enter a title for your notes"  
-                value={state.title}
+                value={state.title} fullWidth
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
                   alter({type: "input", vals: {component: "title", value:e.target.value}})
                 }
@@ -214,14 +216,14 @@ function CreateNote() {
                   <MenuItem value="private">Private</MenuItem>
                 </Select>
               </FormControl>
-              <Button type="submit" variant="contained" 
-                color="secondary"  size="large" loading={isPending}
+              <Button type="submit" variant="contained" disabled={!hide}
+                color="secondary"  size="large" loading={isPending} href="#success"
               >
                 Create Note
               </Button>
             </Stack>
           </Stack>
-          <Stack className="bg-gray-50" sx={{width: {xs: "88rem", md: "50%"}}}> 
+          <Stack className="bg-gray-50" sx={{width: {xs: "100%", md: "50%"}}}> 
             <Typography
               variant="h6"
               className="text-gray-700"

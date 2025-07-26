@@ -1,4 +1,4 @@
-import {Box, Button, Card, CardMedia, IconButton, Stack, Typography } from "@mui/material"
+import {Box, Button, CardMedia, IconButton, Stack, Typography } from "@mui/material"
 import { Delete, Notes, Dashboard, Edit } from "@mui/icons-material";
 import ToggleSideBar from "../components/ToggleSideBar"
 import { useRef, useState } from "react";
@@ -28,7 +28,7 @@ function ProfilePage() {
       <ToggleSideBar/>
       <Stack
         component={"section"}
-        className="bg-gray-50 w-full overflow-auto rounded-xl p-4"
+        className="bg-gray-50 w-full overflow-auto rounded p-4"
         sx={{ ml: { sm: "9rem" }, height: {xs: "100dvh",  md:"35rem"}}}
       >
         <Box
