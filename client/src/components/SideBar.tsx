@@ -1,10 +1,12 @@
 import { Dashboard, Delete, NoteAdd, Notes, Person } from "@mui/icons-material";
 import { Card, CardMedia, Typography, Stack, Button} from "@mui/material";
 import { useLocation } from "react-router-dom";
+import { useGetUserDetails } from "../services/fetchRequests";
 
 function SideBar() {
   const {pathname: path}= useLocation();
-
+  const {data: user} = useGetUserDetails();
+    localStorage.setItem("userId", user?.id)
   return (
     <Stack
       component={"aside"}
@@ -25,16 +27,16 @@ function SideBar() {
         <Typography
           variant="subtitle1"
           fontWeight={"bold"}
-          className="text-gray-50 my-0 py-0"
+          className="text-lime-400 my-0 py-0 text-nowrap"
         >
-          Waithaka
+          Hello {user?.firstName}
         </Typography>
         <Typography
           variant="subtitle2"
           className="text-gray-50 py-0 font-bold"
           fontSize={".6rem"}
         >
-          waithakaoffices@gmail.com
+          {user?.emailAddress}
         </Typography>
         {(path !== "/dashboard/create" && path !== "/dashboard/update" && path !== "/dashboard/profile")?  (
         <>

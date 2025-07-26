@@ -14,7 +14,7 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
         className="text-gray-700 flex justify-between"
         fontWeight={600}
       >
-        {noteData.title}
+       {noteData.title}
         <Chip
           component={"div"}
           label={noteData.isPublic? "Public" : "Private"}
@@ -33,7 +33,8 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
         </IconButton>
       </Typography>
       <Typography variant="body2" className="text-gray-600">
-        <Person /> {noteData.NoteCreator.firstName}{noteData.NoteCreator.userName}
+        <Person /> 
+        {noteData.NoteCreator?.firstName} {noteData.NoteCreator?.userName}
       </Typography>
       <Typography
         variant="body2"
@@ -74,7 +75,7 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
           color="secondary"
           startIcon={<Edit />}
           sx={{ bgcolor: "#f0e5ff", textTransform: "none", display:  
-            noteData.NoteCreator.id === currentUserId ? "flex": "none"
+            noteData.creator === currentUserId ? "flex": "none"
             }} 
           href={`/dashboard/update/${noteData.id}`}
           title="Edit this note"
@@ -86,7 +87,7 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
           title="Delete this note"
           disabled={false}
           style={{display:  
-            noteData.NoteCreator.id === currentUserId ? "flex": "none"
+            noteData.creator === currentUserId ? "flex": "none"
             }}
         >
           <DeleteOutline /> Delete

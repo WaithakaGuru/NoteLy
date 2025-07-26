@@ -8,9 +8,13 @@ export default async function getAllNotes(req: Request, res: Response) {
     const allUserNotes = await client.notes.findMany({
       where: {
         OR: [{ creator: id }, { isPublic: true }],
-      },
+      }, include: {NoteCreator: true},
+      orderBy: { lastUpdated: "desc" }
     });
-    if (allUserNotes) res.status(200).json(allUserNotes);
+    if (allUserNotes) {
+      res.status(200).json(allUserNotes);
+      console.log(allUserNotes);
+    }
   } catch (err) {
     handleErrors(err, "Failed to fetch Notes", req, res);
   }

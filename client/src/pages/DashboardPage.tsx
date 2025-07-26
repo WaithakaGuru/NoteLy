@@ -2,21 +2,13 @@ import {
   CalendarMonth,
   CalendarToday,
   Delete,
-  DeleteOutline,
-  Edit,
   NoteAdd,
   Notes,
-  Person,
-  PushPin,
-  Today,
-  Topic,
-  Visibility,
+  Today
 } from "@mui/icons-material";
 import {
   Box,
   Button,
-  Chip,
-  IconButton,
   Paper,
   Stack,
   TextField,
@@ -24,11 +16,13 @@ import {
 } from "@mui/material";
 import ToggleSideBar from "../components/ToggleSideBar";
 import NoNote from "../components/NoNote";
+import { useGetAllNotes } from "../services/fetchRequests";
+import NoteSummary from "../components/NoteSummary";
+import type { NoteType } from "../utils/Note.type";
 
 function DashboardPage() {
-  // const [notes, setNotes] = useState();
-
-
+  const {data} = useGetAllNotes();
+  console.log(data);
   return (
     <Box
       component={"main"}
@@ -48,10 +42,6 @@ function DashboardPage() {
         >
           <Stack direction={"row"} className="justify-between min-w-1/2">
             <Box>
-              <Box
-                component={"div"}
-                className="flex items-center justify-around w-full"
-              >
                 <Typography
                   fontSize={"1.8rem"}
                   fontWeight={"bold"}
@@ -59,14 +49,6 @@ function DashboardPage() {
                 >
                   Dashboard
                 </Typography>
-                <Typography
-                  fontWeight={600}
-                  fontSize={"1.1rem"}
-                  className="text-purple-700 inline"
-                >
-                  Hello Waithaka
-                </Typography>
-              </Box>
               <Typography
                 variant="body2"
                 gutterBottom
@@ -235,266 +217,15 @@ function DashboardPage() {
             Recent Notes
           </Typography>
           <Stack direction={"row"} className="justify-left gap-2 flex-wrap">
-            <Stack  sx={{width: {xs: "30rem", sm: "23.8rem"}}}
-              className="bg-[#f9f9f9] w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center"
-            >
-              <Typography
-                variant="h6"
-                className="text-gray-700 flex justify-between h-16 overflow-y-hidden"
-                fontWeight={600}
-              >
-                Fisheries in Kenyan facilities{" "}
-                <Chip
-                  component={"div"}
-                  label="Public"
-                  sx={{ bgcolor: "limegreen", color: "#f9f9f9" }}
-                />
-              </Typography>
-              <Typography
-                variant="body2"
-                className="text-gray-600"
-                mb={"-1rem"}
-                align="left"
-              >
-                <Topic /> Business{" "}
-                <IconButton title="Pin this note" sx={{ ml: 20 }}>
-                  <PushPin className="text-gray-500" />
-                </IconButton>
-              </Typography>
-              <Typography variant="body2" className="text-gray-600">
-                <Person /> Waithaka
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  textOverflow: "ellipsis",
-                  display: "-webkit-box",
-                  overflow: "hidden",
-                  WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 3,
-                }}
-                gutterBottom
-              >
-                The farming of fish in Kenya is one of the most undervalued yet
-                profitable business. Lake fishing and pond fish farming are two
-                different approaches with different challenges. Rearing fish in
-                pond is more time demading and has a contraint on resource but
-                it is well paying
-              </Typography>
-              <Stack
-                direction={"row"}
-                className="gap-2 border-t border-gray-300 p-2 pt-8 items-center"
-              >
-                <Typography
-                  variant="body2"
-                  fontSize={".7rem"}
-                  fontWeight={500}
-                  className="text-gray-600"
-                >
-                  Posted July 23, 2025
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{ textTransform: "none" }}
-                  startIcon={<Visibility />}
-                  title="See full blog"
-                  href="/dashboard/note/1"
-                >
-                  View
-                </Button>
-                <Button
-                  color="secondary"
-                  startIcon={<Edit />}
-                  sx={{ bgcolor: "#f0e5ff", textTransform: "none" }}
-                  href="/dashboard/update/1"
-                  title="Edit this note"
-                >
-                  Edit
-                </Button>
-                <button
-                  className="text-red-700 bg-red-200 p-1 rounded text-nowrap cursor-pointer"
-                  title="Delete this note"
-                  disabled={false}
-                >
-                  <DeleteOutline /> Delete
-                </button>
-              </Stack>
-            </Stack>
-            <Stack sx={{width: {xs: "30rem", sm: "23.8rem"}}}
-             className="bg-[#f9f9f9]  w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center"
-            >
-              <Typography
-                variant="h6"
-                className="text-gray-700 flex justify-between h-16 overflow-y-hidden"
-                fontWeight={600}
-              >
-                Fisheries in Kenyan facilities {" "}
-                <Chip
-                  component={"div"}
-                  label="Public"
-                  sx={{ bgcolor: "limegreen", color: "#f9f9f9" }}
-                />
-              </Typography>
-              <Typography
-                variant="body2"
-                className="text-gray-600"
-                mb={"-1rem"}
-                align="left"
-              >
-                <Topic /> Business{" "}
-                <IconButton title="Pin this note" sx={{ ml: 20 }}>
-                  <PushPin className="text-gray-500" />
-                </IconButton>
-              </Typography>
-              <Typography variant="body2" className="text-gray-600">
-                <Person /> Waithaka
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  textOverflow: "ellipsis",
-                  display: "-webkit-box",
-                  overflow: "hidden",
-                  WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 3,
-                }}
-                gutterBottom
-              >
-                The farming of fish in Kenya is one of the most undervalued yet
-                profitable business. Lake fishing and pond fish farming are two
-                different approaches with different challenges. Rearing fish in
-                pond is more time demading and has a contraint on resource but
-                it is well paying
-              </Typography>
-              <Stack
-                direction={"row"}
-                className="gap-2 border-t border-gray-300 p-2 pt-8 items-center"
-              >
-                <Typography
-                  variant="body2"
-                  fontSize={".7rem"}
-                  fontWeight={500}
-                  className="text-gray-600"
-                >
-                  Posted July 23, 2025
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{ textTransform: "none" }}
-                  startIcon={<Visibility />}
-                  title="See full blog"
-                  href="/dashboard/note/1"
-                >
-                  View
-                </Button>
-                <Button
-                  color="secondary"
-                  startIcon={<Edit />}
-                  sx={{ bgcolor: "#f0e5ff", textTransform: "none" }}
-                  href="/dashboard/update/1"
-                  title="Edit this note"
-                >
-                  Edit
-                </Button>
-                <button
-                  className="text-red-700 bg-red-200 p-1 rounded text-nowrap cursor-pointer"
-                  title="Delete this note"
-                  disabled={false}
-                >
-                  <DeleteOutline /> Delete
-                </button>
-              </Stack>
-            </Stack>
-            <Stack sx={{width: {xs: "30rem", sm: "23.8rem"}}}
-              className="bg-[#f9f9f9] w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center">
-              <Typography
-                variant="h6"
-                className="text-gray-700 flex justify-between"
-                fontWeight={600}
-              >
-                Fisheries in Kenyan facilities{" "}
-                <Chip
-                  component={"div"}
-                  label="Personal"
-                  sx={{ bgcolor: "slategrey", color: "#f9f9f9" }}
-                />
-              </Typography>
-              <Typography
-                variant="body2"
-                className="text-gray-600"
-                mb={"-1rem"}
-                align="left"
-              >
-                <Topic /> Business{" "}
-                <IconButton title="Pin this note" sx={{ ml: 20 }}>
-                  <PushPin className="text-gray-500" />
-                </IconButton>
-              </Typography>
-              <Typography variant="body2" className="text-gray-600">
-                <Person /> Waithaka
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  textOverflow: "ellipsis",
-                  display: "-webkit-box",
-                  overflow: "hidden",
-                  WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 3,
-                }}
-                gutterBottom
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio
-                dolorum ipsu m voluptate et id quasi voluptatum iste fugiat esse
-                blanditiis eligendi aperiam impedit, harum odio culpa vel
-                architecto officiis commodi recusandae, nostrum dolor explicabo!
-                Mollitia nostrum voluptate dolore corrupti, iste voluptatibus
-                ullam iure porro exercitationem rerum consequuntur tempore.
-                Quis, beatae!
-              </Typography>
-              <Stack
-                direction={"row"}
-                className="gap-2 border-t border-gray-300 p-2 pt-8 items-center"
-              >
-                <Typography
-                  variant="body2"
-                  fontSize={".7rem"}
-                  fontWeight={500}
-                  className="text-gray-600"
-                >
-                  Posted July 23, 2025
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{ textTransform: "none" }}
-                  startIcon={<Visibility />}
-                  title="See full blog"
-                  href="/dashboard/note/1"
-                >
-                  View
-                </Button>
-                <Button
-                  color="secondary"
-                  startIcon={<Edit />}
-                  sx={{ bgcolor: "#f0e5ff", textTransform: "none" }}
-                  href="/dashboard/update/1"
-                  title="Edit this note"
-                >
-                  Edit
-                </Button>
-                <button
-                  className="text-red-700 bg-red-200 p-1 rounded text-nowrap cursor-pointer"
-                  title="Delete this note"
-                  disabled={false}
-                >
-                  <DeleteOutline /> Delete
-                </button>
-              </Stack>
-            </Stack>
-            <NoNote/>
+            {!data &&
+              <NoNote/>
+            }         
+            {(
+              data?.map((note: NoteType) => 
+                <NoteSummary key={data.id} currentUserId={localStorage.getItem("userId")!} noteData={note} />
+              )
+            )
+            }
           </Stack>
         </Box>
       </Stack>

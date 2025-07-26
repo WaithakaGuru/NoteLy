@@ -34,7 +34,7 @@ const reducerFunc = (state: CreateNoteStateType, action: ActionType): CreateNote
 function CreateNote() {
   const [visibility, setVisibility] = useState<"public" | "private">('public');
   const [error, setError] = useState("");
-  const [hide, setHide] = useState(false)
+  const [hide, setHide] = useState(true);
   const [state, alter] = useReducer(reducerFunc, {
     title: "", synopsis: "", content: ""
   })

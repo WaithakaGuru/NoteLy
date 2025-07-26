@@ -4,7 +4,8 @@ export type NoteType = {
     synopsis: string,
     isPublic: boolean,
     isPinned: boolean, 
-    dateCreated: string
+    dateCreated: string,
+    creator: string,
     NoteCreator: {
         id: string
         firstName: string

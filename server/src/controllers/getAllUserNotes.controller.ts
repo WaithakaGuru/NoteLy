@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import client from "../utils/prismaClient.ts";
 import handleErrors from "../utils/handleErrors.ts";
 
-export default async function getAllNotes(req: Request, res: Response) {
+export default async function getAllUserNotes(req: Request, res: Response) {
   const { id } = res.locals.validUserData;
   try {
     const allUserNotes = await client.notes.findMany({

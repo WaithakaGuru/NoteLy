@@ -1,5 +1,5 @@
-import { Notes, Delete, CalendarMonth, CalendarToday, Today, PushPin} from "@mui/icons-material";
-import {Button, Box, Stack, Typography, Paper, IconButton} from "@mui/material"
+import { Notes, PushPin} from "@mui/icons-material";
+import {Button, Box, Stack, Typography, IconButton} from "@mui/material"
 import ToggleSideBar from "../components/ToggleSideBar";
 import MarkdownPreview from "../components/MarkdownPreview";
 
@@ -68,98 +68,6 @@ function SingleNotePage() {
                 </Button>                
               </Stack>
             </Box>
-          </Stack>
-          <Stack className="border-l border-gray-300 md:pl-20 pl-6">
-            <Typography
-              variant="subtitle1"
-              fontWeight={700}
-              fontSize={"1.5rem"}
-              className="text-gray-600"
-              gutterBottom
-            >
-              Summary
-            </Typography>
-            <Paper
-              className="w-96 p-1 flex gap-2 m-1 border-1 border-gray-200"
-              elevation={0}
-            >
-              <Box
-                className="bg-blue-500 rounded-full w-10 h-10 inline-flex justify-center"
-                sx={{ bgcolor: "#od99ff" }}
-              >
-                <CalendarToday className="text-gray-50 my-auto " />
-              </Box>
-              <Box>
-                <Typography
-                  className="text-gray-600 inline align-top"
-                  fontSize={"1rem"}
-                  fontWeight={600}
-                >
-                  Today
-                </Typography>
-                <Typography
-                  className="text-gray-500  align-top"
-                  fontSize={".8rem"}
-                  fontWeight={700}
-                >
-                  No Notes added today
-                </Typography>
-              </Box>
-            </Paper>
-            <Paper
-              className="w-96 p-1 flex gap-2 m-1 border-1 border-gray-200"
-              elevation={0}
-            >
-              <Box
-                className="bg-orange-500 rounded-full w-10 h-10 inline-flex justify-center"
-                sx={{ bgcolor: "#od99ff" }}
-              >
-                <CalendarMonth className="text-gray-50 my-auto " />
-              </Box>
-              <Box>
-                <Typography
-                  className="text-gray-600 inline align-top"
-                  fontSize={"1rem"}
-                  fontWeight={600}
-                >
-                  This week
-                </Typography>
-                <Typography
-                  className="text-gray-500  align-top"
-                  fontSize={".8rem"}
-                  fontWeight={700}
-                >
-                  No Notes added this week
-                </Typography>
-              </Box>
-            </Paper>
-            <Paper
-              className="w-96 p-1 flex gap-2 m-1 border-1 border-gray-200"
-              elevation={0}
-            >
-              <Box
-                className="bg-lime-500 rounded-full w-10 h-10 inline-flex justify-center"
-                sx={{ bgcolor: "#od99ff" }}
-              >
-                <Today className="text-gray-50 my-auto " />
-              </Box>
-              <Box>
-                <Typography
-                  className="text-gray-600 inline align-top"
-                  fontSize={"1rem"}
-                  fontWeight={600}
-                >
-                  This Month
-                </Typography>
-                <Typography
-                  className="text-gray-500  align-top"
-                  fontSize={".8rem"}
-                  fontWeight={700}
-                >
-                  No Notes added this month
-                </Typography>
-              </Box>
-            </Paper>
           </Stack>
         </Box>
         <Box component={"section"} className="w-full p-2 mt-8">
