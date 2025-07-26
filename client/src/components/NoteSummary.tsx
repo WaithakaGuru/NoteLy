@@ -34,7 +34,7 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
       </Typography>
       <Typography variant="body2" className="text-gray-600">
         <Person /> 
-        {noteData.NoteCreator?.firstName} {noteData.NoteCreator?.userName}
+        {noteData.NoteCreator?.lastName} -  {noteData.NoteCreator?.userName}
       </Typography>
       <Typography
         variant="body2"

@@ -1,6 +1,6 @@
 import {type  NoteType } from "./Note.type";
 
-type NoteCountType = {
+export type NoteCountType = {
     today: number,
     week: number,
     month: number
