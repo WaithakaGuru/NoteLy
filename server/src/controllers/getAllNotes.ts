@@ -7,7 +7,7 @@ export default async function getAllNotes(req: Request, res: Response) {
   try {
     const allUserNotes = await client.notes.findMany({
       where: {
-        OR: [{ creator: id }, { isPublic: true }],
+        AND: [{isDeleted: false}, {OR: [{ creator: id }, { isPublic: true }]}]
       }, include: {NoteCreator: true},
       orderBy: { lastUpdated: "desc" }
     });
