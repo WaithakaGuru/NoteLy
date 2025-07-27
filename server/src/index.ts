@@ -30,6 +30,6 @@ app.use("/api/notes", notesRouter);
 app.use("/api/note", noteRouter);
 app.use("/api/user", userRouter);
 
-app.listen(5567, () => {
+app.listen(port, () => {
   console.log(`Server running  on port ${port}`);
 });

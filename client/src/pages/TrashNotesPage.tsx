@@ -127,7 +127,7 @@ function TrashNotesPage() {
           />
         </Stack>
         <Alert severity="warning" sx={{ fontWeight: "bold" }}>
-          Item in trash will be permanently deleted after 30 day. Restore a note
+          Notes in the trash will be permanently deleted after 30 days. Restore a note
           if you need to.
         </Alert>
         <Box component={"section"} className="w-full p-2 mt-4">
