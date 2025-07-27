@@ -4,8 +4,10 @@ import {Stack, Box, Typography, Button, TextField,FormControl, InputLabel, Selec
 import { Dashboard, Delete, Notes } from "@mui/icons-material";
 import ToggleSideBar from "../components/ToggleSideBar";
 import MarkdownGuide from "../components/MarkdownGuide";
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import MarkdownPreview from "../components/MarkdownPreview";
+import { useGetSpecificNote } from "../services/fetchRequests";
+import { useParams } from "react-router-dom";
 
 type ActionType = {
   type: "input",
@@ -30,10 +32,22 @@ const reducerFunc = (state: CreateNoteStateType, action: ActionType): CreateNote
 
 
 function UpdateNote() {
-  const [visibility, setVisibility] = useState<"public" | "private">('public');
+  const {id} = useParams();
+  const {data: info} = useGetSpecificNote(id!);
+  const [data, setData] = useState(info);
+
+  useEffect(()=>{
+    setData(info);
+  }, [info])
+
+  console.log(data);
+  let publicNote = data?.isPublic ? "public" : "private"
+  const [visibility, setVisibility] = useState<"public" | "private" |string>(publicNote);
   const [state, alter] = useReducer(reducerFunc, {
-    title: "", synopsis: "", content: ""
+    title: data?.title, synopsis: data?.synopsis, content: data?.content
   })
+
+
 
   function handleCreateNote(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
@@ -47,14 +61,14 @@ function UpdateNote() {
   return (
   <Box
       component={"main"}
-      className="w-full h-[36rem]  gap-2 flex"
+      className="w-full h-[36rem] py-2 gap-2 flex"
       sx={{ background: "#011611", height: {xs: "max-content"} }}
     >
       <ToggleSideBar/>
       <Stack
         component={"section"}
         className="bg-gray-50 w-full h-[35rem] overflow-auto rounded p-4"
-        sx={{ ml: { sm: "10rem" }, height: {xs: "100dvh"} }}
+        sx={{ ml: { sm: "9rem" }, height: {xs: "100dvh", md: "35rem"} }}
       >
         <Box
           component={"section"}
@@ -65,15 +79,14 @@ function UpdateNote() {
             <Box>
               <Box
                 component={"div"}
-                className="flex items-center justify-around w-full ml-[-2rem]"
+                className="flex items-center justify-around w-full ml-[-3rem]"
               >
                 <Typography
                   fontSize={"1.7rem"}
                   fontWeight={"bold"}
                   className="text-gray-700"
-                  sx={{ml: {xs:"1.5rem"}}}
                 >
-                 Update Your Note Page
+                 Update Your Note 
                 </Typography>
               </Box>
               <Typography
@@ -101,7 +114,7 @@ function UpdateNote() {
                   Dashboard
                 </Button>
                 <Button
-                  href="dashboard/trash"
+                  href="/dashboard/trash"
                   color="warning"
                   startIcon={<Delete className="mr-[-.5rem]" />}
                   variant="outlined"
@@ -186,7 +199,7 @@ function UpdateNote() {
                 </Select>
               </FormControl>
               <Button type="submit" variant="contained" color="secondary"  size="large">
-                Create Note
+                Save changes
               </Button>
             </Stack>
             </Stack>
@@ -200,7 +213,7 @@ function UpdateNote() {
               >
                 Live preview your work
               </Typography>
-             <MarkdownPreview state={state} visibility={visibility}/>
+             <MarkdownPreview state={state} visibility={data?.isPublic}/>
             </Stack>
         </Box>
       </Stack>
