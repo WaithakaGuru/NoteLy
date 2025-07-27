@@ -112,7 +112,7 @@ function TrashNotesPage() {
             <Stack direction={"row"} className="justify-left gap-2 flex-wrap">
                 {data?.length === 0 && <NoTrash/>}
                { data?.map((note: NoteType) => 
-                    <TrashNote {...note} />
+                    <TrashNote {...note} key={note.id}/>
                 )}
             </Stack>
             </Box>

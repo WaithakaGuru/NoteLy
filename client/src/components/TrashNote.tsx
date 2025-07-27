@@ -2,14 +2,13 @@ import { Restore, Person, Topic, } from "@mui/icons-material"
 import {Button, Typography, Chip, Stack } from "@mui/material"
 import type { NoteType } from "../utils/Note.type"
 import getDateString from "../utils/dateFormatter"
-import { useParams } from "react-router-dom"
 import useGeneric from "../services/patchRequests"
 import { isAxiosError } from "axios"
 import { client } from "../main"
 
 function TrashNote(trashNoteData: NoteType ) {
-    const {id} = useParams();
-    const {mutateAsync: restoreTrashNote, isPending} = useGeneric(id!, ["RestoreTrashNote", id!], "/note/restore/");
+    const id = trashNoteData.id
+    const {mutateAsync: restoreTrashNote, isPending} = useGeneric(id, ["RestoreTrashNote", id], "/note/restore/");
     async function handleRestoreTrashNote() {
         try{
             const restored = await restoreTrashNote();
