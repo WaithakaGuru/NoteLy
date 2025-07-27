@@ -34,7 +34,7 @@ function AllUserNotesPage() {
       <ToggleSideBar/>
       <Stack
         component={"section"}
-        className="bg-gray-50 w-full h-[35rem] overflow-auto rounded-xl p-4"
+        className="bg-gray-50 w-full h-[35rem] overflow-auto rounded p-4"
         sx={{ ml: { sm: "9rem" }, height: {xs: "100dvh",  md:"35rem"}}}
       >
         <Box

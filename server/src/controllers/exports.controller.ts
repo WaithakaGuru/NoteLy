@@ -6,6 +6,7 @@ import getUserInfo from "./getUserInfo.ts";
 import getSpecificNote from "./getSpecificNote.controller.ts";
 import deleteNote from "./deleteNote.controller.ts";
 import updateNote from "./updateNote.contoller.ts";
+import pinNote from "./pinNote.controller.ts";
 import getTrashNotes from "./getAllTrashNotes.controller.ts";
 import restoreDeletedNote from "./restoreDeletedNote.controller.ts";
 import registerNewUser from "./registerNewUser.controller.ts";
@@ -23,6 +24,7 @@ export {
   getSpecificNote,
   deleteNote,
   updateNote,
+  pinNote,
   getTrashNotes,
   restoreDeletedNote,
   registerNewUser,
