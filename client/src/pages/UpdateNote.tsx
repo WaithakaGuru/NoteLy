@@ -33,21 +33,22 @@ const reducerFunc = (state: CreateNoteStateType, action: ActionType): CreateNote
 
 function UpdateNote() {
   const {id} = useParams();
-  const {data: info} = useGetSpecificNote(id!);
-  const [data, setData] = useState(info);
-
-  useEffect(()=>{
-    setData(info);
-  }, [info])
-
+  const {data} = useGetSpecificNote(id!);
+  const [note, setNote] = useState(data!);
   console.log(data);
+  console.log(note);
+  useEffect(()=>{
+    if(data) setNote(data);
+  }, [data])
+
   let publicNote = data?.isPublic ? "public" : "private"
   const [visibility, setVisibility] = useState<"public" | "private" |string>(publicNote);
   const [state, alter] = useReducer(reducerFunc, {
-    title: data?.title, synopsis: data?.synopsis, content: data?.content
+    title: note?.title, synopsis: note?.synopsis, content: note?.content
   })
-
-
+  
+  console.log("data", data);
+  console.log("note", note);
 
   function handleCreateNote(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();

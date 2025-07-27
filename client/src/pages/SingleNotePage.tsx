@@ -69,7 +69,7 @@ function SingleNotePage() {
                   className="w-38 text-gray-50 text-nowrap"
                   title="Write a new note"
                 >
-                  My notes
+                  My notes 
                 </Button>    
                  <Stack component={"div"} direction={"row"} gap={1}>
                     <Button
@@ -81,7 +81,7 @@ function SingleNotePage() {
                         textTransform: "none",
                         fontWeight: "bold",
                         fontSize: "1.1rem",
-                        display: data?.creator === id ? "flex" : "none"
+                        display: data?.creator === localStorage.getItem("userId") ? "flex" : "none"
                       }}
                       className="w-40 text-gray-50 text-nowrap"
                       title="Delete this note"
@@ -99,7 +99,7 @@ function SingleNotePage() {
                         textTransform: "none",
                         fontWeight: "bold",
                         fontSize: "1.1rem",
-                        display: data?.creator === id ? "flex" : "none"
+                        display: data?.creator === localStorage.getItem("userId") ? "flex" : "none"
                       }}
                       className="w-28 text-gray-50 text-nowrap"
                     >
