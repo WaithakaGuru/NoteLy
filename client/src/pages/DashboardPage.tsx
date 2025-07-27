@@ -23,6 +23,7 @@ import liveSearch from "../utils/liveSearch.";
 function DashboardPage() {
   const {data: info} = useGetAllNotes();
   const [data, setData] = useState(info);
+  const [noteTitle, setNoteTitle] = useState("Recent Notes")
   let summaryInfo = info && getNotesPerDuration(info);
 
   useEffect(()=>{
@@ -30,7 +31,9 @@ function DashboardPage() {
   }, [info])
 
   function handleLiveNoteSearch(e: React.ChangeEvent<HTMLInputElement>) {
-    const liveData = liveSearch(info, e.target.value);
+    const val = e.target.value;
+    val.trim()? setNoteTitle("Recent Notes") : setNoteTitle("Search Results");
+    const liveData = liveSearch(info, val);
     setData(liveData);
   }
 
@@ -135,7 +138,7 @@ function DashboardPage() {
             fontWeight={"bold"}
             fontSize={"2rem"}
           >
-            Recent Notes ({data?.length})
+            {noteTitle} ({data?.length})
           </Typography>
           <Stack direction={"row"} className="justify-left gap-2 flex-wrap">
             {data?.length === 0 &&

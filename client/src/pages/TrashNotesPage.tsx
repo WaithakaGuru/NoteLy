@@ -10,6 +10,7 @@ import type { NoteType } from '../utils/Note.type'
 
 function TrashNotesPage() {
     const {data: trash} = useGetTrashNotes();
+    const [noteTitle, setNoteTitle] = useState("Recently deleted Notes")
     const [data, setData] = useState(trash);
 
     useEffect(()=> {
@@ -17,6 +18,8 @@ function TrashNotesPage() {
     }, [trash])
 
     function handleLiveSearch(e: React.ChangeEvent<HTMLInputElement>){
+        const val = e.target.value;
+        val.trim()? setNoteTitle("Search Results") : setNoteTitle("Recently deleted Notes");
         const trashSearchResults = liveSearch(trash, e.target.value);
         setData(trashSearchResults);
     }
@@ -96,8 +99,8 @@ function TrashNotesPage() {
                     sx={{ my: 1, borderRadius: "1rem" }}
                 />
             </Stack>
-            <Alert severity='warning' >
-                Item in trash will be permanently deleted after 30 day. Restore a note if youneed to.
+            <Alert severity='warning' sx={{fontWeight: "bold"}} >
+                Item in trash will be permanently deleted after 30 day. Restore a note if you need to.
             </Alert>
             <Box component={"section"} className="w-full p-2 mt-4">
             <Typography
@@ -107,7 +110,7 @@ function TrashNotesPage() {
                 fontWeight={"bold"}
                 fontSize={"2rem"}
             >
-                Recently deleted Notes ({data?.length})
+                {noteTitle} ({data?.length})
             </Typography>
             <Stack direction={"row"} className="justify-left gap-2 flex-wrap">
                 {data?.length === 0 && <NoTrash/>}

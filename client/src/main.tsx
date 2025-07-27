@@ -8,7 +8,11 @@ import theme from "./themes/theme.ts";
 
 export const client = new QueryClient();
 
-createRoot(document.getElementById("root")!).render(
+let root = createRoot(document.getElementById("root")!);
+// console.log(rootElement.childNodes);
+// if(!rootElement.hasChildNodes()){
+//   const root = createRoot(rootElement);
+root.render(
   <StrictMode>
     <QueryClientProvider client={client}>
       <ThemeProvider theme={theme}>
@@ -18,3 +22,4 @@ createRoot(document.getElementById("root")!).render(
     </QueryClientProvider>
   </StrictMode>,
 );
+

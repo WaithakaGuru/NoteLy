@@ -13,6 +13,7 @@ import getNotesPerDuration from "../utils/notesPerDuration";
 function AllUserNotesPage() {
   const {data: info} = useGetAllUserNotes();
   const [data, setData] = useState(info);
+  const [noteTitle, setNoteTitle] = useState("Your Recent Notes");
     
   useEffect(()=> {
     if(info) setData(info);
@@ -21,7 +22,9 @@ function AllUserNotesPage() {
   const infoSummary = info && getNotesPerDuration(info);
 
   function handleLiveSearch(e: React.ChangeEvent<HTMLInputElement>){
-    const searchResult = liveSearch(info!, e.target.value);
+    const val = e.target.value
+    val.trim()? setNoteTitle("Your Recent Notes") : setNoteTitle("Search Results");
+    const searchResult = liveSearch(info!, val);
     setData(searchResult);
   }
 
@@ -140,7 +143,7 @@ function AllUserNotesPage() {
             fontWeight={"bold"}
             fontSize={"2rem"}
           >
-           Your Recent Notes ({data?.length})
+           {noteTitle} ({data?.length})
           </Typography>
           <Stack direction={"row"} className="justify-left gap-2 flex-wrap">
            {data?.map((note: NoteType) => 
