@@ -1,21 +1,38 @@
-import { Stack, Box, Button, TextField, Typography, Alert } from '@mui/material'
+import { Stack, Box, Button, TextField, Typography, Alert, IconButton } from '@mui/material'
 import ToggleSideBar from '../components/ToggleSideBar'
 import TrashNote from '../components/TrashNote'
-import { Dashboard, Notes } from '@mui/icons-material'
+import { Dashboard, Notes, West } from '@mui/icons-material'
 import { useGetTrashNotes } from '../services/fetchRequests'
 import NoTrash from '../components/NoTrash'
 import { useEffect, useState } from 'react'
 import liveSearch from '../utils/liveSearch.'
 import type { NoteType } from '../utils/Note.type'
+import { filterPinned, filterPublic } from '../utils/filterNote'
 
 function TrashNotesPage() {
     const {data: trash} = useGetTrashNotes();
     const [noteTitle, setNoteTitle] = useState("Recently deleted Notes")
+    const [goBackHidden, setGoBackHidden] = useState(true);
+    const [showAllNotes, setShowAllNotes] = useState(false);
     const [data, setData] = useState(trash);
 
     useEffect(()=> {
         if(trash) setData(trash);
-    }, [trash])
+    }, [trash, showAllNotes])
+
+    function handleShowAllNotes() {
+        setGoBackHidden(true);
+        setShowAllNotes(true);
+    }
+    
+    function handleFilterPublicNotes(){
+        setData(filterPublic(data));
+        setGoBackHidden(false);
+    }
+    function handleFilterPinnedNotes(){
+        setData(filterPinned(data));
+        setGoBackHidden(false);
+    }
 
     function handleLiveSearch(e: React.ChangeEvent<HTMLInputElement>){
         const val = e.target.value;
@@ -110,7 +127,7 @@ function TrashNotesPage() {
                 fontWeight={"bold"}
                 fontSize={"2rem"}
             >
-                {noteTitle} ({data?.length})
+              <IconButton color='warning' title='See All Notes' hidden={goBackHidden} onClick={handleShowAllNotes}> <West/></IconButton> {noteTitle} ({data?.length})
             </Typography>
             <Stack direction={"row"} className="justify-left gap-2 flex-wrap">
                 {data?.length === 0 && <NoTrash/>}

@@ -1,14 +1,14 @@
 import {
   Delete,
   NoteAdd,
-  Notes,
+  Notes, West
 } from "@mui/icons-material";
 import {
   Box,
   Button,
   Stack,
   TextField,
-  Typography,
+  Typography, IconButton
 } from "@mui/material";
 import ToggleSideBar from "../components/ToggleSideBar";
 import NoNote from "../components/NoNote";
@@ -19,17 +19,34 @@ import NotesCreationSummary from "../components/NotesCreationSummary";
 import getNotesPerDuration from "../utils/notesPerDuration";
 import React, { useEffect, useState } from "react";
 import liveSearch from "../utils/liveSearch.";
+import { filterPinned, filterPublic } from "../utils/filterNote";
 
 function DashboardPage() {
   const {data: info} = useGetAllNotes();
   const [data, setData] = useState(info);
+  const [goBackHidden, setGoBackHidden] = useState(true);
+  const [showAllNotes, setShowAllNotes] = useState(false);
   const [noteTitle, setNoteTitle] = useState("Recent Notes")
   let summaryInfo = info && getNotesPerDuration(info);
 
   useEffect(()=>{
     setData(info)
-  }, [info])
+  }, [info, showAllNotes])
 
+  function handleShowAllNotes() {
+    setGoBackHidden(true);
+    setShowAllNotes(true);
+  }
+
+  function handleFilterPublicNotes(){
+    setData(filterPublic(info));
+    setGoBackHidden(false);
+  }
+  function handleFilterPinnedNotes(){
+    setData(filterPinned(info));
+    setGoBackHidden(false);
+  }
+  
   function handleLiveNoteSearch(e: React.ChangeEvent<HTMLInputElement>) {
     const val = e.target.value;
     val.trim()? setNoteTitle("Recent Notes") : setNoteTitle("Search Results");
@@ -138,7 +155,7 @@ function DashboardPage() {
             fontWeight={"bold"}
             fontSize={"2rem"}
           >
-            {noteTitle} ({data?.length})
+            <IconButton color='warning' title='See All Notes' hidden={goBackHidden} onClick={handleShowAllNotes}> <West/></IconButton> {noteTitle} ({data?.length})
           </Typography>
           <Stack direction={"row"} className="justify-left gap-2 flex-wrap">
             {data?.length === 0 &&

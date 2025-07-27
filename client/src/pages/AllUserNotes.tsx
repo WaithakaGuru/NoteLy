@@ -1,5 +1,5 @@
-import { Box, Stack, Typography, Button, TextField} from "@mui/material";
-import {NoteAdd, Delete, Dashboard } from "@mui/icons-material";
+import { Box, Stack, Typography, Button, TextField, IconButton} from "@mui/material";
+import {NoteAdd, Delete, Dashboard, West } from "@mui/icons-material";
 import ToggleSideBar from "../components/ToggleSideBar";
 import NoNote from "../components/NoNote";
 import { useGetAllUserNotes } from "../services/fetchRequests";
@@ -9,17 +9,35 @@ import type { NoteType } from "../utils/Note.type";
 import NoteSummary from "../components/NoteSummary";
 import NotesCreationSummary from "../components/NotesCreationSummary";
 import getNotesPerDuration from "../utils/notesPerDuration";
+import { filterPinned, filterPublic } from "../utils/filterNote";
 
 function AllUserNotesPage() {
   const {data: info} = useGetAllUserNotes();
   const [data, setData] = useState(info);
+  const [goBackHidden, setGoBackHidden] = useState(true);
+  const [showAllNotes, setShowAllNotes] = useState(false);
   const [noteTitle, setNoteTitle] = useState("Your Recent Notes");
     
   useEffect(()=> {
     if(info) setData(info);
-  }, [info])
+  }, [info, showAllNotes])
+  
+  function handleShowAllNotes() {
+    setGoBackHidden(true);
+    setShowAllNotes(true);
+  }
+
+  function handleFilterPublicNotes(){
+    setData(filterPublic(info));
+    setGoBackHidden(false);
+  }
+  function handleFilterPinnedNotes(){
+    setData(filterPinned(info));
+    setGoBackHidden(false);
+  }
 
   const infoSummary = info && getNotesPerDuration(info);
+
 
   function handleLiveSearch(e: React.ChangeEvent<HTMLInputElement>){
     const val = e.target.value
@@ -143,7 +161,7 @@ function AllUserNotesPage() {
             fontWeight={"bold"}
             fontSize={"2rem"}
           >
-           {noteTitle} ({data?.length})
+            <IconButton color='warning' title='See All Notes' hidden={goBackHidden} onClick={handleShowAllNotes}> <West/></IconButton>  {noteTitle} ({data?.length})
           </Typography>
           <Stack direction={"row"} className="justify-left gap-2 flex-wrap">
            {data?.map((note: NoteType) => 
