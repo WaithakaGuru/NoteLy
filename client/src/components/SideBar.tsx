@@ -38,7 +38,8 @@ function SideBar() {
         >
           {user?.emailAddress}
         </Typography>
-        {(path !== "/dashboard/create" && path !== "/dashboard/update" && path !== "/dashboard/profile" && !(path.includes("/dashboard/note/")))?  (
+        {(path !== "/dashboard/create" && !path.includes("/dashboard/update") &&
+         path !== "/dashboard/profile" && !(path.includes("/dashboard/note/")))?  (
         <>
         <Button href={"/dashboard"} className="p-0" sx={{my:".5rem"}} variant="outlined">
         <Typography

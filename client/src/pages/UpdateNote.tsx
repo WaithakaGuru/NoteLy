@@ -10,7 +10,7 @@ import { useGetSpecificNote } from "../services/fetchRequests";
 import { useParams } from "react-router-dom";
 
 type ActionType = {
-  type: "input",
+  type: string,
   vals: {
     value: string,
     component: string
@@ -24,34 +24,41 @@ type CreateNoteStateType = {
 }
 
 const reducerFunc = (state: CreateNoteStateType, action: ActionType): CreateNoteStateType  => {
-  if(action.type === "input") {
+  switch(action.type){
+    case "input" :
     return {...state, [action.vals.component] : action.vals.value}
+
+    default:
+    return state
   }
-  return state
 }
 
 
 function UpdateNote() {
   const {id} = useParams();
   const {data} = useGetSpecificNote(id!);
-  const [note, setNote] = useState(data!);
-  console.log(data);
-  console.log(note);
-  useEffect(()=>{
-    if(data) setNote(data);
-  }, [data])
-
-  let publicNote = data?.isPublic ? "public" : "private"
-  const [visibility, setVisibility] = useState<"public" | "private" |string>(publicNote);
   const [state, alter] = useReducer(reducerFunc, {
-    title: note?.title, synopsis: note?.synopsis, content: note?.content
+    title:"", synopsis: "", content: ""
   })
-  
-  console.log("data", data);
-  console.log("note", note);
 
-  function handleCreateNote(e: React.FormEvent<HTMLFormElement>){
+  useEffect(() => {
+    if (data) {
+      alter({ type: "input", vals: {component:  "title", value: data.title}});
+      alter({ type: "input", vals: {component: "synopsis", value:  data.synopsis}});
+      alter({ type: "input", vals: {component: "content", value: data.content}})
+    }
+    }, [data])
+
+  const publicNote = data?.isPublic ? "public" : "private"
+  const [visibility, setVisibility] = useState<"public" | "private" |string>(publicNote);
+
+  function handleUpdateNote(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
+    try{
+
+    }catch(err){
+
+    }
   }
 
 
@@ -162,7 +169,7 @@ function UpdateNote() {
             >
               Update this Note (use Markdown)
             </Typography>
-            <Stack component={"form"} onSubmit={handleCreateNote} 
+            <Stack component={"form"} onSubmit={handleUpdateNote} 
             className="bg-white border border-gray-300 p-4 m-1 gap-2 rounded shadow-md" >
               <TextField required sx={{my: ".4rem"}} label="Enter a title for your notes"  
                 value={state.title}
