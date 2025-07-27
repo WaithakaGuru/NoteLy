@@ -8,7 +8,8 @@ export default async function getAllUserNotes(req: Request, res: Response) {
     const allUserNotes = await client.notes.findMany({
       where: {
         AND: [{creator: id }, {isDeleted: false}]
-      }
+      }, include:{NoteCreator: {omit: {avatarUrl: true, password: true}}},
+      orderBy:{lastUpdated:"desc"}
     });
     if (allUserNotes) res.status(200).json(allUserNotes);
   } catch (err) {

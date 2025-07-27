@@ -24,7 +24,7 @@ const useGetAllUserNotes = () => {
             const allUserNotes = await ax.get("/notes", {
                 headers: {Authorization: `Author ${token}`}
             })
-            return allUserNotes
+            return allUserNotes.data
         },
         retry: 1
     })

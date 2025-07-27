@@ -10,7 +10,7 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
     <Stack sx={{width: {xs: "30rem", sm:"23.8rem"}}}
       className="w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center bg-white">
       <Typography
-        variant="h5"
+        variant="h6"
         className="text-gray-700 flex justify-between"
         fontWeight={600}
       >
@@ -18,7 +18,7 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
         <Chip
           component={"div"}
           label={noteData.isPublic? "Public" : "Private"}
-          sx={{ bgcolor: noteData.isPublic? "limegreen": "slategrey", color: "#f9f9f9" }}
+          sx={{ bgcolor: noteData.isPublic? "limegreen": "slategrey", color: "#f9f9f9", mx: "2px" }}
         />
       </Typography>
       <Typography
@@ -67,6 +67,7 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
           sx={{ textTransform: "none" }}
           startIcon={<Visibility />}
           title="See full blog"
+          className="w-28"
           href={`/dashboard/note/${noteData.id}`}
         >
           View
