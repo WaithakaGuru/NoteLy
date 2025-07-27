@@ -14,7 +14,7 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
     try{
       const deletedNote = await deletNote();
       if(deletedNote) {
-        client.invalidateQueries({queryKey: ["DeleteNote", noteData.id]})
+        client.invalidateQueries({queryKey: ['GetAllNotes']})
       }
     }catch(err){
       if(isAxiosError(err)) console.log(err.response?.data.message);

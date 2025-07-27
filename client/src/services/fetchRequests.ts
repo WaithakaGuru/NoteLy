@@ -5,7 +5,7 @@ import ax from "../utils/axInstance";
 const useGetAllNotes = () => {
     const {token} = useNote();
     return useQuery({
-        queryKey: ["GetAllBlogs"],
+        queryKey: ["GetAllNotes"],
         queryFn: async () => {
             const allNotes = await ax.get("/notes/all",{
                 headers: {Authorization: `Author ${token}`}
