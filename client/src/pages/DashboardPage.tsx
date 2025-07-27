@@ -55,7 +55,7 @@ function DashboardPage() {
   
   function handleLiveNoteSearch(e: React.ChangeEvent<HTMLInputElement>) {
     const val = e.target.value;
-    val.trim()? setNoteTitle("Recent Notes") : setNoteTitle("Search Results");
+    val.trim()? setNoteTitle("Search Results") : setNoteTitle("Recent Notes");
     const liveData = liveSearch(info, val);
     setData(liveData);
   }

@@ -12,6 +12,7 @@ type T = TextFieldProps & { v?: string };
 function PasswordInput({
   onChange,
   value,
+  variant = "outlined",
   v = "#333",
   label = "Password",
 }: T) {
@@ -21,7 +22,7 @@ function PasswordInput({
     <TextField
       type={showPassword ? "text" : "password"}
       label={label}
-      variant="outlined"
+      variant={variant}
       required
       placeholder="****"
       fullWidth
@@ -51,7 +52,7 @@ function PasswordInput({
           <InputAdornment position="end">
             <IconButton
               onClick={() => setShowPassword(!showPassword)}
-              color="info"
+              color="warning"
             >
               {showPassword ? <VisibilityOff /> : <Visibility />}
             </IconButton>

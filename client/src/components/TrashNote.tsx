@@ -11,7 +11,7 @@ function TrashNote(trashNoteData: NoteType ) {
     const {mutateAsync: restoreTrashNote, isPending} = useGeneric(id, "RestoreTrashNote", "/note/restore/");
     async function handleRestoreTrashNote() {
         try{
-            const restored = await restoreTrashNote();
+            const restored = await restoreTrashNote({});
             if(restored){
                 client.invalidateQueries({queryKey: ["GetTrashNotes"]});
             }

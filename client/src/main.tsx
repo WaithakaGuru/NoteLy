@@ -9,9 +9,6 @@ import theme from "./themes/theme.ts";
 export const client = new QueryClient();
 
 let root = createRoot(document.getElementById("root")!);
-// console.log(rootElement.childNodes);
-// if(!rootElement.hasChildNodes()){
-//   const root = createRoot(rootElement);
 root.render(
   <StrictMode>
     <QueryClientProvider client={client}>

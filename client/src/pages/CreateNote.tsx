@@ -233,7 +233,7 @@ function CreateNote() {
             >
               Live preview your work
             </Typography>
-            <MarkdownPreview state={state} visibility={visibility}/>
+            <MarkdownPreview state={state} visibility={isPublic}/>
           </Stack>
         </Box>
       </Stack>
