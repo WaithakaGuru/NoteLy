@@ -22,8 +22,8 @@ import liveSearch from "../utils/liveSearch.";
 
 function DashboardPage() {
   const {data: info} = useGetAllNotes();
-  const summaryInfo = getNotesPerDuration(info);
   const [data, setData] = useState(info);
+  let summaryInfo; info && getNotesPerDuration(info);
 
   useEffect(()=>{
     setData(info)

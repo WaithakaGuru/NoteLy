@@ -2,14 +2,19 @@ import { Notes, PushPin} from "@mui/icons-material";
 import {Button, Box, Stack, Typography, IconButton} from "@mui/material"
 import ToggleSideBar from "../components/ToggleSideBar";
 import MarkdownPreview from "../components/MarkdownPreview";
-
-const MockNote = {
-  title: "This ia a mock Note",
-  synopsis: "This is a mock Note Synopsis",
-  content: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci, quos amet minima fuga ducimus quae reiciendis laboriosam velit veritatis ut."
-}
+import { useGetSpecificNote } from "../services/fetchRequests";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function SingleNotePage() {
+  const {id} = useParams();
+  const {data} = useGetSpecificNote(id!);
+  const [fullNote, setFullNote] = useState(data!)
+    
+  useEffect(()=>{
+    if(data) setFullNote(data) 
+  },[data] )
+
   return (
     <Box
       component={"main"}
@@ -51,7 +56,7 @@ function SingleNotePage() {
               </Typography>
               <Stack direction={"row"} gap={1}>
                 <Button
-                  href="dashboard/note"
+                  href="/dashboard/note"
                   color="secondary"
                   variant="contained"
                   startIcon={<Notes/>}
@@ -80,7 +85,7 @@ function SingleNotePage() {
           >
             Detailed note <Box fontSize={"1rem"}> Pin this note <IconButton><PushPin/></IconButton></Box>
           </Typography>
-          <MarkdownPreview state={MockNote} visibility="public"/>
+          <MarkdownPreview state={fullNote} visibility={data?.isPublic}/>
         </Box>
       </Stack>
     </Box>

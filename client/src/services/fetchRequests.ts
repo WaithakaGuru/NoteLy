@@ -49,10 +49,10 @@ const useGetSpecificNote = (id: string) => {
     return useQuery({
         queryKey: ["GetSpecificNote", id],
         queryFn: async () => {
-            const specificNote = await ax.get(`/note/:${id}`, {
+            const specificNote = await ax.get(`/note/${id}`, {
                 headers: {Authorization: `Author ${token}`}
             })
-            return specificNote
+            return specificNote.data
         },
         retry: 1
     })

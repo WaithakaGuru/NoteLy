@@ -7,7 +7,7 @@ const useDeleteNote = (id: string)=> {
     return useMutation({
         mutationKey: ["DeleteNote", id],
         mutationFn: async () => {
-            const deletedNote = ax.delete(`/note/:${id}`, {
+            const deletedNote = ax.delete(`/note/${id}`, {
                 headers: {Authorization: `Author ${token}`}
             })
             return deletedNote

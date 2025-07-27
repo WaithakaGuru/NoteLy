@@ -7,7 +7,7 @@ type MarkdownContent = {
         synopsis: string,
         content: string
     },
-    visibility: string
+    visibility: boolean
 }
 
 function MarkdownPreview(info: MarkdownContent) {
@@ -20,8 +20,8 @@ function MarkdownPreview(info: MarkdownContent) {
                 Visibility:  
             </Typography>
              { <Chip
-                label={info.visibility==="public"? "Public" : "Private"}
-                sx={{ bgcolor: info.visibility==="public" ? "limegreen": "slategrey", color: "#f9f9f9" }}
+                label={info.visibility? "Public" : "Private"}
+                sx={{ bgcolor: info.visibility ? "limegreen": "slategrey", color: "#f9f9f9" }}
                 />}
         </Box>
         <Divider flexItem/>
@@ -30,7 +30,7 @@ function MarkdownPreview(info: MarkdownContent) {
             Title:
         </Typography>
         <Markdown>
-            {info.state.title || "No title written yet!!"}
+            {info?.state?.title || "No title written yet!!"}
         </Markdown>
 
         <Divider flexItem/>
@@ -39,7 +39,7 @@ function MarkdownPreview(info: MarkdownContent) {
             Synopsis:
         </Typography>
         <Markdown>
-            {info.state.synopsis || "No synopsis writen yet!!"}
+            {info?.state?.synopsis || "No synopsis writen yet!!"}
         </Markdown>
 
         <Divider flexItem/>
@@ -48,7 +48,7 @@ function MarkdownPreview(info: MarkdownContent) {
             Content:
         </Typography>
         <Markdown>
-            {info.state.content || "No content written yet !!"}
+            {info?.state?.content || "No content written yet !!"}
         </Markdown>
     </Box>
   )
