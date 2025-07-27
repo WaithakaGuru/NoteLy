@@ -146,7 +146,7 @@ function AllUserNotesPage() {
            {data?.map((note: NoteType) => 
               <NoteSummary key={note.id}  currentUserId={localStorage.getItem("userId")!} noteData={note}/>
             )} 
-          {!data && <NoNote/>}
+          {data?.length === 0 && <NoNote/>}
           </Stack>
         </Box>
       </Stack>

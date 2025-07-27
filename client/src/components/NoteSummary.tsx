@@ -51,7 +51,7 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
       </Typography>
       <Stack
         direction={"row"}
-        className="gap-4 border-t border-gray-300 p-2 pt-8 items-center"
+        className="gap-2 border-t border-gray-300 p-2 pt-8 items-center"
       >
         <Typography
           variant="body2"
@@ -84,7 +84,7 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
           Edit
         </Button>
         <button
-          className="text-red-700 bg-red-200 p-1 rounded text-nowrap cursor-pointer"
+          className="text-red-700 bg-red-200 p-[.4rem] rounded text-nowrap cursor-pointer"
           title="Delete this note"
           disabled={false}
           style={{display:  

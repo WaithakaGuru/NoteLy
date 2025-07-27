@@ -6,6 +6,7 @@ export type NoteType = {
     isPinned: boolean, 
     dateCreated: string,
     creator: string,
+    lastUpdated: string,
     NoteCreator: {
         id: string
         firstName: string

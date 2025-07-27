@@ -1,6 +1,8 @@
 import { Restore, Person, Topic, } from "@mui/icons-material"
 import {Button, Typography, Chip, Stack } from "@mui/material"
-function TrashNote() {
+import type { NoteType } from "../utils/Note.type"
+import getDateString from "../utils/dateFormatter"
+function TrashNote(trashNoteData: NoteType ) {
   return (
      <Stack  sx={{width: {xs: "30rem", sm: "23.8rem"}}}
         className="bg-[#f9f9f9] w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center"
@@ -11,7 +13,7 @@ function TrashNote() {
             fontWeight={600}
             sx={{textDecoration: "strike"}}
         >
-        Fisheries in Kenyan facilities{" "}
+          {trashNoteData.title}
         <Chip
             component={"div"}
             label="Public"
@@ -27,7 +29,7 @@ function TrashNote() {
         <Topic /> Business{" "}
         </Typography>
         <Typography variant="body2" className="text-gray-600">
-        <Person /> Waithaka
+        <Person /> {trashNoteData.NoteCreator.lastName} {trashNoteData.NoteCreator.userName}
         </Typography>
         <Typography
         variant="body2"
@@ -40,11 +42,7 @@ function TrashNote() {
         }}
         gutterBottom
         >
-        The farming of fish in Kenya is one of the most undervalued yet
-        profitable business. Lake fishing and pond fish farming are two
-        different approaches with different challenges. Rearing fish in
-        pond is more time demading and has a contraint on resource but
-        it is well paying
+         {trashNoteData.synopsis}
         </Typography>
         <Stack
         direction={"row"}
@@ -56,7 +54,7 @@ function TrashNote() {
             fontWeight={500}
             className="text-gray-600"
         >
-            Posted July 23, 2025
+          Deleted: {getDateString(trashNoteData.lastUpdated)}
         </Typography>
         <Button
             color="secondary"

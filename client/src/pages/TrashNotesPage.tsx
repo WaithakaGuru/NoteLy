@@ -1,9 +1,26 @@
-import { Stack, Box, Button, TextField, Typography } from '@mui/material'
+import { Stack, Box, Button, TextField, Typography, Alert } from '@mui/material'
 import ToggleSideBar from '../components/ToggleSideBar'
 import TrashNote from '../components/TrashNote'
 import { Dashboard, Notes } from '@mui/icons-material'
+import { useGetTrashNotes } from '../services/fetchRequests'
+import NoTrash from '../components/NoTrash'
+import { useEffect, useState } from 'react'
+import liveSearch from '../utils/liveSearch.'
+import type { NoteType } from '../utils/Note.type'
 
 function TrashNotesPage() {
+    const {data: trash} = useGetTrashNotes();
+    const [data, setData] = useState(trash);
+
+    useEffect(()=> {
+        if(trash) setData(trash);
+    }, [trash])
+
+    function handleLiveSearch(e: React.ChangeEvent<HTMLInputElement>){
+        const trashSearchResults = liveSearch(trash, e.target.value);
+        setData(trashSearchResults);
+    }
+
   return (
     <Box
       component={"main"}
@@ -75,9 +92,13 @@ function TrashNotesPage() {
                 <TextField
                     className="min-w-fit w-80"
                     label="Search for notes"
+                    onChange={handleLiveSearch}
                     sx={{ my: 1, borderRadius: "1rem" }}
                 />
             </Stack>
+            <Alert severity='warning' >
+                Item in trash will be permanently deleted after 30 day. Restore a note if youneed to.
+            </Alert>
             <Box component={"section"} className="w-full p-2 mt-4">
             <Typography
                 variant="h6"
@@ -86,13 +107,13 @@ function TrashNotesPage() {
                 fontWeight={"bold"}
                 fontSize={"2rem"}
             >
-                Recently deleted Notes
+                Recently deleted Notes ({data?.length})
             </Typography>
             <Stack direction={"row"} className="justify-left gap-2 flex-wrap">
-                <TrashNote/>
-                <TrashNote/>
-                <TrashNote/>
-                <TrashNote/>
+                {data?.length === 0 && <NoTrash/>}
+               { data?.map((note: NoteType) => 
+                    <TrashNote {...note} />
+                )}
             </Stack>
             </Box>
         </Stack>

@@ -14,7 +14,7 @@ function NoNote() {
         <Button
             variant="contained"
             color="secondary"
-            title="Add a new title"
+            title="Add a new note"
             href="/dashboard/create"
         >
             Create a new note

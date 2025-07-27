@@ -7,7 +7,7 @@ export default async function getTrashNotes(req: Request, res: Response) {
   try {
     const trashNotes = await client.notes.findMany({
       where: {
-        AND: [{ creator: id }, { isDeleted: false }],
+        AND: [{ creator: id }, { isDeleted: true }],
       },
     });
     if (trashNotes) res.status(200).json(trashNotes);

@@ -38,7 +38,7 @@ const useGetTrashNotes = () => {
             const trashNotes = ax.get("/notes/trash", {
                 headers: {Authorization: `Author ${token}`}
             })
-            return trashNotes
+            return (await trashNotes).data
         },
         retry: 1
     })

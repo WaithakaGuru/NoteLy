@@ -138,7 +138,7 @@ function DashboardPage() {
             Recent Notes ({data?.length})
           </Typography>
           <Stack direction={"row"} className="justify-left gap-2 flex-wrap">
-            {!data &&
+            {data?.length === 0 &&
               <NoNote/>
             }         
             {(
