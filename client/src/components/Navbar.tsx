@@ -54,7 +54,7 @@ function Navbar() {
   return (
     <Stack
       component={"nav"}
-      className="bg-gray-50 border-0 border-b-gray-400 p-2 h-10 sticky
+      className="bg-gray-50 border-0 border-b-gray-400 p-2 h-12 sticky
          top-0 shadow min-w-[100%]"
       direction={"row"}
       justifyContent={"space-between"}

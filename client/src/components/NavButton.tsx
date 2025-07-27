@@ -38,7 +38,7 @@ function NavButton({
         },
       }}
     >
-      {def}
+     <Box sx={{display:{xs: "flex", sm: "none"}}}> {def}</Box>
       <Box sx={{ display: { xs: "none", sm: "flex" } }}>{label}</Box>
     </Button>
   );
