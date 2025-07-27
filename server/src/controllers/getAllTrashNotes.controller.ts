@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import client from "../utils/prismaClient.ts";
 import handleErrors from "../utils/handleErrors.ts";
+import filterOldTrashNotes from "../utils/filterOldTrash.ts";
 
 export default async function getTrashNotes(req: Request, res: Response) {
   const { id } = res.locals.validUserData;
@@ -11,7 +12,11 @@ export default async function getTrashNotes(req: Request, res: Response) {
       },
       include: { NoteCreator: { omit: { password: true, avatarUrl: true } } },
     });
-    if (trashNotes) res.status(200).json(trashNotes);
+    if (trashNotes){
+      const validTrashNotes = filterOldTrashNotes(trashNotes)
+      res.status(200).json(validTrashNotes);
+    }
+
   } catch (err) {
     handleErrors(err, "Failed to fetch Trash Notes", req, res);
   }
