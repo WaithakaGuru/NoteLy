@@ -5,15 +5,33 @@ import MarkdownPreview from "../components/MarkdownPreview";
 import { useGetSpecificNote } from "../services/fetchRequests";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { client } from "../main";
+import { isAxiosError } from "axios";
+import { useGeneric } from "../services/patchRequests";
 
 function SingleNotePage() {
   const {id} = useParams();
   const {data} = useGetSpecificNote(id!);
+  console.log(data);
   const [fullNote, setFullNote] = useState(data!)
+  const {mutateAsync: pinNote} = useGeneric(data?.id, "PinNote", "/note/pin/")
     
   useEffect(()=>{
     if(data) setFullNote(data) 
   },[data] )
+
+ async function handlePinNote () {
+    try{
+      const pinnedNote = await pinNote({isPinned: data?.isPinned});
+      if(pinnedNote) {
+        client.invalidateQueries({queryKey: ['GetAllNotes']});
+        client.invalidateQueries({queryKey: ['GetAllUserNotes']});
+      }
+    }catch (err)  {
+      if(isAxiosError(err)) console.log(err.response?.data.message);
+      else console.log(err);
+    }
+}
 
   return (
     <Box
@@ -118,7 +136,7 @@ function SingleNotePage() {
             fontWeight={"bold"}
             fontSize={"2rem"}
           >
-            Detailed note <Box fontSize={"1rem"}> Pin this note <IconButton><PushPin/></IconButton></Box>
+            Detailed note <Box fontSize={"1rem"}> {data?.isPinned? "Unpin this note" : "Pin this note" }<IconButton onClick={handlePinNote}>{data?.isPinned? <PushPin className="text-lime-500"/> : <PushPin/>} </IconButton></Box>
           </Typography>
           <MarkdownPreview state={fullNote} visibility={data?.isPublic}/>
         </Box>

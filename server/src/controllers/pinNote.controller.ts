@@ -3,14 +3,14 @@ import client from "../utils/prismaClient.ts";
 import handleErrors from "../utils/handleErrors.ts";
 
 export default async function pinNote (req: Request, res: Response) {
-    const {id: userId} = res.locals.validUserData;
     const  id = req.params.id;
+    const {isPinned} = req.body;
 
     try{
         const pinnedNote = await client.notes.update({
             where: {
                id: id
-            }, data: {isPinned: true}
+            }, data: {isPinned: !isPinned}
         })
         if(pinnedNote) res.status(201).json(pinnedNote);
     }catch(err) {

@@ -21,7 +21,11 @@ type UpdateProfileInfo = {
     emailAddress: string
 }
 
-type UpdateTypes = UpdateNote | UpdatePassword | UpdateProfileInfo | {};
+type PinNote = {
+    isPinned: boolean
+}
+
+type UpdateTypes = UpdateNote | UpdatePassword | UpdateProfileInfo | PinNote | {};
 
 const useGeneric = (id: string, mutationKey: string, path: string) => {
     const {token} = useNote();

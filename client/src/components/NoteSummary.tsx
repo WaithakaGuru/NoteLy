@@ -5,18 +5,34 @@ import type { NoteType } from "../utils/Note.type";
 import useDeleteNote from "../services/deleteRequests";
 import { isAxiosError } from "axios";
 import { client } from "../main";
+import { useGeneric } from "../services/patchRequests";
 
 type FullNoteType = {noteData:NoteType , currentUserId: string};
 
 function NoteSummary({noteData, currentUserId}: FullNoteType ) {
-  const {mutateAsync: deletNote, isPending} = useDeleteNote(noteData.id)
+  const {mutateAsync: deletNote, isPending} = useDeleteNote(noteData.id);
+  const {mutateAsync: pinNote} = useGeneric(noteData.id, "PinNote", "/note/pin/")
   async function handleDeleteNote() {
     try{
       const deletedNote = await deletNote();
       if(deletedNote) {
-        client.invalidateQueries({queryKey: ['GetAllNotes']})
+        client.invalidateQueries({queryKey: ['GetAllNotes']});
+        client.invalidateQueries({queryKey: ['GetAllUserNotes']});
       }
     }catch(err){
+      if(isAxiosError(err)) console.log(err.response?.data.message);
+      else console.log(err);
+    }
+  }
+
+  async function handlePinNote () {
+    try{
+      const pinnedNote = await pinNote({isPinned: noteData.isPinned});
+      if(pinnedNote) {
+        client.invalidateQueries({queryKey: ['GetAllNotes']});
+        client.invalidateQueries({queryKey: ['GetAllUserNotes']});
+      }
+    }catch (err)  {
       if(isAxiosError(err)) console.log(err.response?.data.message);
       else console.log(err);
     }
@@ -44,9 +60,10 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
         align="left"
       >
         <Topic /> Study notes{" "}
-        <IconButton title="Pin this note" sx={{ ml: 20 }}>
-          <PushPin className="text-gray-500" />
-        </IconButton>
+        <IconButton title="Pin this note" sx={{ ml: 20 }} onClick={handlePinNote}>
+          {noteData.isPinned? 
+          <PushPin className="text-lime-500" /> :   <PushPin className="text-gray-500" /> }
+        </IconButton> 
       </Typography>
       <Typography variant="body2" className="text-gray-600">
         <Person /> 
