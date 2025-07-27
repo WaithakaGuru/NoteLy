@@ -2,8 +2,31 @@ import { Restore, Person, Topic, } from "@mui/icons-material"
 import {Button, Typography, Chip, Stack } from "@mui/material"
 import type { NoteType } from "../utils/Note.type"
 import getDateString from "../utils/dateFormatter"
+import { useParams } from "react-router-dom"
+import useGeneric from "../services/patchRequests"
+import { isAxiosError } from "axios"
+import { client } from "../main"
+
 function TrashNote(trashNoteData: NoteType ) {
-  return (
+    const {id} = useParams();
+    const {mutateAsync: restoreTrashNote, isPending} = useGeneric(id!, ["RestoreTrashNote", id!], "/note/restore/");
+    async function handleRestoreTrashNote() {
+        try{
+            const restored = await restoreTrashNote();
+            if(restored){
+                client.invalidateQueries({queryKey: ["GetTrashNotes"]});
+            }
+        }catch(err){
+            if(isAxiosError(err)) {
+                console.log(err.response?.data.message);
+            }
+            else{
+                console.log(err);
+            }
+        }
+    }
+
+    return (
      <Stack  sx={{width: {xs: "30rem", sm: "23.8rem"}}}
         className="bg-[#f9f9f9] w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center"
     >
@@ -29,7 +52,7 @@ function TrashNote(trashNoteData: NoteType ) {
         <Topic /> Business{" "}
         </Typography>
         <Typography variant="body2" className="text-gray-600">
-        <Person /> {trashNoteData.NoteCreator.lastName} {trashNoteData.NoteCreator.userName}
+        <Person /> {trashNoteData.NoteCreator?.lastName} {trashNoteData.NoteCreator?.userName}
         </Typography>
         <Typography
         variant="body2"
@@ -61,6 +84,8 @@ function TrashNote(trashNoteData: NoteType ) {
             startIcon={<Restore />}
             sx={{ bgcolor: "#f0e5ff", textTransform: "none" }}
             title="Restore this note"
+            loading={isPending}
+            onClick={handleRestoreTrashNote}
         >
             Restore
         </Button>

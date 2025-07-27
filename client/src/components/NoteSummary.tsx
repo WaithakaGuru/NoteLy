@@ -2,10 +2,26 @@ import { Stack, IconButton, Typography, Chip, Button } from "@mui/material"
 import { Edit, DeleteOutline, Person, Topic, PushPin, Visibility } from "@mui/icons-material"
 import getDateString from "../utils/dateFormatter"
 import type { NoteType } from "../utils/Note.type";
+import useDeleteNote from "../services/deleteRequests";
+import { isAxiosError } from "axios";
+import { client } from "../main";
 
 type FullNoteType = {noteData:NoteType , currentUserId: string};
 
 function NoteSummary({noteData, currentUserId}: FullNoteType ) {
+  const {mutateAsync: deletNote, isPending} = useDeleteNote(noteData.id)
+  async function handleDeleteNote() {
+    try{
+      const deletedNote = await deletNote();
+      if(deletedNote) {
+        client.invalidateQueries({queryKey: ["DeleteNote", noteData.id]})
+      }
+    }catch(err){
+      if(isAxiosError(err)) console.log(err.response?.data.message);
+      else console.log(err);
+    }
+  }
+
   return (
     <Stack sx={{width: {xs: "30rem", sm:"23.8rem"}}}
       className="w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center bg-white">
@@ -83,16 +99,20 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
         >
           Edit
         </Button>
-        <button
-          className="text-red-700 bg-red-200 p-[.4rem] rounded text-nowrap cursor-pointer"
+        <Button
+          className= "p-[.4rem] rounded text-nowrap cursor-pointer w-29"
           title="Delete this note"
           disabled={false}
+          onClick={handleDeleteNote}
+          loading={isPending}
           style={{display:  
-            noteData.creator === currentUserId ? "flex": "none"
+            noteData.creator === currentUserId ? "flex": "none", 
+            color: "oklch(50.5% 0.213 27.518)",
+            backgroundColor: "oklch(88.5% 0.062 18.334)"
             }}
         >
           <DeleteOutline /> Delete
-        </button>
+        </Button>
       </Stack>
     </Stack>
   )
