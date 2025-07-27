@@ -8,7 +8,7 @@ import { client } from "../main"
 
 function TrashNote(trashNoteData: NoteType ) {
     const id = trashNoteData.id
-    const {mutateAsync: restoreTrashNote, isPending} = useGeneric(id, ["RestoreTrashNote", id], "/note/restore/");
+    const {mutateAsync: restoreTrashNote, isPending} = useGeneric(id, "RestoreTrashNote", "/note/restore/");
     async function handleRestoreTrashNote() {
         try{
             const restored = await restoreTrashNote();

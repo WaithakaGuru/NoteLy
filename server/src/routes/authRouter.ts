@@ -29,7 +29,7 @@ authRouter.post(
   createJWebToken,
 );
 authRouter.post("/logout", verifyJWebToken, logoutUser);
-authRouter.post(
+authRouter.patch(
   "/password",
   verifyJWebToken,
   verifyCurrentPassword,
