@@ -1,12 +1,15 @@
 import { Dashboard, Delete, NoteAdd, Notes, Person } from "@mui/icons-material";
-import { Card, CardMedia, Typography, Stack, Button} from "@mui/material";
+import { Card, CardMedia, Typography, Stack, Button } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { useGetUserDetails } from "../services/fetchRequests";
 
-function SideBar(props?: {handlePinned?: () => void, handlePublic?: () => void }) {
-  const {pathname: path} = useLocation();
-  const {data: user} = useGetUserDetails();
-    localStorage.setItem("userId", user?.id)
+function SideBar(props?: {
+  handlePinned?: () => void;
+  handlePublic?: () => void;
+}) {
+  const { pathname: path } = useLocation();
+  const { data: user } = useGetUserDetails();
+  localStorage.setItem("userId", user?.id);
 
   function doNothing() {
     console.log("");
@@ -42,70 +45,107 @@ function SideBar(props?: {handlePinned?: () => void, handlePublic?: () => void }
         >
           {user?.emailAddress}
         </Typography>
-        {(path !== "/dashboard/create" && !path.includes("/dashboard/update") &&
-         path !== "/dashboard/profile" && !(path.includes("/dashboard/note/")))?  (
-        <>
-        <Button sx={{my:".5rem"}} variant="outlined" onClick={props?.handlePinned || doNothing}>
-          <Typography
-            className="text-gray-50 text-nowrap"
-            fontWeight={"bold"}
-            textTransform={"none"}
-            sx={{ml: "-.9rem"}}
-          >
-            Pinned Notes
-          </Typography>
-        </Button>
-        <Button variant="outlined" onClick={props?.handlePublic || doNothing} >
-          <Typography
-            className="text-gray-50 text-nowrap"
-            fontWeight={"bold"}
-            textTransform={"none"}
-            sx={{ml: "-.9rem"}}
-          >
-            Public Notes
-          </Typography>
-        </Button>
-      </>) : "" }
+        {path !== "/dashboard/create" &&
+        !path.includes("/dashboard/update") &&
+        path !== "/dashboard/profile" &&
+        !path.includes("/dashboard/note/") ? (
+          <>
+            <Button
+              sx={{ my: ".5rem" }}
+              variant="outlined"
+              onClick={props?.handlePinned || doNothing}
+            >
+              <Typography
+                className="text-gray-50 text-nowrap"
+                fontWeight={"bold"}
+                textTransform={"none"}
+                sx={{ ml: "-.9rem" }}
+              >
+                Pinned Notes
+              </Typography>
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={props?.handlePublic || doNothing}
+            >
+              <Typography
+                className="text-gray-50 text-nowrap"
+                fontWeight={"bold"}
+                textTransform={"none"}
+                sx={{ ml: "-.9rem" }}
+              >
+                Public Notes
+              </Typography>
+            </Button>
+          </>
+        ) : (
+          ""
+        )}
       </Card>
       <Stack component={"div"} className="justify-center gap-4 p-6">
         <a href="/dashboard">
-          <Typography fontWeight={"bold"} className="flex items-center gap-1 w-max p-1 rounded"
-            sx={{color: path==="/dashboard"? "#f9fafb" : "#99a1af", '&:hover': {bgcolor: "#1e2939"},
-               bgcolor: path==="/dashboard"? "#1e2939" : "none"}}
-            >
-            <Dashboard/> Dashboard
+          <Typography
+            fontWeight={"bold"}
+            className="flex items-center gap-1 w-max p-1 rounded"
+            sx={{
+              color: path === "/dashboard" ? "#f9fafb" : "#99a1af",
+              "&:hover": { bgcolor: "#1e2939" },
+              bgcolor: path === "/dashboard" ? "#1e2939" : "none",
+            }}
+          >
+            <Dashboard /> Dashboard
           </Typography>
         </a>
-       < a href="/dashboard/create">
-          <Typography fontWeight={"bold"} className="flex items-center gap-1 p-1 rounded"
-            sx={{color: path==="/dashboard/create"? "#f9fafb" : "#99a1af", '&:hover': {bgcolor: "#1e2939"},
-               bgcolor: path==="/dashboard/create"? "#1e2939" : "none"}}
+        <a href="/dashboard/create">
+          <Typography
+            fontWeight={"bold"}
+            className="flex items-center gap-1 p-1 rounded"
+            sx={{
+              color: path === "/dashboard/create" ? "#f9fafb" : "#99a1af",
+              "&:hover": { bgcolor: "#1e2939" },
+              bgcolor: path === "/dashboard/create" ? "#1e2939" : "none",
+            }}
           >
-            <NoteAdd/> New Note
+            <NoteAdd /> New Note
           </Typography>
         </a>
         <a href="/dashboard/note">
-          <Typography fontWeight={"bold"} className="flex items-center gap-1 p-1 rounded"
-            sx={{color: path==="/dashboard/note"? "#f9fafb" : "#99a1af", '&:hover': {bgcolor: "#1e2939"},
-               bgcolor: path==="/dashboard/note"? "#1e2939" : "none"}}
+          <Typography
+            fontWeight={"bold"}
+            className="flex items-center gap-1 p-1 rounded"
+            sx={{
+              color: path === "/dashboard/note" ? "#f9fafb" : "#99a1af",
+              "&:hover": { bgcolor: "#1e2939" },
+              bgcolor: path === "/dashboard/note" ? "#1e2939" : "none",
+            }}
           >
-           <Notes/>  My notes
+            <Notes /> My notes
           </Typography>
         </a>
         <a href="/dashboard/trash">
-          <Typography fontWeight={"bold"} className="flex items-center w-max gap-1 p-1 rounded"
-            sx={{color: path==="/dashboard/trash"? "#f9fafb" : "#99a1af", '&:hover': {bgcolor: "#1e2939"},
-               bgcolor: path==="/dashboard/trash"? "#1e2939" : "none"}}
+          <Typography
+            fontWeight={"bold"}
+            className="flex items-center w-max gap-1 p-1 rounded"
+            sx={{
+              color: path === "/dashboard/trash" ? "#f9fafb" : "#99a1af",
+              "&:hover": { bgcolor: "#1e2939" },
+              bgcolor: path === "/dashboard/trash" ? "#1e2939" : "none",
+            }}
           >
-            <Delete/> Trash Notes
+            <Delete /> Trash Notes
           </Typography>
         </a>
         <a href="/dashboard/profile">
-          <Typography fontWeight={"bold"} className="flex items-center gap-1 p-1 rounded"
-            sx={{color: path==="/dashboard/profile"? "#f9fafb" : "#99a1af", '&:hover': {bgcolor: "#1e2939"},
-               bgcolor: path==="/dashboard/profile"? "#1e2939" : "none"}}
+          <Typography
+            fontWeight={"bold"}
+            className="flex items-center gap-1 p-1 rounded"
+            sx={{
+              color: path === "/dashboard/profile" ? "#f9fafb" : "#99a1af",
+              "&:hover": { bgcolor: "#1e2939" },
+              bgcolor: path === "/dashboard/profile" ? "#1e2939" : "none",
+            }}
           >
-            <Person/> Profile
+            <Person /> Profile
           </Typography>
         </a>
       </Stack>

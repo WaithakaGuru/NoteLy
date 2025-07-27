@@ -1,14 +1,11 @@
-import {
-  Delete,
-  NoteAdd,
-  Notes, West
-} from "@mui/icons-material";
+import { Delete, NoteAdd, Notes, West } from "@mui/icons-material";
 import {
   Box,
   Button,
   Stack,
   TextField,
-  Typography, IconButton
+  Typography,
+  IconButton,
 } from "@mui/material";
 import ToggleSideBar from "../components/ToggleSideBar";
 import NoNote from "../components/NoNote";
@@ -22,40 +19,40 @@ import liveSearch from "../utils/liveSearch.";
 import { filterPinned, filterPublic } from "../utils/filterNote";
 
 function DashboardPage() {
-  const {data: info} = useGetAllNotes();
+  const { data: info } = useGetAllNotes();
   const [data, setData] = useState<NoteType[] | undefined>(undefined);
   const [isFiltering, setIsFiltering] = useState(false);
   const [goBackHidden, setGoBackHidden] = useState(true);
-  const [noteTitle, setNoteTitle] = useState("Recent Notes")
+  const [noteTitle, setNoteTitle] = useState("Recent Notes");
   const summaryInfo = info && getNotesPerDuration(info);
 
-  useEffect(()=>{
-    if(info && !isFiltering) setData(info)
-  }, [info, isFiltering])
+  useEffect(() => {
+    if (info && !isFiltering) setData(info);
+  }, [info, isFiltering]);
 
   function handleShowAllNotes() {
     setIsFiltering(false);
     setGoBackHidden(true);
     setData(info);
-    setNoteTitle("Recent Notes")
+    setNoteTitle("Recent Notes");
   }
 
-  function handleFilterPublicNotes(){
-    setIsFiltering(true)
+  function handleFilterPublicNotes() {
+    setIsFiltering(true);
     setData(filterPublic(info));
     setNoteTitle("Public Notes");
     setGoBackHidden(false);
   }
-  function handleFilterPinnedNotes(){
-    setIsFiltering(true)
+  function handleFilterPinnedNotes() {
+    setIsFiltering(true);
     setData(filterPinned(info));
     setNoteTitle("Pinned Notes");
     setGoBackHidden(false);
   }
-  
+
   function handleLiveNoteSearch(e: React.ChangeEvent<HTMLInputElement>) {
     const val = e.target.value;
-    val.trim()? setNoteTitle("Search Results") : setNoteTitle("Recent Notes");
+    val.trim() ? setNoteTitle("Search Results") : setNoteTitle("Recent Notes");
     const liveData = liveSearch(info, val);
     setData(liveData);
   }
@@ -64,13 +61,16 @@ function DashboardPage() {
     <Box
       component={"main"}
       className="w-full h-[36rem] py-2 gap-2 flex"
-      sx={{ background: "#011611", height: {xs: "max-content"} }}
+      sx={{ background: "#011611", height: { xs: "max-content" } }}
     >
-      <ToggleSideBar handlePinned={handleFilterPinnedNotes} handlePublic={handleFilterPublicNotes}/>
+      <ToggleSideBar
+        handlePinned={handleFilterPinnedNotes}
+        handlePublic={handleFilterPublicNotes}
+      />
       <Stack
         component={"section"}
         className="bg-gray-50 w-full h-[35rem] overflow-auto p-4 rounded"
-        sx={{ ml: { sm: "9rem" }, height: {xs: "100dvh", md: "35rem"} }}
+        sx={{ ml: { sm: "9rem" }, height: { xs: "100dvh", md: "35rem" } }}
       >
         <Box
           component={"section"}
@@ -79,13 +79,13 @@ function DashboardPage() {
         >
           <Stack direction={"row"} className="justify-between min-w-1/2">
             <Box>
-                <Typography
-                  fontSize={"1.8rem"}
-                  fontWeight={"bold"}
-                  className="text-gray-700"
-                >
-                  Dashboard
-                </Typography>
+              <Typography
+                fontSize={"1.8rem"}
+                fontWeight={"bold"}
+                className="text-gray-700"
+              >
+                Dashboard
+              </Typography>
               <Typography
                 variant="body2"
                 gutterBottom
@@ -161,18 +161,26 @@ function DashboardPage() {
             fontWeight={"bold"}
             fontSize={"2rem"}
           >
-            <IconButton color='warning' title='See All Notes' hidden={goBackHidden} onClick={handleShowAllNotes}> <West/></IconButton> {noteTitle} ({data?.length})
+            <IconButton
+              color="warning"
+              title="See All Notes"
+              hidden={goBackHidden}
+              onClick={handleShowAllNotes}
+            >
+              {" "}
+              <West />
+            </IconButton>{" "}
+            {noteTitle} ({data?.length})
           </Typography>
           <Stack direction={"row"} className="justify-left gap-2 flex-wrap">
-            {data?.length === 0 &&
-              <NoNote/>
-            }         
-            {(
-              data?.map((note: NoteType) => 
-                <NoteSummary key={note.id} currentUserId={localStorage.getItem("userId")!} noteData={note} />
-              )
-            )
-            }
+            {data?.length === 0 && <NoNote />}
+            {data?.map((note: NoteType) => (
+              <NoteSummary
+                key={note.id}
+                currentUserId={localStorage.getItem("userId")!}
+                noteData={note}
+              />
+            ))}
           </Stack>
         </Box>
       </Stack>

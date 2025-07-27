@@ -5,7 +5,7 @@ import {
   getSpecificNote,
   restoreDeletedNote,
   updateNote,
-  pinNote
+  pinNote,
 } from "../controllers/exports.controller.ts";
 
 const noteRouter = Router();

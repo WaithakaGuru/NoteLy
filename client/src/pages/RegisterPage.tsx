@@ -47,33 +47,31 @@ const initialState = {
 };
 
 function RegisterPage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [state, dispatch] = useReducer(reducerFunc, initialState);
-  const {mutateAsync: register, isPending} = useRegister()
+  const { mutateAsync: register, isPending } = useRegister();
 
-  
   async function handleSubmitRegister(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setError("")
-    try{
-      if(!(state.password === state.confirmPassword))  {
+    setError("");
+    try {
+      if (!(state.password === state.confirmPassword)) {
         setError("Password and Confirm Password must match!!");
-        return 
+        return;
       }
-      if(!isStrongPassword(state.password)) {
+      if (!isStrongPassword(state.password)) {
         setError("Choose a stronger password!!");
-        return
+        return;
       }
       const user = await register(state);
-      if(user) navigate("/login", {replace: true})
-    }catch(err){
-      if(isAxiosError(err)){
-        setError(err.response?.data.message)
-      }
-      else {
+      if (user) navigate("/login", { replace: true });
+    } catch (err) {
+      if (isAxiosError(err)) {
+        setError(err.response?.data.message);
+      } else {
         console.log(err);
-        setError("Something went wrong!!")
+        setError("Something went wrong!!");
       }
     }
   }

@@ -5,8 +5,8 @@ type LogInType = 1 | 0;
 type StoreType = {
   loggedIn: boolean | null;
   token: string | null;
-  path: string,
-  sideBarOpen: boolean,
+  path: string;
+  sideBarOpen: boolean;
 
   addToken: (token: string) => void;
   setPath: (pathName: string) => void;
@@ -27,22 +27,22 @@ const storeModel: StateCreator<StoreType> = (set) => {
         localStorage.removeItem("token");
       } else {
         localStorage.setItem("token", token);
-        set({ token:token });
+        set({ token: token });
       }
     },
     setPath(pathName) {
-      set({path: pathName})
+      set({ path: pathName });
     },
-    setSideBarOpen(status: boolean){
-      set({sideBarOpen: status})
+    setSideBarOpen(status: boolean) {
+      set({ sideBarOpen: status });
     },
     setIsLoggedIn(val) {
       if (val === 1) {
         localStorage.setItem("loggedIn", "true");
-        set({loggedIn: true})
+        set({ loggedIn: true });
       } else {
         localStorage.removeItem("loggedIn");
-        set({loggedIn: false})
+        set({ loggedIn: false });
       }
     },
   };

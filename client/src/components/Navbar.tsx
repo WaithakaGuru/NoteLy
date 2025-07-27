@@ -17,7 +17,14 @@ import NavButton from "./NavButton";
 
 function Navbar() {
   const path = useLocation().pathname;
-  const { loggedIn, addToken, setPath, setIsLoggedIn, setSideBarOpen, sideBarOpen } = useNote();
+  const {
+    loggedIn,
+    addToken,
+    setPath,
+    setIsLoggedIn,
+    setSideBarOpen,
+    sideBarOpen,
+  } = useNote();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [imageAvailable, setImageAvailable] = useState(false);
@@ -28,7 +35,7 @@ function Navbar() {
     img.src = imageUrl;
     img.onload = () => setImageAvailable(true);
     img.onerror = () => setImageAvailable(false);
-    setPath(path)
+    setPath(path);
   }, []);
 
   function handleToggleProfile() {
@@ -39,7 +46,7 @@ function Navbar() {
     setIsOpen(false);
 
     localStorage.removeItem("token");
-    setIsLoggedIn(0)
+    setIsLoggedIn(0);
     addToken("");
     navigate("/", { replace: true });
   }
@@ -53,21 +60,23 @@ function Navbar() {
       justifyContent={"space-between"}
       zIndex={2}
     >
-      <Box component={"div"} className="max-h-11 flex items-center gap-1" >
-        {loggedIn ?
+      <Box component={"div"} className="max-h-11 flex items-center gap-1">
+        {loggedIn ? (
           <IconButton
             sx={{
-            bgcolor: "#364153",
-            "&:hover": { bgcolor: "#4a5565" },
-            display: { sm: "none" },
+              bgcolor: "#364153",
+              "&:hover": { bgcolor: "#4a5565" },
+              display: { sm: "none" },
             }}
             onClick={() => setSideBarOpen(!sideBarOpen)}
             title="Open Side bar"
             className="w-9 h-9"
           >
             <Menu className="text-gray-50" />
-          </IconButton> : ""
-        }
+          </IconButton>
+        ) : (
+          ""
+        )}
         <Button href="/" title="Go to Homepage">
           {imageAvailable ? (
             <img src={imageUrl} width="100px" alt="Notely" />
@@ -81,67 +90,70 @@ function Navbar() {
       </Box>
 
       {loggedIn ? (
-          <Stack direction={"row"} gap={1} className="items-center">
+        <Stack direction={"row"} gap={1} className="items-center">
+          <NavButton
+            startIcon={<Dashboard />}
+            label="Home"
+            href="/dashboard"
+            title="Go to Dashboard"
+          />
+          <NavButton
+            startIcon={<Notes />}
+            label="My Notes"
+            href="/dashboard/note"
+            title="See all your notes"
+          />
+          <NavButton
+            startIcon={<NoteAdd />}
+            label="New note"
+            href="/dashboard/create"
+            title="Create a new note"
+          />
+          <IconButton
+            className="w-9 h-9 pla"
+            sx={{
+              color: "#364153",
+              border: "1px solid #364153",
+              transition: "border-color .4s ease-in-out",
+              background:
+                path === "/dashboard/profile"
+                  ? "linear-gradient(45deg, #dce6f6, #a9b6ca)"
+                  : "",
+              "&:hover": {
+                background: "linear-gradient(45deg, #dce6f6, #a9b6ca)",
+                borderColor: "transparent",
+              },
+            }}
+            title="Profile settings"
+            onClick={handleToggleProfile}
+          >
+            <Person />
+          </IconButton>
+          <Drawer
+            open={isOpen}
+            anchor="right"
+            sx={{ p: 2, height: "10rem" }}
+            onClick={() => setIsOpen(false)}
+          >
             <NavButton
-              startIcon={<Dashboard />}
-              label="Home"
-              href="/dashboard"
-              title="Go to Dashboard"
+              label="My profile"
+              startIcon={<Person />}
+              href="/dashboard/profile"
+              m={2}
+              def="My profile"
             />
-            <NavButton
-              startIcon={<Notes />}
-              label="My Notes"
-              href="/dashboard/note"
-              title="See all your notes"
-            />
-            <NavButton
-              startIcon={<NoteAdd />}
-              label="New note"
-              href="/dashboard/create"
-              title="Create a new note"
-            />
-            <IconButton
-              className="w-9 h-9 pla"
-              sx={{
-                color: "#364153",
-                border: "1px solid #364153",
-                transition: "border-color .4s ease-in-out",
-                background: path==="/dashboard/profile"? "linear-gradient(45deg, #dce6f6, #a9b6ca)" : "",
-                "&:hover": {
-                  background: "linear-gradient(45deg, #dce6f6, #a9b6ca)",
-                  borderColor: "transparent",
-                },
-              }}
-              title="Profile settings"
-              onClick={handleToggleProfile}
+            <Button
+              startIcon={<Logout />}
+              onClick={handleLogOut}
+              title="Sign Out"
+              variant="outlined"
+              sx={{ m: 2 }}
+              color="error"
             >
-              <Person />
-            </IconButton>
-            <Drawer
-              open={isOpen}
-              anchor="right"
-              sx={{ p: 2, height: "10rem" }}
-              onClick={() => setIsOpen(false)}
-            >
-              <NavButton
-                label="My profile"
-                startIcon={<Person />}
-                href="/dashboard/profile"
-                m={2}
-                def="My profile"
-              />
-              <Button
-                startIcon={<Logout />}
-                onClick={handleLogOut}
-                title="Sign Out"
-                variant="outlined"
-                sx={{ m: 2 }}
-                color="error"
-              >
-                Logout
-              </Button>
-            </Drawer>
-          </Stack>
+              Logout
+            </Button>
+          </Drawer>
+        </Stack>
       ) : (
         <>
           <Stack direction={"row"} gap={2}>

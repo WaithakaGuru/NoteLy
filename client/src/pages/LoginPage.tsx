@@ -11,8 +11,8 @@ function LoginPage() {
   const [error, setError] = useState("");
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const {mutateAsync: login, isPending} = useLogin();
-  const {addToken, setIsLoggedIn} = useNote();
+  const { mutateAsync: login, isPending } = useLogin();
+  const { addToken, setIsLoggedIn } = useNote();
   const navigate = useNavigate();
 
   function handleIdentifier(e: React.ChangeEvent<HTMLInputElement>) {
@@ -25,21 +25,19 @@ function LoginPage() {
   async function handleSubmitLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
-    try{
-      const validUser = await login({identifier, password});
-      if(validUser){
+    try {
+      const validUser = await login({ identifier, password });
+      if (validUser) {
         addToken(validUser.data);
         setIsLoggedIn(1);
-        navigate('/dashboard', {replace: true})
+        navigate("/dashboard", { replace: true });
       }
-
-    }catch(err){
-        if(isAxiosError(err)){
-        setError(err.response?.data.message)
-      }
-      else {
+    } catch (err) {
+      if (isAxiosError(err)) {
+        setError(err.response?.data.message);
+      } else {
         console.log(err);
-        setError("Something went wrong!!")
+        setError("Something went wrong!!");
       }
     }
   }
@@ -119,7 +117,12 @@ function LoginPage() {
               Sign in
             </Button>
 
-            <Typography variant="subtitle1" gutterBottom mt={2} color="text-gray-700">
+            <Typography
+              variant="subtitle1"
+              gutterBottom
+              mt={2}
+              color="text-gray-700"
+            >
               New to NoteLy?
               <div className="text-lime-500 inline-flex font-bold ml-1 hover:underline">
                 <Link to={"/register"} title="Create New NoteLy account">

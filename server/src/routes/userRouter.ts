@@ -4,10 +4,13 @@ import {
   verifyUniqueEmail,
   verifyUniqueUsername,
 } from "../middlewares/exports.middleware.ts";
-import { updateUserInfo, getUserInfo } from "../controllers/exports.controller.ts";
+import {
+  updateUserInfo,
+  getUserInfo,
+} from "../controllers/exports.controller.ts";
 
 const userRouter = Router();
-userRouter.get("/", verifyJWebToken, getUserInfo)
+userRouter.get("/", verifyJWebToken, getUserInfo);
 userRouter.patch(
   "/",
   verifyJWebToken,

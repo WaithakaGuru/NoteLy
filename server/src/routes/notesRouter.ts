@@ -4,7 +4,7 @@ import {
   createNote,
   getTrashNotes,
   getAllUserNotes,
-  getAllNotes
+  getAllNotes,
 } from "../controllers/exports.controller.ts";
 
 const notesRouter = Router();

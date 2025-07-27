@@ -23,10 +23,8 @@ export default async function verifyCurrentPassword(
     }
   } catch (err) {
     console.log(err);
-    res
-      .status(500)
-      .json({
-        message: "Something went wrong!! failed to verify currentPassword",
-      });
+    res.status(500).json({
+      message: "Something went wrong!! failed to verify currentPassword",
+    });
   }
 }

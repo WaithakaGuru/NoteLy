@@ -3,7 +3,7 @@ import handleErrors from "../utils/handleErrors.ts";
 import { Request, Response } from "express";
 
 export default async function updateUserInfo(req: Request, res: Response) {
-  const {firstName, lastName, emailAddress, userName } = req.body;
+  const { firstName, lastName, emailAddress, userName } = req.body;
   const { id } = res.locals.validUserData;
   try {
     const updatedUser = await client.users.update({

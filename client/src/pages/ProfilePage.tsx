@@ -1,35 +1,44 @@
-import {Alert, Box, Button, CardMedia, IconButton, Stack, TextField, Typography } from "@mui/material"
+import {
+  Alert,
+  Box,
+  Button,
+  CardMedia,
+  IconButton,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Delete, Notes, Dashboard, Edit, Cancel } from "@mui/icons-material";
-import ToggleSideBar from "../components/ToggleSideBar"
+import ToggleSideBar from "../components/ToggleSideBar";
 import React, { useEffect, useReducer, useRef, useState } from "react";
 import { useGetUserDetails } from "../services/fetchRequests";
 import PasswordInput from "../components/PasswordInput";
-import  { useGenericUser } from "../services/patchRequests";
+import { useGenericUser } from "../services/patchRequests";
 import { isAxiosError } from "axios";
 import { client } from "../main";
 import isStrongPassword from "../utils/checkPasswordStrength";
 
 type UserInfo = {
-  firstName: string,
-  lastName: string,
-  userName: string,
-  emailAddress: string
-}
+  firstName: string;
+  lastName: string;
+  userName: string;
+  emailAddress: string;
+};
 
 type ActionType = {
-  type: string,
+  type: string;
   data: {
-    el: string,
-    value: string
-  }
-}
+    el: string;
+    value: string;
+  };
+};
 
 function controlUserInfoInputs(state: UserInfo, action: ActionType) {
-  switch(action.type) {
-    case "input" :
-      return{...state, [action.data.el]: action.data.value};
-    
-    default: 
+  switch (action.type) {
+    case "input":
+      return { ...state, [action.data.el]: action.data.value };
+
+    default:
       return state;
   }
 }
@@ -39,10 +48,10 @@ const initialState = {
   lastName: "",
   userName: "",
   emailAddress: "",
-}
+};
 
 function ProfilePage() {
-  const [image, setImage] = useState<File|undefined>();
+  const [image, setImage] = useState<File | undefined>();
   const [imageError, setImageError] = useState("");
   const [error, setError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -53,106 +62,125 @@ function ProfilePage() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
-  const {mutateAsync: updateInfo, isPending} = useGenericUser("updateUserInfo", "/user")
-  const {mutateAsync: updatePass, isPending: passPending} = useGenericUser("updateUserPassword", "/auth/password")
+  const { mutateAsync: updateInfo, isPending } = useGenericUser(
+    "updateUserInfo",
+    "/user",
+  );
+  const { mutateAsync: updatePass, isPending: passPending } = useGenericUser(
+    "updateUserPassword",
+    "/auth/password",
+  );
 
-  const {data} = useGetUserDetails();
+  const { data } = useGetUserDetails();
 
-  useEffect(()=>{
-    if(data) {
-      alter({type: "input", data:{el: "firstName", value: data.firstName}})
-      alter({type: "input", data:{el: "lastName", value: data.lastName}})
-      alter({type: "input", data:{el: "userName", value: data.userName}})
-      alter({type: "input", data:{el: "emailAddress", value: data.emailAddress}})
+  useEffect(() => {
+    if (data) {
+      alter({
+        type: "input",
+        data: { el: "firstName", value: data.firstName },
+      });
+      alter({ type: "input", data: { el: "lastName", value: data.lastName } });
+      alter({ type: "input", data: { el: "userName", value: data.userName } });
+      alter({
+        type: "input",
+        data: { el: "emailAddress", value: data.emailAddress },
+      });
     }
-  }, [data])
+  }, [data]);
 
   function handleCallHiddenInput() {
     fileInputRef.current?.click();
   }
 
-  function handleFileUpload (e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0]
-    if(!file?.type.startsWith("image/")) {
+  function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file?.type.startsWith("image/")) {
       setImageError("File must be an image!!");
-      return
+      return;
     }
-    if(file?.size! >= 5 * 1024 * 1024) {
+    if (file?.size! >= 5 * 1024 * 1024) {
       setImageError("Choose an image less than 5mb!!");
-      return 
+      return;
     }
-    if(file) setImage(file);
-     console.log(image);
+    if (file) setImage(file);
+    console.log(image);
   }
 
-    function handleFirstName (e: React.ChangeEvent<HTMLInputElement>) {
-      alter({type: "input", data: {el: "firstName", value: e.target.value}})
-    }
-    function handlLastName (e: React.ChangeEvent<HTMLInputElement>) {
-      alter({type: "input", data: {el: "lastName", value: e.target.value}})
-    }
-    function handleUserName (e: React.ChangeEvent<HTMLInputElement>) {
-      alter({type: "input", data: {el: "userName", value: e.target.value}})
-    }
-    function handleEmail (e: React.ChangeEvent<HTMLInputElement>) {
-      alter({type: "input", data: {el: "emailAddress", value: e.target.value}})
-    }
+  function handleFirstName(e: React.ChangeEvent<HTMLInputElement>) {
+    alter({ type: "input", data: { el: "firstName", value: e.target.value } });
+  }
+  function handlLastName(e: React.ChangeEvent<HTMLInputElement>) {
+    alter({ type: "input", data: { el: "lastName", value: e.target.value } });
+  }
+  function handleUserName(e: React.ChangeEvent<HTMLInputElement>) {
+    alter({ type: "input", data: { el: "userName", value: e.target.value } });
+  }
+  function handleEmail(e: React.ChangeEvent<HTMLInputElement>) {
+    alter({
+      type: "input",
+      data: { el: "emailAddress", value: e.target.value },
+    });
+  }
 
-    function handleCurrentPassword(e: React.ChangeEvent<HTMLInputElement>) {
-      setCurrentPassword(e.target.value);
-    }
+  function handleCurrentPassword(e: React.ChangeEvent<HTMLInputElement>) {
+    setCurrentPassword(e.target.value);
+  }
 
-    function handleNewPassword(e: React.ChangeEvent<HTMLInputElement>) {
-      setNewPassword(e.target.value);
-    }
+  function handleNewPassword(e: React.ChangeEvent<HTMLInputElement>) {
+    setNewPassword(e.target.value);
+  }
 
   async function handleUpdateUserInfo(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
+    e.preventDefault();
 
-    try{
+    try {
       const updatedUser = await updateInfo(state);
-      if(updatedUser){
+      if (updatedUser) {
         setSuccess("Profile information updated successfully");
-        client.invalidateQueries({queryKey: ['GetUserDetails']})
+        client.invalidateQueries({ queryKey: ["GetUserDetails"] });
       }
-    }catch(err) {
-      if(isAxiosError(err)) setError(err.response?.data.message || "Unknown Error!!");
-      else{
+    } catch (err) {
+      if (isAxiosError(err))
+        setError(err.response?.data.message || "Unknown Error!!");
+      else {
         console.log(err);
-        setError("Something went Wrong! Try updating later!!")
+        setError("Something went Wrong! Try updating later!!");
       }
     }
   }
 
   async function handleUpdateUserPassword(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    try{
-      if(!isStrongPassword(newPassword)){
+    e.preventDefault();
+    try {
+      if (!isStrongPassword(newPassword)) {
         setPasswordError("Choose a stronger password!!");
-        return
+        return;
       }
-      const updatedPass = await updatePass({currentPassword, newPassword});
-      if(updatedPass) setSuccessPass("Password changed successfully!")
-    }catch(err) {
-      if(isAxiosError(err)) setPasswordError(err.response?.data.message || "Unknown password error")
-      else{
+      const updatedPass = await updatePass({ currentPassword, newPassword });
+      if (updatedPass) setSuccessPass("Password changed successfully!");
+    } catch (err) {
+      if (isAxiosError(err))
+        setPasswordError(
+          err.response?.data.message || "Unknown password error",
+        );
+      else {
         console.log(err);
-        setPasswordError("Something failed! Try updating password later!!")
+        setPasswordError("Something failed! Try updating password later!!");
       }
     }
   }
-  
+
   return (
-     <Box
+    <Box
       component={"main"}
       className="w-full gap-2 flex h-[36rem] py-2"
-      sx={{ background: "#011611", height: {xs: "max-content"} }}
+      sx={{ background: "#011611", height: { xs: "max-content" } }}
     >
       <ToggleSideBar />
       <Stack
         component={"section"}
         className="bg-gray-50 w-full overflow-auto rounded p-4"
-        sx={{ ml: { sm: "9rem" }, height: {xs: "100dvh",  md:"35rem"}}}
+        sx={{ ml: { sm: "9rem" }, height: { xs: "100dvh", md: "35rem" } }}
       >
         <Box
           component={"section"}
@@ -232,93 +260,257 @@ function ProfilePage() {
               </Stack>
             </Box>
           </Stack>
-          <Stack component={"section"} className="border border-gray-300 w-full p-2 m-2 rounded-xl shadow-2xs gap-12 items-center" direction={"row"}>
-            {imageError && 
+          <Stack
+            component={"section"}
+            className="border border-gray-300 w-full p-2 m-2 rounded-xl shadow-2xs gap-12 items-center"
+            direction={"row"}
+          >
+            {imageError && (
               <Alert severity="error">
-                {imageError} 
-                <IconButton color="secondary" onClick={()=> setImageError("")}>
-                  <Cancel/>
+                {imageError}
+                <IconButton color="secondary" onClick={() => setImageError("")}>
+                  <Cancel />
                 </IconButton>
               </Alert>
-            }
-            <Box className="w-30 h-30 rounded-full bg-transparent shadow relative z-0"  sx={{borderRadius: "50%"}}>
-              <CardMedia component={"img"} image="../../me.png" className="h-30 max-w-30 rounded-full" /> 
-              <IconButton onClick={handleCallHiddenInput} title="Update Profile Photo" className="w-10 h-10 z-50 bottom-[.4rem]" sx={{bgcolor: "#6d28d9", color: "#f9fafb", right: "-.5rem", position:"absolute", '&:hover': {
-                bgcolor: "oklch(52.7% 0.265 303.9)"}, border: ".3rem solid #e5e7eb" 
-              }}>
-                <Edit/>
-                <input type="file" className="hidden" onChange={handleFileUpload} ref={fileInputRef}/>
+            )}
+            <Box
+              className="w-30 h-30 rounded-full bg-transparent shadow relative z-0"
+              sx={{ borderRadius: "50%" }}
+            >
+              <CardMedia
+                component={"img"}
+                image="../../me.png"
+                className="h-30 max-w-30 rounded-full"
+              />
+              <IconButton
+                onClick={handleCallHiddenInput}
+                title="Update Profile Photo"
+                className="w-10 h-10 z-50 bottom-[.4rem]"
+                sx={{
+                  bgcolor: "#6d28d9",
+                  color: "#f9fafb",
+                  right: "-.5rem",
+                  position: "absolute",
+                  "&:hover": {
+                    bgcolor: "oklch(52.7% 0.265 303.9)",
+                  },
+                  border: ".3rem solid #e5e7eb",
+                }}
+              >
+                <Edit />
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={handleFileUpload}
+                  ref={fileInputRef}
+                />
               </IconButton>
             </Box>
             <Box>
-              <Typography variant="body1" gutterBottom> <strong><i>Name:</i></strong> {data?.firstName} {data?.lastName}</Typography>
-              <Typography variant="body1" gutterBottom> <strong><i>Username:</i></strong> {data?.userName}</Typography>
-              <Typography variant="body1" gutterBottom> <strong><i>Emali:</i></strong> {data?.emailAddress}</Typography>
-            </Box> 
+              <Typography variant="body1" gutterBottom>
+                {" "}
+                <strong>
+                  <i>Name:</i>
+                </strong>{" "}
+                {data?.firstName} {data?.lastName}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                {" "}
+                <strong>
+                  <i>Username:</i>
+                </strong>{" "}
+                {data?.userName}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                {" "}
+                <strong>
+                  <i>Emali:</i>
+                </strong>{" "}
+                {data?.emailAddress}
+              </Typography>
+            </Box>
           </Stack>
         </Box>
-        <Stack direction={{xs: "column", md: "row"}} className="p-4" gap={8}>
-          <Box component={"form"} onSubmit={handleUpdateUserInfo} className="bg-red border border-gray-300 p-6
-            flex flex-col items-center shadow rounded-2xl border-r-2 border-r-purple-600 min-w-[35%]" 
-             sx={{bgcolor:"#fff"}} gap={1}
-          > 
-            {error && <Alert severity="error" sx={{display: "flex", alignItems: "center", maxWidth: "25rem"}}>{error} <IconButton color="error" onClick={()=> setError("")}><Cancel/></IconButton></Alert>}
-            {success && <Alert severity="success" sx={{display: "flex", alignItems: "center", maxWidth: "25rem"}}>{success} <IconButton color="primary" onClick={()=> setSuccess("")}><Cancel/></IconButton></Alert>}
-            <Typography variant="h6" fontWeight={"bold"} gutterBottom 
-              className="self-start pb-4" color="secondary"
+        <Stack direction={{ xs: "column", md: "row" }} className="p-4" gap={8}>
+          <Box
+            component={"form"}
+            onSubmit={handleUpdateUserInfo}
+            className="bg-red border border-gray-300 p-6
+            flex flex-col items-center shadow rounded-2xl border-r-2 border-r-purple-600 min-w-[35%]"
+            sx={{ bgcolor: "#fff" }}
+            gap={1}
+          >
+            {error && (
+              <Alert
+                severity="error"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  maxWidth: "25rem",
+                }}
+              >
+                {error}{" "}
+                <IconButton color="error" onClick={() => setError("")}>
+                  <Cancel />
+                </IconButton>
+              </Alert>
+            )}
+            {success && (
+              <Alert
+                severity="success"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  maxWidth: "25rem",
+                }}
+              >
+                {success}{" "}
+                <IconButton color="primary" onClick={() => setSuccess("")}>
+                  <Cancel />
+                </IconButton>
+              </Alert>
+            )}
+            <Typography
+              variant="h6"
+              fontWeight={"bold"}
+              gutterBottom
+              className="self-start pb-4"
+              color="secondary"
             >
-               Update Your Profile
+              Update Your Profile
             </Typography>
-            <TextField label="First name" sx={{bgcolor: "transparent", px:".5rem"}} 
-              className="rounded-2xl" fullWidth variant="standard"
-              color="secondary"  
+            <TextField
+              label="First name"
+              sx={{ bgcolor: "transparent", px: ".5rem" }}
+              className="rounded-2xl"
+              fullWidth
+              variant="standard"
+              color="secondary"
               required
               onChange={handleFirstName}
               value={state.firstName}
             />
-            <TextField label="Last name" sx={{bgcolor: "transparent", m:".5rem", borderRadius: "2rem", px:".5rem" }}
-             fullWidth variant="standard"
-             color="secondary"
-             required
-             onChange={handlLastName}
-             value={state.lastName}
+            <TextField
+              label="Last name"
+              sx={{
+                bgcolor: "transparent",
+                m: ".5rem",
+                borderRadius: "2rem",
+                px: ".5rem",
+              }}
+              fullWidth
+              variant="standard"
+              color="secondary"
+              required
+              onChange={handlLastName}
+              value={state.lastName}
             />
-            <TextField label="Username" sx={{bgcolor: "transparent", m:".5rem", borderRadius: "2rem", px:".5rem" }}
-             fullWidth variant="standard"
-             color="secondary"
-             required
-             onChange={handleUserName}
-             value={state.userName}
+            <TextField
+              label="Username"
+              sx={{
+                bgcolor: "transparent",
+                m: ".5rem",
+                borderRadius: "2rem",
+                px: ".5rem",
+              }}
+              fullWidth
+              variant="standard"
+              color="secondary"
+              required
+              onChange={handleUserName}
+              value={state.userName}
             />
-            <TextField label="Email" sx={{bgcolor: "transparent", m:".5rem", borderRadius: "2rem", px:".5rem" }}
-             fullWidth variant="standard"
-             color="secondary"
-             required
-             onChange={handleEmail}
-             value={state.emailAddress}
+            <TextField
+              label="Email"
+              sx={{
+                bgcolor: "transparent",
+                m: ".5rem",
+                borderRadius: "2rem",
+                px: ".5rem",
+              }}
+              fullWidth
+              variant="standard"
+              color="secondary"
+              required
+              onChange={handleEmail}
+              value={state.emailAddress}
             />
-            <Button type="submit" variant="contained"
-             color="secondary" className="self-start"
+            <Button
+              type="submit"
+              variant="contained"
+              color="secondary"
+              className="self-start"
               loading={isPending}
             >
               Save Changes
             </Button>
           </Box>
-          <Box component={"form"} onSubmit={handleUpdateUserPassword} className="bg-red border border-gray-300 p-6
-            flex flex-col items-center shadow rounded-2xl border-l-2 border-l-orange-500 min-w-[30%]" 
-             sx={{bgcolor:"#fff"}} gap={2}
+          <Box
+            component={"form"}
+            onSubmit={handleUpdateUserPassword}
+            className="bg-red border border-gray-300 p-6
+            flex flex-col items-center shadow rounded-2xl border-l-2 border-l-orange-500 min-w-[30%]"
+            sx={{ bgcolor: "#fff" }}
+            gap={2}
           >
-            {passwordError && <Alert severity="error" sx={{display: "flex", alignItems: "center", maxWidth: "25rem"}}>{passwordError} <IconButton color="error" onClick={()=> setPasswordError("")}><Cancel/></IconButton></Alert>}
-            {successPass && <Alert severity="success" sx={{display: "flex", alignItems: "center", maxWidth: "25rem"}}>{successPass} <IconButton color="primary" onClick={()=> setSuccessPass("")}><Cancel/></IconButton></Alert>}
-            <Typography variant="h6" fontWeight={"bold"} gutterBottom 
-              className="self-start pb-4" color="warning"
+            {passwordError && (
+              <Alert
+                severity="error"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  maxWidth: "25rem",
+                }}
+              >
+                {passwordError}{" "}
+                <IconButton color="error" onClick={() => setPasswordError("")}>
+                  <Cancel />
+                </IconButton>
+              </Alert>
+            )}
+            {successPass && (
+              <Alert
+                severity="success"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  maxWidth: "25rem",
+                }}
+              >
+                {successPass}{" "}
+                <IconButton color="primary" onClick={() => setSuccessPass("")}>
+                  <Cancel />
+                </IconButton>
+              </Alert>
+            )}
+            <Typography
+              variant="h6"
+              fontWeight={"bold"}
+              gutterBottom
+              className="self-start pb-4"
+              color="warning"
             >
               Set A new password
             </Typography>
-            <PasswordInput label="Current Password" value={currentPassword} onChange={handleCurrentPassword} v="#e65100" variant="standard"/>
-            <PasswordInput label="New Password" value={newPassword} onChange={handleNewPassword} v="#e65100" variant="standard"/>
-            <Button type="submit" variant="contained" 
-              color="warning" className="self-start"
+            <PasswordInput
+              label="Current Password"
+              value={currentPassword}
+              onChange={handleCurrentPassword}
+              v="#e65100"
+              variant="standard"
+            />
+            <PasswordInput
+              label="New Password"
+              value={newPassword}
+              onChange={handleNewPassword}
+              v="#e65100"
+              variant="standard"
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="warning"
+              className="self-start"
               loading={passPending}
             >
               Change password
@@ -327,7 +519,7 @@ function ProfilePage() {
         </Stack>
       </Stack>
     </Box>
-  )
+  );
 }
 
 export default ProfilePage;

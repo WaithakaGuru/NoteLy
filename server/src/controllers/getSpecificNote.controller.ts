@@ -5,11 +5,12 @@ export default async function getSpecificNote(req: Request, res: Response) {
   const id = req.params.id;
   try {
     const specificNote = await client.notes.findFirst({
-      where: { id }, include: {NoteCreator: true}
+      where: { id },
+      include: { NoteCreator: true },
     });
-    if (specificNote){
-       res.status(200).json(specificNote);
-      }
+    if (specificNote) {
+      res.status(200).json(specificNote);
+    }
   } catch (err) {
     console.log(err);
     res

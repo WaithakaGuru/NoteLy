@@ -32,7 +32,7 @@ function App() {
             path="/dashboard/create"
             element={
               <Restricted>
-                <CreateNote/>
+                <CreateNote />
               </Restricted>
             }
           />
@@ -59,7 +59,7 @@ function App() {
             path="/dashboard/Trash"
             element={
               <Restricted>
-                <TrashNotesPage/>
+                <TrashNotesPage />
               </Restricted>
             }
           />

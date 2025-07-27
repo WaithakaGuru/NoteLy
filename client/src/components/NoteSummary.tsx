@@ -1,56 +1,73 @@
-import { Stack, IconButton, Typography, Chip, Button } from "@mui/material"
-import { Edit, DeleteOutline, Person, Topic, PushPin, Visibility } from "@mui/icons-material"
-import getDateString from "../utils/dateFormatter"
+import { Stack, IconButton, Typography, Chip, Button } from "@mui/material";
+import {
+  Edit,
+  DeleteOutline,
+  Person,
+  Topic,
+  PushPin,
+  Visibility,
+} from "@mui/icons-material";
+import getDateString from "../utils/dateFormatter";
 import type { NoteType } from "../utils/Note.type";
 import useDeleteNote from "../services/deleteRequests";
 import { isAxiosError } from "axios";
 import { client } from "../main";
 import { useGeneric } from "../services/patchRequests";
 
-type FullNoteType = {noteData:NoteType , currentUserId: string};
+type FullNoteType = { noteData: NoteType; currentUserId: string };
 
-function NoteSummary({noteData, currentUserId}: FullNoteType ) {
-  const {mutateAsync: deletNote, isPending} = useDeleteNote(noteData.id);
-  const {mutateAsync: pinNote} = useGeneric(noteData.id, "PinNote", "/note/pin/")
+function NoteSummary({ noteData, currentUserId }: FullNoteType) {
+  const { mutateAsync: deletNote, isPending } = useDeleteNote(noteData.id);
+  const { mutateAsync: pinNote } = useGeneric(
+    noteData.id,
+    "PinNote",
+    "/note/pin/",
+  );
   async function handleDeleteNote() {
-    try{
+    try {
       const deletedNote = await deletNote();
-      if(deletedNote) {
-        client.invalidateQueries({queryKey: ['GetAllNotes']});
-        client.invalidateQueries({queryKey: ['GetAllUserNotes']});
+      if (deletedNote) {
+        client.invalidateQueries({ queryKey: ["GetAllNotes"] });
+        client.invalidateQueries({ queryKey: ["GetAllUserNotes"] });
       }
-    }catch(err){
-      if(isAxiosError(err)) console.log(err.response?.data.message);
+    } catch (err) {
+      if (isAxiosError(err)) console.log(err.response?.data.message);
       else console.log(err);
     }
   }
 
-  async function handlePinNote () {
-    try{
-      const pinnedNote = await pinNote({isPinned: noteData.isPinned});
-      if(pinnedNote) {
-        client.invalidateQueries({queryKey: ['GetAllNotes']});
-        client.invalidateQueries({queryKey: ['GetAllUserNotes']});
+  async function handlePinNote() {
+    try {
+      const pinnedNote = await pinNote({ isPinned: noteData.isPinned });
+      if (pinnedNote) {
+        client.invalidateQueries({ queryKey: ["GetAllNotes"] });
+        client.invalidateQueries({ queryKey: ["GetAllUserNotes"] });
       }
-    }catch (err)  {
-      if(isAxiosError(err)) console.log(err.response?.data.message);
+    } catch (err) {
+      if (isAxiosError(err)) console.log(err.response?.data.message);
       else console.log(err);
     }
   }
 
   return (
-    <Stack sx={{width: {xs: "30rem", sm:"23.8rem"}}}
-      className="w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center bg-white">
+    <Stack
+      sx={{ width: { xs: "30rem", sm: "23.8rem" } }}
+      className="w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center bg-white"
+    >
       <Typography
         variant="h6"
         className="text-gray-700 flex justify-between"
         fontWeight={600}
       >
-       {noteData.title}
+        {noteData.title}
         <Chip
           component={"div"}
-          label={noteData.isPublic? "Public" : "Private"}
-          sx={{ bgcolor: noteData.isPublic? "limegreen": "slategrey", color: "#f9f9f9", mx: "2px" }}
+          label={noteData.isPublic ? "Public" : "Private"}
+          sx={{
+            bgcolor: noteData.isPublic ? "limegreen" : "slategrey",
+            color: "#f9f9f9",
+            mx: "2px",
+          }}
         />
       </Typography>
       <Typography
@@ -60,14 +77,21 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
         align="left"
       >
         <Topic /> Study notes{" "}
-        <IconButton title="Pin this note" sx={{ ml: 20 }} onClick={handlePinNote}>
-          {noteData.isPinned? 
-          <PushPin className="text-lime-500" /> :   <PushPin className="text-gray-500" /> }
-        </IconButton> 
+        <IconButton
+          title="Pin this note"
+          sx={{ ml: 20 }}
+          onClick={handlePinNote}
+        >
+          {noteData.isPinned ? (
+            <PushPin className="text-lime-500" />
+          ) : (
+            <PushPin className="text-gray-500" />
+          )}
+        </IconButton>
       </Typography>
       <Typography variant="body2" className="text-gray-600">
-        <Person /> 
-        {noteData.NoteCreator?.lastName} -  {noteData.NoteCreator?.userName}
+        <Person />
+        {noteData.NoteCreator?.lastName} - {noteData.NoteCreator?.userName}
       </Typography>
       <Typography
         variant="body2"
@@ -108,31 +132,33 @@ function NoteSummary({noteData, currentUserId}: FullNoteType ) {
         <Button
           color="secondary"
           startIcon={<Edit />}
-          sx={{ bgcolor: "#f0e5ff", textTransform: "none", display:  
-            noteData.creator === currentUserId ? "flex": "none"
-            }} 
+          sx={{
+            bgcolor: "#f0e5ff",
+            textTransform: "none",
+            display: noteData.creator === currentUserId ? "flex" : "none",
+          }}
           href={`/dashboard/update/${noteData.id}`}
           title="Edit this note"
         >
           Edit
         </Button>
         <Button
-          className= "p-[.4rem] rounded text-nowrap cursor-pointer w-29"
+          className="p-[.4rem] rounded text-nowrap cursor-pointer w-29"
           title="Delete this note"
           disabled={false}
           onClick={handleDeleteNote}
           loading={isPending}
-          style={{display:  
-            noteData.creator === currentUserId ? "flex": "none", 
+          style={{
+            display: noteData.creator === currentUserId ? "flex" : "none",
             color: "oklch(50.5% 0.213 27.518)",
-            backgroundColor: "oklch(88.5% 0.062 18.334)"
-            }}
+            backgroundColor: "oklch(88.5% 0.062 18.334)",
+          }}
         >
           <DeleteOutline /> Delete
         </Button>
       </Stack>
     </Stack>
-  )
+  );
 }
 
-export default NoteSummary
+export default NoteSummary;

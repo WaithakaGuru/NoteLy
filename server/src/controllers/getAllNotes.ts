@@ -7,9 +7,13 @@ export default async function getAllNotes(req: Request, res: Response) {
   try {
     const allUserNotes = await client.notes.findMany({
       where: {
-        AND: [{isDeleted: false}, {OR: [{ creator: id }, { isPublic: true }]}]
-      }, include: {NoteCreator: {omit: {password: true, avatarUrl: true}}},
-      orderBy: {lastUpdated: "desc"},
+        AND: [
+          { isDeleted: false },
+          { OR: [{ creator: id }, { isPublic: true }] },
+        ],
+      },
+      include: { NoteCreator: { omit: { password: true, avatarUrl: true } } },
+      orderBy: { lastUpdated: "desc" },
     });
     if (allUserNotes) {
       res.status(200).json(allUserNotes);

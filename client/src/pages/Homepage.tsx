@@ -56,7 +56,7 @@ function Homepage() {
           sx={{
             textAlign: "center",
             mb: 4,
-            background:  "#606e83",
+            background: "#606e83",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             fontSize: "2.5rem",
@@ -73,12 +73,13 @@ function Homepage() {
             { value: "100+", label: "Daily Clients" },
           ].map((stat, index) => (
             <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
-              <Box component={"div"}
+              <Box
+                component={"div"}
                 sx={{
                   p: 4,
                   borderRadius: 4,
                   textAlign: "center",
-                  background:"linear-gradient(45deg, #dce6f6, #a9b6ca)",                  // background:"#dce6f6",,
+                  background: "linear-gradient(45deg, #dce6f6, #a9b6ca)", // background:"#dce6f6",,
                   boxShadow: "0 5px 25px rgba(0,0,0,0.2)",
                   transition: "transform 0.3s ease",
                   "&:hover": {
@@ -148,8 +149,8 @@ function Homepage() {
             think clearly and stay productive.
             <br />
             <br />
-            Built with love by <strong>Waithaka</strong> who understands the chaos of digital
-            overload, Notely is here to bring
+            Built with love by <strong>Waithaka</strong> who understands the
+            chaos of digital overload, Notely is here to bring
             <span style={{ color: "#6D28D9", fontWeight: 500 }}>
               {" "}
               clarity to your creativity

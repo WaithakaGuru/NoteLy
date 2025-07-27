@@ -1,6 +1,6 @@
-import { Typography, Paper, Box, Stack } from "@mui/material"
-import { CalendarMonth, Today, CalendarToday } from "@mui/icons-material"
-import { type NoteCountType } from "../utils/notesPerDuration"
+import { Typography, Paper, Box, Stack } from "@mui/material";
+import { CalendarMonth, Today, CalendarToday } from "@mui/icons-material";
+import { type NoteCountType } from "../utils/notesPerDuration";
 
 function NotesCreationSummary(summaryInfo: NoteCountType) {
   return (
@@ -37,8 +37,14 @@ function NotesCreationSummary(summaryInfo: NoteCountType) {
             fontSize={".8rem"}
             fontWeight={700}
           >
-            {summaryInfo.today? 
-             (<span><strong style={{color: "#333"}}>{summaryInfo.today}</strong> Notes added today</span>)  : "No Notes added today"}
+            {summaryInfo.today ? (
+              <span>
+                <strong style={{ color: "#333" }}>{summaryInfo.today}</strong>{" "}
+                Notes added today
+              </span>
+            ) : (
+              "No Notes added today"
+            )}
           </Typography>
         </Box>
       </Paper>
@@ -65,8 +71,14 @@ function NotesCreationSummary(summaryInfo: NoteCountType) {
             fontSize={".8rem"}
             fontWeight={700}
           >
-              {summaryInfo.week? 
-             (<><strong style={{color: "#333"}}>{summaryInfo.week}</strong> Notes added this week</>)  : "No Notes added this week"}
+            {summaryInfo.week ? (
+              <>
+                <strong style={{ color: "#333" }}>{summaryInfo.week}</strong>{" "}
+                Notes added this week
+              </>
+            ) : (
+              "No Notes added this week"
+            )}
           </Typography>
         </Box>
       </Paper>
@@ -93,13 +105,19 @@ function NotesCreationSummary(summaryInfo: NoteCountType) {
             fontSize={".8rem"}
             fontWeight={700}
           >
-            {summaryInfo.month?
-             (<><strong style={{color: "#333"}}>{summaryInfo.month}</strong> Notes added this month</>)  : "No Notes added this month"}
+            {summaryInfo.month ? (
+              <>
+                <strong style={{ color: "#333" }}>{summaryInfo.month}</strong>{" "}
+                Notes added this month
+              </>
+            ) : (
+              "No Notes added this month"
+            )}
           </Typography>
         </Box>
       </Paper>
     </Stack>
-  )
+  );
 }
 
-export default NotesCreationSummary
+export default NotesCreationSummary;

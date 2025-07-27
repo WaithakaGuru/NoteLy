@@ -1,7 +1,17 @@
-import {Stack, Box, Typography, Button, TextField,FormControl, InputLabel, Select,
-   MenuItem, type SelectChangeEvent,
-   Alert} from "@mui/material"
-import { Cancel, Dashboard, Delete, Notes} from "@mui/icons-material";
+import {
+  Stack,
+  Box,
+  Typography,
+  Button,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  type SelectChangeEvent,
+  Alert,
+} from "@mui/material";
+import { Cancel, Dashboard, Delete, Notes } from "@mui/icons-material";
 import ToggleSideBar from "../components/ToggleSideBar";
 import MarkdownGuide from "../components/MarkdownGuide";
 import { useReducer, useState } from "react";
@@ -10,72 +20,74 @@ import { isAxiosError } from "axios";
 import { useCreateNote } from "../services/postRequests";
 
 type ActionType = {
-  type: "input",
+  type: "input";
   vals: {
-    value: string,
-    component: string
-  }
-}
+    value: string;
+    component: string;
+  };
+};
 
 type CreateNoteStateType = {
-  title: string,
-  synopsis: string,
-  content: string,
-}
+  title: string;
+  synopsis: string;
+  content: string;
+};
 
-const reducerFunc = (state: CreateNoteStateType, action: ActionType): CreateNoteStateType  => {
-  if(action.type === "input") {
-    return {...state, [action.vals.component] : action.vals.value}
+const reducerFunc = (
+  state: CreateNoteStateType,
+  action: ActionType,
+): CreateNoteStateType => {
+  if (action.type === "input") {
+    return { ...state, [action.vals.component]: action.vals.value };
   }
-  return state
-}
-
+  return state;
+};
 
 function CreateNote() {
-  const [visibility, setVisibility] = useState<"public" | "private">('public');
+  const [visibility, setVisibility] = useState<"public" | "private">("public");
   const [error, setError] = useState("");
   const [hide, setHide] = useState(true);
   const [state, alter] = useReducer(reducerFunc, {
-    title: "", synopsis: "", content: ""
-  })
-  const {mutateAsync: createNote, isPending} = useCreateNote();
+    title: "",
+    synopsis: "",
+    content: "",
+  });
+  const { mutateAsync: createNote, isPending } = useCreateNote();
   const isPublic = visibility === "public" ? true : false;
 
-  async function handleCreateNote(e: React.FormEvent<HTMLFormElement>){
+  async function handleCreateNote(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const newNoteData = {...state, isPublic};
-    try{
+    const newNoteData = { ...state, isPublic };
+    try {
       const newNote = await createNote(newNoteData);
-      if(newNote){
-        setHide(false)
+      if (newNote) {
+        setHide(false);
       }
-    }catch(err){
-      if(isAxiosError(err)) {
-        setError(err.response?.data.message)
-      }
-      else{
+    } catch (err) {
+      if (isAxiosError(err)) {
+        setError(err.response?.data.message);
+      } else {
         console.log(err);
-        setError("Something went wrong!!")
+        setError("Something went wrong!!");
       }
     }
   }
 
-
   function handleVisibility(e: SelectChangeEvent) {
-    setVisibility(e.target.value as "public"|"private")
+    setVisibility(e.target.value as "public" | "private");
   }
 
   return (
-  <Box
+    <Box
       component={"main"}
       className="w-full gap-2 flex h-[36rem] py-2"
-      sx={{ background: "#011611", height: {xs: "max-content"} }}
+      sx={{ background: "#011611", height: { xs: "max-content" } }}
     >
-      <ToggleSideBar/>
+      <ToggleSideBar />
       <Stack
         component={"section"}
         className="bg-gray-50 w-full overflow-auto rounded p-4"
-        sx={{ ml: { sm: "9rem" }, height: {xs: "100dvh",  md:"35rem"}}}
+        sx={{ ml: { sm: "9rem" }, height: { xs: "100dvh", md: "35rem" } }}
       >
         <Box
           component={"section"}
@@ -93,7 +105,7 @@ function CreateNote() {
                   fontWeight={"bold"}
                   className="text-gray-700 "
                 >
-                 Create A new page
+                  Create A new page
                 </Typography>
               </Box>
               <Typography
@@ -155,10 +167,18 @@ function CreateNote() {
               </Stack>
             </Box>
           </Stack>
-          <MarkdownGuide/>                   
+          <MarkdownGuide />
         </Box>
-        <Box component={"section"} className="w-full p-2 items-center flex gap-6 my-12"  sx={{flexDirection: {xs: "column", md: "row"}}}>
-          <Stack fontFamily={"cursive"} className="min-w-[55%]" sx={{width: {xs: "100%", md: "50%"}}}>
+        <Box
+          component={"section"}
+          className="w-full p-2 items-center flex gap-6 my-12"
+          sx={{ flexDirection: { xs: "column", md: "row" } }}
+        >
+          <Stack
+            fontFamily={"cursive"}
+            className="min-w-[55%]"
+            sx={{ width: { xs: "100%", md: "50%" } }}
+          >
             <Typography
               variant="h6"
               className="text-gray-700"
@@ -169,40 +189,71 @@ function CreateNote() {
               Write a new Note (use Markdown)
             </Typography>
             {error && <Alert severity="error">{error}</Alert>}
-            <Alert severity="success" hidden={hide} className="flex items-center"
+            <Alert
+              severity="success"
+              hidden={hide}
+              className="flex items-center"
               id="success"
-            > 
-                Note successfully created :) 
-                <Button onClick={()=> setHide(!hide)} 
-                  className="relative right-0" sx={{position: "relative", right: 0}}
-                >
-                  <Cancel/>
-                </Button>
-              </Alert>
-            <Stack component={"form"} onSubmit={handleCreateNote}  
-              className="bg-white border border-gray-300 p-4 m-1 gap-2 rounded shadow-md" >
-              <TextField required sx={{my: ".4rem"}} label="Enter a title for your notes"  
-                value={state.title} fullWidth
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
-                  alter({type: "input", vals: {component: "title", value:e.target.value}})
+            >
+              Note successfully created :)
+              <Button
+                onClick={() => setHide(!hide)}
+                className="relative right-0"
+                sx={{ position: "relative", right: 0 }}
+              >
+                <Cancel />
+              </Button>
+            </Alert>
+            <Stack
+              component={"form"}
+              onSubmit={handleCreateNote}
+              className="bg-white border border-gray-300 p-4 m-1 gap-2 rounded shadow-md"
+            >
+              <TextField
+                required
+                sx={{ my: ".4rem" }}
+                label="Enter a title for your notes"
+                value={state.title}
+                fullWidth
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  alter({
+                    type: "input",
+                    vals: { component: "title", value: e.target.value },
+                  })
                 }
               />
-              <TextField required sx={{my: ".4rem"}} label="Write the synopsis of your notes" multiline minRows={3} 
-                value={state.synopsis} 
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
-                  alter({type: "input", vals: {component: "synopsis", value:e.target.value}})
+              <TextField
+                required
+                sx={{ my: ".4rem" }}
+                label="Write the synopsis of your notes"
+                multiline
+                minRows={3}
+                value={state.synopsis}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  alter({
+                    type: "input",
+                    vals: { component: "synopsis", value: e.target.value },
+                  })
                 }
               />
-              <TextField required sx={{my: ".4rem"}} label="Write the content of your notes" multiline minRows={5} 
+              <TextField
+                required
+                sx={{ my: ".4rem" }}
+                label="Write the content of your notes"
+                multiline
+                minRows={5}
                 value={state.content}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
-                  alter({type: "input", vals: {component: "content", value:e.target.value}})
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  alter({
+                    type: "input",
+                    vals: { component: "content", value: e.target.value },
+                  })
                 }
               />
               <Typography variant="h6" color="warning">
-                (Public notes are available to all Notely users) 
+                (Public notes are available to all Notely users)
               </Typography>
-              <FormControl fullWidth size="small" required sx={{my: ".4rem"}}>
+              <FormControl fullWidth size="small" required sx={{ my: ".4rem" }}>
                 <InputLabel id="visibility-select-label">Visibility</InputLabel>
                 <Select
                   required
@@ -216,14 +267,23 @@ function CreateNote() {
                   <MenuItem value="private">Private</MenuItem>
                 </Select>
               </FormControl>
-              <Button type="submit" variant="contained" disabled={!hide}
-                color="secondary"  size="large" loading={isPending} href="#success"
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={!hide}
+                color="secondary"
+                size="large"
+                loading={isPending}
+                href="#success"
               >
                 Create Note
               </Button>
             </Stack>
           </Stack>
-          <Stack className="bg-gray-50" sx={{width: {xs: "100%", md: "50%"}}}> 
+          <Stack
+            className="bg-gray-50"
+            sx={{ width: { xs: "100%", md: "50%" } }}
+          >
             <Typography
               variant="h6"
               className="text-gray-700"
@@ -233,12 +293,12 @@ function CreateNote() {
             >
               Live preview your work
             </Typography>
-            <MarkdownPreview state={state} visibility={isPublic}/>
+            <MarkdownPreview state={state} visibility={isPublic} />
           </Stack>
         </Box>
       </Stack>
     </Box>
-    )
+  );
 }
 
 export default CreateNote;

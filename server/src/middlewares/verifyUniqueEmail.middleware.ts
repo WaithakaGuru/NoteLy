@@ -19,7 +19,8 @@ export default async function verifyUniqueEmail(
     if (invalidEmail) {
       res
         .status(400)
-        .json( {invalidEmail,
+        .json({
+          invalidEmail,
           message: "Email already exists: Choose a unique and valid email",
         });
       return;
