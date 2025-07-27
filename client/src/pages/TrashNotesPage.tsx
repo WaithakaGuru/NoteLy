@@ -22,15 +22,18 @@ function TrashNotesPage() {
 
     function handleShowAllNotes() {
         setGoBackHidden(true);
+        setNoteTitle("Recently deleted Notes")
         setShowAllNotes(true);
     }
     
     function handleFilterPublicNotes(){
         setData(filterPublic(data));
+        setNoteTitle("Public Trashed Notes")
         setGoBackHidden(false);
     }
     function handleFilterPinnedNotes(){
         setData(filterPinned(data));
+        setNoteTitle("Pinned Trashed Notes")
         setGoBackHidden(false);
     }
 
@@ -47,7 +50,7 @@ function TrashNotesPage() {
       className="w-full h-[36rem] py-2 gap-2 flex"
       sx={{ background: "#011611", height: {xs: "max-content"} }}
     >
-        <ToggleSideBar/>
+        <ToggleSideBar handlePinned={handleFilterPinnedNotes} handlePublic={handleFilterPublicNotes}/>
         <Stack
             component={"section"}
             className="bg-gray-50 w-full overflow-auto rounded p-4"

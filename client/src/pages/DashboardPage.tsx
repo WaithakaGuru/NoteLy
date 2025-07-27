@@ -36,14 +36,17 @@ function DashboardPage() {
   function handleShowAllNotes() {
     setGoBackHidden(true);
     setShowAllNotes(true);
+    setNoteTitle("Recent Notes")
   }
 
   function handleFilterPublicNotes(){
     setData(filterPublic(info));
+    setNoteTitle("Public Notes");
     setGoBackHidden(false);
   }
   function handleFilterPinnedNotes(){
     setData(filterPinned(info));
+    setNoteTitle("Pinned Notes");
     setGoBackHidden(false);
   }
   
@@ -60,7 +63,7 @@ function DashboardPage() {
       className="w-full h-[36rem] py-2 gap-2 flex"
       sx={{ background: "#011611", height: {xs: "max-content"} }}
     >
-      <ToggleSideBar/>
+      <ToggleSideBar handlePinned={handleFilterPinnedNotes} handlePublic={handleFilterPublicNotes}/>
       <Stack
         component={"section"}
         className="bg-gray-50 w-full h-[35rem] overflow-auto p-4 rounded"

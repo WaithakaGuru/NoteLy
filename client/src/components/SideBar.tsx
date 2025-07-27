@@ -3,8 +3,8 @@ import { Card, CardMedia, Typography, Stack, Button} from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { useGetUserDetails } from "../services/fetchRequests";
 
-function SideBar() {
-  const {pathname: path}= useLocation();
+function SideBar(props: {handlePinned: () => void, handlePublic: () => void }) {
+  const {pathname: path} = useLocation();
   const {data: user} = useGetUserDetails();
     localStorage.setItem("userId", user?.id)
   return (
@@ -41,17 +41,17 @@ function SideBar() {
         {(path !== "/dashboard/create" && !path.includes("/dashboard/update") &&
          path !== "/dashboard/profile" && !(path.includes("/dashboard/note/")))?  (
         <>
-        <Button href={"/dashboard"} className="p-0" sx={{my:".5rem"}} variant="outlined">
-        <Typography
-          className="text-gray-50 text-nowrap"
-          fontWeight={"bold"}
-          textTransform={"none"}
-          sx={{ml: "-.9rem"}}
-        >
-          Pinned Notes
-        </Typography>
+        <Button href={"/dashboard"} sx={{my:".5rem"}} variant="outlined" onClick={props.handlePinned}>
+          <Typography
+            className="text-gray-50 text-nowrap"
+            fontWeight={"bold"}
+            textTransform={"none"}
+            sx={{ml: "-.9rem"}}
+          >
+            Pinned Notes
+          </Typography>
         </Button>
-        <Button href={"/dashboard"} variant="outlined">
+        <Button href={"/dashboard"} variant="outlined" onClick={props.handlePublic} >
           <Typography
             className="text-gray-50 text-nowrap"
             fontWeight={"bold"}
