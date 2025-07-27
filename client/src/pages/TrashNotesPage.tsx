@@ -23,6 +23,7 @@ function TrashNotesPage() {
     function handleShowAllNotes() {
         setGoBackHidden(true);
         setNoteTitle("Recently deleted Notes")
+        setData(trash)
         setShowAllNotes(true);
     }
     

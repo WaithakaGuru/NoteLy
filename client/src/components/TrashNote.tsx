@@ -2,7 +2,7 @@ import { Restore, Person, Topic, } from "@mui/icons-material"
 import {Button, Typography, Chip, Stack } from "@mui/material"
 import type { NoteType } from "../utils/Note.type"
 import getDateString from "../utils/dateFormatter"
-import useGeneric from "../services/patchRequests"
+import {useGeneric} from "../services/patchRequests"
 import { isAxiosError } from "axios"
 import { client } from "../main"
 

@@ -1,8 +1,18 @@
 import { Request, Response } from "express";
+import client from "../utils/prismaClient";
+import handleErrors from "../utils/handleErrors";
 
-export default function getUserInfo(_req: Request, res: Response){
-    const userInfo = res.locals.validUserData;
-    if(userInfo)
-    res.status(200).json(userInfo)
-    else res.status(400).json({message: "Current userInfo not retrieved!!"})
+export default async function getUserInfo(req: Request, res: Response){
+    const {id} = res.locals.validUserData;
+    try{
+        const userInfo = await client.users.findFirst({
+            where: {
+                id
+            },
+            omit: {password: true,}
+        })
+        if(userInfo) res.status(200).json(userInfo);
+    }catch(err){
+        handleErrors(err, "Failed to fetch user Info", req, res)
+    }
 }

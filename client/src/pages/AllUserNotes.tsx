@@ -13,19 +13,20 @@ import { filterPinned, filterPublic } from "../utils/filterNote";
 
 function AllUserNotesPage() {
   const {data: info} = useGetAllUserNotes();
-  const [data, setData] = useState(info);
+  const [data, setData] = useState<NoteType[] | undefined>(undefined);
+  const [isFiltering, setIsFiltering] = useState(false);
   const [goBackHidden, setGoBackHidden] = useState(true);
-  const [showAllNotes, setShowAllNotes] = useState(false);
   const [noteTitle, setNoteTitle] = useState("Your Recent Notes");
     
   useEffect(()=> {
-    if(info && !showAllNotes) setData(info);
-  }, [info, showAllNotes])
+    if(info && !isFiltering) setData(info);
+  }, [info, isFiltering])
   
   function handleShowAllNotes() {
     setGoBackHidden(true);
     setNoteTitle("Your Recent Notes")
-    setShowAllNotes(true);
+    setData(info)
+    setIsFiltering(false);
   }
 
   function handleFilterPublicNotes(){

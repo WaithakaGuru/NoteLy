@@ -27,7 +27,7 @@ function DashboardPage() {
   const [isFiltering, setIsFiltering] = useState(false);
   const [goBackHidden, setGoBackHidden] = useState(true);
   const [noteTitle, setNoteTitle] = useState("Recent Notes")
-  let summaryInfo = info && getNotesPerDuration(info);
+  const summaryInfo = info && getNotesPerDuration(info);
 
   useEffect(()=>{
     if(info && !isFiltering) setData(info)

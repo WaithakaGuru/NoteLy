@@ -11,7 +11,8 @@ import MarkdownPreview from "../components/MarkdownPreview";
 import { useGetSpecificNote } from "../services/fetchRequests";
 import { useParams } from "react-router-dom";
 import { isAxiosError } from "axios";
-import useGeneric from "../services/patchRequests";
+import{ useGeneric} from "../services/patchRequests";
+import { client } from "../main";
 
 type ActionType = {
   type: string,
@@ -68,7 +69,7 @@ function UpdateNote() {
       const updatedNote = await updateNote({...state, isPublic});
       if(updatedNote){
         setSuccess(true);
-
+        client.invalidateQueries({queryKey: ["updateNote", id]})
       }
     }catch(err){
       if(isAxiosError(err))setError(err.response?.data.message || "Unknown error")

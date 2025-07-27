@@ -35,5 +35,17 @@ const useGeneric = (id: string, mutationKey: string, path: string) => {
         }
     })
 }
+const useGenericUser = (mutationKey: string, path: string) => {
+    const {token} = useNote();
+    return useMutation({
+        mutationKey: [mutationKey],
+        mutationFn: async (data: UpdateTypes ) => {
+            const genericUserData = await ax.patch(`${path}`, data, {
+                headers: {Authorization: `Author ${token}`}
+            })
+            return genericUserData.data
+        }
+    })
+}
 
-export default useGeneric;
+export {useGeneric, useGenericUser};
