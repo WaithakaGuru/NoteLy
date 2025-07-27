@@ -9,6 +9,7 @@ export default async function getTrashNotes(req: Request, res: Response) {
       where: {
         AND: [{ creator: id }, { isDeleted: true }],
       },
+      include: {NoteCreator: {omit: {password: true, avatarUrl: true}}}
     });
     if (trashNotes) res.status(200).json(trashNotes);
   } catch (err) {

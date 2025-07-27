@@ -19,7 +19,7 @@ function AllUserNotesPage() {
   const [noteTitle, setNoteTitle] = useState("Your Recent Notes");
     
   useEffect(()=> {
-    if(info) setData(info);
+    if(info && !showAllNotes) setData(info);
   }, [info, showAllNotes])
   
   function handleShowAllNotes() {
@@ -68,27 +68,13 @@ function AllUserNotesPage() {
         >
           <Stack direction={"row"} className="justify-between min-w-1/2">
             <Box>
-              <Box
-                component={"div"}
-                className="flex items-center justify-around w-full"
+              <Typography
+                fontSize={"1.8rem"}
+                fontWeight={"bold"}
+                className="text-gray-700"
               >
-                <Typography
-                  fontSize={"1.8rem"}
-                  fontWeight={"bold"}
-                  className="text-gray-700"
-                  sx={{ml: {xs: "1rem", sm: "auto"}}}
-                >
-                 Notes Collection for: 
-                </Typography>
-                <Typography
-                  fontWeight={600}
-                  fontSize={"1.1rem"}
-                  className="text-purple-700 inline"
-                  sx={{ml: "1rem"}}
-                >
-                  Waithaka
-                </Typography>
-              </Box>
+                Notes Collection
+              </Typography>
               <Typography
                 variant="body2"
                 gutterBottom

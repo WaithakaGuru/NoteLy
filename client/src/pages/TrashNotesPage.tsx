@@ -17,7 +17,7 @@ function TrashNotesPage() {
     const [data, setData] = useState(trash);
 
     useEffect(()=> {
-        if(trash) setData(trash);
+        if(trash && !showAllNotes) setData(trash);
     }, [trash, showAllNotes])
 
     function handleShowAllNotes() {
@@ -28,12 +28,12 @@ function TrashNotesPage() {
     
     function handleFilterPublicNotes(){
         setData(filterPublic(data));
-        setNoteTitle("Public Trashed Notes")
+        setNoteTitle("Trashed Public Notes")
         setGoBackHidden(false);
     }
     function handleFilterPinnedNotes(){
         setData(filterPinned(data));
-        setNoteTitle("Pinned Trashed Notes")
+        setNoteTitle("Trashed Pinned Notes")
         setGoBackHidden(false);
     }
 

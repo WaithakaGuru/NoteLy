@@ -3,14 +3,18 @@ import { Card, CardMedia, Typography, Stack, Button} from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { useGetUserDetails } from "../services/fetchRequests";
 
-function SideBar(props: {handlePinned: () => void, handlePublic: () => void }) {
+function SideBar(props?: {handlePinned?: () => void, handlePublic?: () => void }) {
   const {pathname: path} = useLocation();
   const {data: user} = useGetUserDetails();
     localStorage.setItem("userId", user?.id)
+
+  function doNothing() {
+    console.log("");
+  }
   return (
     <Stack
       component={"aside"}
-      className="max-w-42 fixed top-16 h-full w-64 overflow-hidden ml-[-1.2rem] sm:border-r sm:border-t border-gray-400 rounded"
+      className="max-w-42 fixed top-12 h-full w-64 overflow-hidden ml-[-1.2rem] sm:border-r sm:border-t border-gray-400 rounded"
       sx={{ zIndex: { xs: -1, sm: 1 } }}
     >
       <Card
@@ -41,7 +45,7 @@ function SideBar(props: {handlePinned: () => void, handlePublic: () => void }) {
         {(path !== "/dashboard/create" && !path.includes("/dashboard/update") &&
          path !== "/dashboard/profile" && !(path.includes("/dashboard/note/")))?  (
         <>
-        <Button href={"/dashboard"} sx={{my:".5rem"}} variant="outlined" onClick={props.handlePinned}>
+        <Button sx={{my:".5rem"}} variant="outlined" onClick={props?.handlePinned || doNothing}>
           <Typography
             className="text-gray-50 text-nowrap"
             fontWeight={"bold"}
@@ -51,7 +55,7 @@ function SideBar(props: {handlePinned: () => void, handlePublic: () => void }) {
             Pinned Notes
           </Typography>
         </Button>
-        <Button href={"/dashboard"} variant="outlined" onClick={props.handlePublic} >
+        <Button variant="outlined" onClick={props?.handlePublic || doNothing} >
           <Typography
             className="text-gray-50 text-nowrap"
             fontWeight={"bold"}

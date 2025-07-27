@@ -3,7 +3,7 @@ import { Box, Drawer} from "@mui/material";
 import useNote from "../store/notelyStore";
 
 
-function ToggleSideBar(props: {handlePinned: () => void, handlePublic: () => void}) {
+function ToggleSideBar(props?: {handlePinned?: () => void, handlePublic?: () => void}) {
     const {sideBarOpen, setSideBarOpen} = useNote()
   return (
     <Box>

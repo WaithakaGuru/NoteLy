@@ -23,28 +23,31 @@ import { filterPinned, filterPublic } from "../utils/filterNote";
 
 function DashboardPage() {
   const {data: info} = useGetAllNotes();
-  const [data, setData] = useState(info);
+  const [data, setData] = useState<NoteType[] | undefined>(undefined);
+  const [isFiltering, setIsFiltering] = useState(false);
   const [goBackHidden, setGoBackHidden] = useState(true);
-  const [showAllNotes, setShowAllNotes] = useState(false);
   const [noteTitle, setNoteTitle] = useState("Recent Notes")
   let summaryInfo = info && getNotesPerDuration(info);
 
   useEffect(()=>{
-    setData(info)
-  }, [info, showAllNotes])
+    if(info && !isFiltering) setData(info)
+  }, [info, isFiltering])
 
   function handleShowAllNotes() {
+    setIsFiltering(false);
     setGoBackHidden(true);
-    setShowAllNotes(true);
+    setData(info);
     setNoteTitle("Recent Notes")
   }
 
   function handleFilterPublicNotes(){
+    setIsFiltering(true)
     setData(filterPublic(info));
     setNoteTitle("Public Notes");
     setGoBackHidden(false);
   }
   function handleFilterPinnedNotes(){
+    setIsFiltering(true)
     setData(filterPinned(info));
     setNoteTitle("Pinned Notes");
     setGoBackHidden(false);

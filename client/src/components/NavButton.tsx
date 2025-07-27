@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 
 type NavButtonType = ButtonProps & {
   label: string;
-  m?: number;
+  m?: number; def?: string
 };
 
 function NavButton({
@@ -12,6 +12,7 @@ function NavButton({
   startIcon,
   title = "",
   m = 0,
+  def
 }: NavButtonType) {
   const path = useLocation().pathname;
   return (
@@ -36,6 +37,7 @@ function NavButton({
         },
       }}
     >
+      {def}
       <Box sx={{display: {xs: "none", sm: "flex"}}}>{label}</Box>
     </Button>
   );

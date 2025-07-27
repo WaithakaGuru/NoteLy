@@ -25,7 +25,7 @@ function ProfilePage() {
       className="w-full gap-2 flex h-[36rem] py-2"
       sx={{ background: "#011611", height: {xs: "max-content"} }}
     >
-      <ToggleSideBar/>
+      <ToggleSideBar />
       <Stack
         component={"section"}
         className="bg-gray-50 w-full overflow-auto rounded p-4"

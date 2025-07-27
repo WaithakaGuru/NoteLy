@@ -47,7 +47,7 @@ function Navbar() {
   return (
     <Stack
       component={"nav"}
-      className="bg-gray-50 border-0 border-b-gray-400 p-2 h-14 sticky
+      className="bg-gray-50 border-0 border-b-gray-400 p-2 h-10 sticky
          top-0 shadow min-w-[100%]"
       direction={"row"}
       justifyContent={"space-between"}
@@ -63,7 +63,7 @@ function Navbar() {
             }}
             onClick={() => setSideBarOpen(!sideBarOpen)}
             title="Open Side bar"
-            className="w-11 h-11"
+            className="w-9 h-9"
           >
             <Menu className="text-gray-50" />
           </IconButton> : ""
@@ -81,7 +81,7 @@ function Navbar() {
       </Box>
 
       {loggedIn ? (
-          <Stack direction={"row"} gap={1}>
+          <Stack direction={"row"} gap={1} className="items-center">
             <NavButton
               startIcon={<Dashboard />}
               label="Home"
@@ -101,6 +101,7 @@ function Navbar() {
               title="Create a new note"
             />
             <IconButton
+              className="w-9 h-9 pla"
               sx={{
                 color: "#364153",
                 border: "1px solid #364153",
@@ -127,6 +128,7 @@ function Navbar() {
                 startIcon={<Person />}
                 href="/dashboard/profile"
                 m={2}
+                def="My profile"
               />
               <Button
                 startIcon={<Logout />}
