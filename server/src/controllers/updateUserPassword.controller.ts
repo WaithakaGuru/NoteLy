@@ -8,7 +8,7 @@ export default async function updatePassword(_req: Request, res: Response) {
   const hashedNewPassword = hashPassword(newPassword);
   try {
     const data = await client.users.update({
-      where: id,
+      where: {id},
       data: { password: hashedNewPassword },
     });
     if (data)
