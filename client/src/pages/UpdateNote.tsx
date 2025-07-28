@@ -304,7 +304,6 @@ function UpdateNote() {
               <Button
                 type="submit"
                 variant="contained"
-                href="#update"
                 color="secondary"
                 size="large"
                 loading={isPending}

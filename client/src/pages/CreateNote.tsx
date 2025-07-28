@@ -274,7 +274,6 @@ function CreateNote() {
                 color="secondary"
                 size="large"
                 loading={isPending}
-                href="#success"
               >
                 Create Note
               </Button>
