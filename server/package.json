@@ -4,15 +4,16 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "build" : "tsc",
+    "build" : "npx tsx",
+    "prod" : "npx prisma migrate deploy && tsc && node dist/index.js",
     "pstudio": "prisma studio",
     "pinit": "prisma init",
     "pgenerate": "prisma generate --schema=./prisma/schema.prisma",
     "pmigrate": "prisma migrate dev",
     "pdeploy": "prisma migrate deploy",
     "start": "node dist/index.js",
-    "dev": "nodemon --watch src --ext ts --exec tsx src/index.ts"
-  },
+    "dev": "npx tsx watch src/index.ts"
+},
   "author": "WaithakaGuru",
   "dependencies": {
     "@prisma/client": "^6.9.0",
