@@ -1,0 +1,17 @@
+import client from "../utils/prismaClient.ts";
+import handleErrors from "../utils/handleErrors.ts";
+export default async function updateUserInfo(req, res) {
+    const { firstName, lastName, emailAddress, userName } = req.body;
+    const { id } = res.locals.validUserData;
+    try {
+        const updatedUser = await client.users.update({
+            where: { id },
+            data: { firstName, lastName, emailAddress, userName },
+        });
+        if (updatedUser)
+            res.status(201).json(updatedUser);
+    }
+    catch (err) {
+        handleErrors(err, "Update User Information later", req, res);
+    }
+}

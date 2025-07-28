@@ -1,7 +1,7 @@
-import { Block, FormatListBulletedAdd, FormatListNumbered, Link, List, Numbers } from "@mui/icons-material";
+import { FormatListBulletedAdd, FormatListNumbered, Link, List } from "@mui/icons-material";
 import { useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+// import remarkGfm from "remark-gfm";
 
 export default function MarkdownEditor() {
   const [content, setContent] = useState<string>("");
