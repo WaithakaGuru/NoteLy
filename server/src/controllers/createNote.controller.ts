@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import client from "../utils/prismaClient.ts";
+import client from "../utils/prismaClient";
 
 export default async function createNote(req: Request, res: Response) {
   const { title, synopsis, content, isPublic } = req.body;

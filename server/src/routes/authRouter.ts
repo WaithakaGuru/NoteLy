@@ -6,13 +6,13 @@ import {
   verifyIdentifier,
   verifyJWebToken,
   verifyLoginPassword,
-} from "../middlewares/exports.middleware.ts";
+} from "../middlewares/exports.middleware";
 import {
   createJWebToken,
   logoutUser,
   registerNewUser,
   updatePassword,
-} from "../controllers/exports.controller.ts";
+} from "../controllers/exports.controller";
 
 const authRouter = Router();
 

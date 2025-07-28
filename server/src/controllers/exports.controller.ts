@@ -1,19 +1,19 @@
-import getUploadInfo from "./generateCloudinaryUploadInfo.controller.ts";
-import createNote from "./createNote.controller.ts";
-import getAllNotes from "./getAllNotes.ts";
-import getAllUserNotes from "./getAllUserNotes.controller.ts";
-import getUserInfo from "./getUserInfo.ts";
-import getSpecificNote from "./getSpecificNote.controller.ts";
-import deleteNote from "./deleteNote.controller.ts";
-import updateNote from "./updateNote.contoller.ts";
-import pinNote from "./pinNote.controller.ts";
-import getTrashNotes from "./getAllTrashNotes.controller.ts";
-import restoreDeletedNote from "./restoreDeletedNote.controller.ts";
-import registerNewUser from "./registerNewUser.controller.ts";
-import createJWebToken from "./loginUser.controller.ts";
-import updateUserInfo from "./updateUserInfo.controller.ts";
-import updatePassword from "./updateUserPassword.controller.ts";
-import logoutUser from "./logoutUser.controller.ts";
+import getUploadInfo from "./generateCloudinaryUploadInfo.controller";
+import createNote from "./createNote.controller";
+import getAllNotes from "./getAllNotes";
+import getAllUserNotes from "./getAllUserNotes.controller";
+import getUserInfo from "./getUserInfo";
+import getSpecificNote from "./getSpecificNote.controller";
+import deleteNote from "./deleteNote.controller";
+import updateNote from "./updateNote.contoller";
+import pinNote from "./pinNote.controller";
+import getTrashNotes from "./getAllTrashNotes.controller";
+import restoreDeletedNote from "./restoreDeletedNote.controller";
+import registerNewUser from "./registerNewUser.controller";
+import createJWebToken from "./loginUser.controller";
+import updateUserInfo from "./updateUserInfo.controller";
+import updatePassword from "./updateUserPassword.controller";
+import logoutUser from "./logoutUser.controller";
 
 export {
   getUploadInfo,

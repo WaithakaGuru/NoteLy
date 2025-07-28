@@ -1,11 +1,11 @@
-import { authenticateUsername } from "./authenticateUsername.middleware.ts";
-import authenticateEmail from "./authenticateEmail.middleware.ts";
-import verifyIdentifier from "./verifyLoginIdentifier.middleware.ts";
-import verifyLoginPassword from "./verifyLoginPassword.middleware.ts";
-import verifyJWebToken from "./verifyJWebToken.middleware.ts";
-import verifyUniqueEmail from "./verifyUniqueEmail.middleware.ts";
-import verifyUniqueUsername from "./verifyUniqueUsername.middleware.ts";
-import verifyCurrentPassword from "./verifyCurrentPassword.middleware.ts";
+import { authenticateUsername } from "./authenticateUsername.middleware";
+import authenticateEmail from "./authenticateEmail.middleware";
+import verifyIdentifier from "./verifyLoginIdentifier.middleware";
+import verifyLoginPassword from "./verifyLoginPassword.middleware";
+import verifyJWebToken from "./verifyJWebToken.middleware";
+import verifyUniqueEmail from "./verifyUniqueEmail.middleware";
+import verifyUniqueUsername from "./verifyUniqueUsername.middleware";
+import verifyCurrentPassword from "./verifyCurrentPassword.middleware";
 
 export {
   authenticateUsername,

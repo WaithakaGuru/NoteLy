@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import client from "../utils/prismaClient.ts";
+import client from "../utils/prismaClient";
 
 export default async function getSpecificNote(req: Request, res: Response) {
   const id = req.params.id;

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import client from "../utils/prismaClient.ts";
-import handleErrors from "../utils/handleErrors.ts";
+import client from "../utils/prismaClient";
+import handleErrors from "../utils/handleErrors";
 
 export default async function verifyUniqueEmail(
   req: Request,

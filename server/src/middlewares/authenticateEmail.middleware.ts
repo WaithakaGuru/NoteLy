@@ -1,4 +1,4 @@
-import client from "../utils/prismaClient.ts";
+import client from "../utils/prismaClient";
 import { Response, Request, NextFunction } from "express";
 
 const authenticateEmail = async (

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import client from "../utils/prismaClient.ts";
-import handleErrors from "../utils/handleErrors.ts";
-import filterOldTrashNotes from "../utils/filterOldTrash.ts";
+import client from "../utils/prismaClient";
+import handleErrors from "../utils/handleErrors";
+import filterOldTrashNotes from "../utils/filterOldTrash";
 
 export default async function getTrashNotes(req: Request, res: Response) {
   const { id } = res.locals.validUserData;

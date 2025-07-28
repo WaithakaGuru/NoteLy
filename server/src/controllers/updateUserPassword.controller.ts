@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import client from "../utils/prismaClient.ts";
-import hashPassword from "../utils/hashPassword.ts";
+import client from "../utils/prismaClient";
+import hashPassword from "../utils/hashPassword";
 
 export default async function updatePassword(_req: Request, res: Response) {
   const newPassword = res.locals.newPassword;

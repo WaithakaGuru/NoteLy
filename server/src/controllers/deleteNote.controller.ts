@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import client from "../utils/prismaClient.ts";
-import handleErrors from "../utils/handleErrors.ts";
+import client from "../utils/prismaClient";
+import handleErrors from "../utils/handleErrors";
 
 export default async function deleteNote(req: Request, res: Response) {
   const id = req.params.id;

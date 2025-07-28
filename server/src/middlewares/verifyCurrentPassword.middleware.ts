@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import client from "../utils/prismaClient.ts";
-import isCorrectPassword from "../utils/verifyPassword.ts";
+import client from "../utils/prismaClient";
+import isCorrectPassword from "../utils/verifyPassword";
 
 export default async function verifyCurrentPassword(
   req: Request,

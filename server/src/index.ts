@@ -1,10 +1,10 @@
 import express, { Request, Response } from "express";
 import CORS from "cors";
 import { configDotenv } from "dotenv";
-import userRouter from "./routes/userRouter.ts";
-import notesRouter from "./routes/notesRouter.ts";
-import noteRouter from "./routes/noteRouter.ts";
-import authRouter from "./routes/authRouter.ts";
+import userRouter from "./routes/userRouter";
+import notesRouter from "./routes/notesRouter";
+import noteRouter from "./routes/noteRouter";
+import authRouter from "./routes/authRouter";
 
 configDotenv({ path: "./.env" });
 

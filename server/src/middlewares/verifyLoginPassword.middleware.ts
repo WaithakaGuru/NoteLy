@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import isCorrectPassword from "../utils/verifyPassword.ts";
+import isCorrectPassword from "../utils/verifyPassword";
 
 export default async function verifyLoginPassword(
   req: Request,

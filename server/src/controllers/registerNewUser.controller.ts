@@ -1,6 +1,6 @@
-import handleErrors from "../utils/handleErrors.ts";
-import hashPassword from "../utils/hashPassword.ts";
-import client from "../utils/prismaClient.ts";
+import handleErrors from "../utils/handleErrors";
+import hashPassword from "../utils/hashPassword";
+import client from "../utils/prismaClient";
 import { Request, Response } from "express";
 
 export default async function registerNewUser(req: Request, res: Response) {

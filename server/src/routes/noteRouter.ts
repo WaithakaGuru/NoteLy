@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { verifyJWebToken } from "../middlewares/exports.middleware.ts";
+import { verifyJWebToken } from "../middlewares/exports.middleware";
 import {
   deleteNote,
   getSpecificNote,
   restoreDeletedNote,
   updateNote,
   pinNote,
-} from "../controllers/exports.controller.ts";
+} from "../controllers/exports.controller";
 
 const noteRouter = Router();
 noteRouter.get("/:id", verifyJWebToken, getSpecificNote);

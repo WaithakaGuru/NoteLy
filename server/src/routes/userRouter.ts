@@ -3,11 +3,11 @@ import {
   verifyJWebToken,
   verifyUniqueEmail,
   verifyUniqueUsername,
-} from "../middlewares/exports.middleware.ts";
+} from "../middlewares/exports.middleware";
 import {
   updateUserInfo,
   getUserInfo,
-} from "../controllers/exports.controller.ts";
+} from "../controllers/exports.controller";
 
 const userRouter = Router();
 userRouter.get("/", verifyJWebToken, getUserInfo);

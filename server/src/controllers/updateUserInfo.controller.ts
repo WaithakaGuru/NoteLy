@@ -1,5 +1,5 @@
-import client from "../utils/prismaClient.ts";
-import handleErrors from "../utils/handleErrors.ts";
+import client from "../utils/prismaClient";
+import handleErrors from "../utils/handleErrors";
 import { Request, Response } from "express";
 
 export default async function updateUserInfo(req: Request, res: Response) {
