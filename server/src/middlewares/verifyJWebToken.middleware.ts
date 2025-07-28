@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import jwt, { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 export default function verifyJWebToken(
   req: Request,
@@ -23,17 +23,16 @@ export default function verifyJWebToken(
     res.locals.validUserData = tokenData;
     next();
   } catch (err) {
-    if (err instanceof JsonWebTokenError) {
-      console.log("Wrong token: ", err.message);
-      res.status(400).json({ message: "Wrong token!!" });
-    } else if (err instanceof TokenExpiredError) {
-      console.log("Expired token", err.message);
-      res.status(400).json({ message: "Expired token" });
-    } else {
+    // if (err instanceof JsonWebTokenError) {
+    //   console.log("Wrong token: ", err.message);
+    //   res.status(400).json({ message: "Wrong token!!" });
+    // } else if (err instanceof TokenExpiredError) {
+    //   console.log("Expired token", err.message);
+    //   res.status(400).json({ message: "Expired token" });
+    // } else {
       console.log(err);
       res
         .status(500)
         .json({ message: "Server Error: Token Verfication failed!!" });
     }
   }
-}
