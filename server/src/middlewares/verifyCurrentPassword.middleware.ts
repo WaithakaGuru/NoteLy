@@ -11,7 +11,7 @@ export default async function verifyCurrentPassword(
   const { id } = res.locals.validUserData;
   try {
     const data = await client.users.findFirst({
-      where: id,
+      where: {id},
       select: { password: true },
     });
     if (!isCorrectPassword(currentPassword, data?.password!)) {
