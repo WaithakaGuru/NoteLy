@@ -19,7 +19,7 @@ app.use(express.json());
 
 app.use(
   CORS({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173", "https://note-ly-xi.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   }),
