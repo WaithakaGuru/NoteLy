@@ -1,4 +1,4 @@
-import { Stack, IconButton, Typography, Chip, Button } from "@mui/material";
+import { Stack, IconButton, Typography, Chip, Button, Box } from "@mui/material";
 import {
   Edit,
   DeleteOutline,
@@ -54,40 +54,43 @@ function NoteSummary({ noteData, currentUserId }: FullNoteType) {
       sx={{ width: { xs: "30rem", sm: "23.8rem" } }}
       className="w-[24rem] p-4 items-left gap-4 shadow-xl min-h-84 border-gray-300 border rounded-xl justify-center bg-white"
     >
-      <Typography
-        variant="h6"
-        className="text-gray-700 flex justify-between"
-        fontWeight={600}
-      >
-        {noteData.title}
-        <Chip
-          component={"div"}
-          label={noteData.isPublic ? "Public" : "Private"}
-          sx={{
-            bgcolor: noteData.isPublic ? "limegreen" : "slategrey",
-            color: "#f9f9f9",
-            mx: "2px",
-          }}
-        />
-      </Typography>
+     <Stack direction={"row"}>
+        <Typography
+          variant="body1"
+          className="text-gray-700 flex"
+          fontWeight={600}
+        >
+          {noteData.title}
+        </Typography>
+         <Box component={"div"} className="flex items-start">
+            <Chip
+              component={"div"}
+              label={noteData.isPublic ? "Public" : "Private"}
+              sx={{
+                bgcolor: noteData.isPublic ? "limegreen" : "slategrey",
+                color: "#f9f9f9",
+                mx: "2px",
+              }}
+            />
+            <IconButton
+              title={noteData.isPinned ? "Unpin this note": "Pin this note"}
+              onClick={handlePinNote}
+              sx={{mt: "-.5rem"}}
+            >
+              {noteData.isPinned ? (
+                <PushPin className="text-lime-500" />
+              ) : (
+                <PushPin className="text-gray-500" />
+              )}
+            </IconButton>
+         </Box>
+     </Stack>
       <Typography
         variant="body2"
         className="text-gray-600"
-        mb={"-1rem"}
         align="left"
       >
         <Topic /> Study notes{" "}
-        <IconButton
-          title="Pin this note"
-          sx={{ ml: 20 }}
-          onClick={handlePinNote}
-        >
-          {noteData.isPinned ? (
-            <PushPin className="text-lime-500" />
-          ) : (
-            <PushPin className="text-gray-500" />
-          )}
-        </IconButton>
       </Typography>
       <Typography variant="body2" className="text-gray-600">
         <Person />
@@ -143,7 +146,7 @@ function NoteSummary({ noteData, currentUserId }: FullNoteType) {
           Edit
         </Button>
         <Button
-          className="p-[.4rem] rounded text-nowrap cursor-pointer w-29"
+          className="p-[.4rem] rounded text-nowrap cursor-pointer w-4"
           title="Delete this note"
           disabled={false}
           onClick={handleDeleteNote}
@@ -154,7 +157,7 @@ function NoteSummary({ noteData, currentUserId }: FullNoteType) {
             backgroundColor: "oklch(88.5% 0.062 18.334)",
           }}
         >
-          <DeleteOutline /> Delete
+          <DeleteOutline /> 
         </Button>
       </Stack>
     </Stack>

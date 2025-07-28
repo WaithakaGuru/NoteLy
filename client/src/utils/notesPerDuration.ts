@@ -10,8 +10,8 @@ export default function getNotesPerDuration(notes: NoteType[]): NoteCountType {
   let result = { today: 0, week: 0, month: 0 };
 
   notes.forEach((note) => {
-    const dateInMs = new Date(note.dateCreated).getMilliseconds();
-    const currentDateInMs = new Date().getMilliseconds();
+    const dateInMs = new Date(note.dateCreated).getTime();
+    const currentDateInMs = new Date().getTime();
 
     const differenceInDays =
       (currentDateInMs - dateInMs) / (1000 * 60 * 60 * 24);

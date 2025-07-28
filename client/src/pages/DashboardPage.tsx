@@ -28,6 +28,8 @@ function DashboardPage() {
 
   useEffect(() => {
     if (info && !isFiltering) setData(info);
+    else if(noteTitle === ("Pinned Notes")) setData(filterPinned(info))
+    else if(noteTitle === ("Public Notes")) setData(filterPublic(info))    
   }, [info, isFiltering]);
 
   function handleShowAllNotes() {
