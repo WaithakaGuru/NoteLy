@@ -25,6 +25,12 @@ type UserInfo = {
   emailAddress: string;
 };
 
+type UserPass = {
+  currentPassword: string,
+  newPassword: string,
+  confirmPassword: string
+}
+
 type ActionType = {
   type: string;
   data: {
@@ -32,6 +38,13 @@ type ActionType = {
     value: string;
   };
 };
+
+type passAction = {
+  passData: {
+    el: string,
+    password: string
+  }
+}
 
 function controlUserInfoInputs(state: UserInfo, action: ActionType) {
   switch (action.type) {
@@ -43,12 +56,22 @@ function controlUserInfoInputs(state: UserInfo, action: ActionType) {
   }
 }
 
+function changePassword(pass: UserPass, p:passAction ){
+  return {...pass, [p.passData.el]: p.passData.password}
+}
+
 const initialState = {
   firstName: "",
   lastName: "",
   userName: "",
   emailAddress: "",
 };
+
+const initialPass = {
+  currentPassword: "",
+  newPassword: "",
+  confirmPassword: ""
+}
 
 function ProfilePage() {
   const [image, setImage] = useState<File | undefined>();
@@ -59,9 +82,9 @@ function ProfilePage() {
   const [success, setSuccess] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [state, alter] = useReducer(controlUserInfoInputs, initialState);
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [pass, alterPass] = useReducer(changePassword, initialPass);
   const [profSetting, setProfSetting] = useState(true);
+  const [currentUserInfo, setCurrentInfo] = useState<UserInfo | null>(null);
 
   const { mutateAsync: updateInfo, isPending } = useGenericUser(
     "updateUserInfo",
@@ -86,6 +109,7 @@ function ProfilePage() {
         type: "input",
         data: { el: "emailAddress", value: data.emailAddress },
       });
+      setCurrentInfo(data);
     }
   }, [data]);
 
@@ -124,23 +148,36 @@ function ProfilePage() {
   }
 
   function handleCurrentPassword(e: React.ChangeEvent<HTMLInputElement>) {
-    setCurrentPassword(e.target.value);
+    alterPass({passData: {el: "currentPassword", password: e.target.value}});
   }
 
   function handleNewPassword(e: React.ChangeEvent<HTMLInputElement>) {
-    setNewPassword(e.target.value);
+    alterPass({passData: {el: "newPassword", password: e.target.value}});
+  }
+  function handleConfirmPassword(e: React.ChangeEvent<HTMLInputElement>) {
+    alterPass({passData: {el: "confirmPassword", password: e.target.value}});
   }
 
   async function handleUpdateUserInfo(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     try {
-      const updatedUser = await updateInfo(state);
-      if (updatedUser) {
-        setError("");
-        setSuccess("Profile information updated successfully");
-        client.invalidateQueries({ queryKey: ["GetUserDetails"] });
+      if(
+        currentUserInfo?.firstName === state.firstName &&
+        currentUserInfo?.lastName === state.lastName &&
+        currentUserInfo?.userName === state.userName &&
+        currentUserInfo?.emailAddress === state.emailAddress
+      ){
+        setError("Profile info is Already up-to-date!");
       }
+      else{
+        const updatedUser = await updateInfo(state);
+        if (updatedUser) {
+          setError("");
+          setSuccess("Profile information updated successfully");
+          client.invalidateQueries({ queryKey: ["GetUserDetails"] });
+        }
+    }
     } catch (err) {
       setSuccess("");
       if (isAxiosError(err))
@@ -155,11 +192,18 @@ function ProfilePage() {
   async function handleUpdateUserPassword(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
-      if (!isStrongPassword(newPassword)) {
+      if (!isStrongPassword(pass.newPassword)) {
         setSuccessPass("")
         setPasswordError("Choose a stronger password!!");
         return;
       }
+      if (!(pass.newPassword === pass.confirmPassword)) {
+        setSuccessPass("")
+        setPasswordError("Passwords must match!!");
+        return;
+      }
+      const currentPassword = pass.currentPassword;
+      const newPassword = pass.currentPassword;
       const updatedPass = await updatePass({ currentPassword, newPassword });
       if (updatedPass) setSuccessPass("Password changed successfully!");
     } catch (err) {
@@ -527,15 +571,22 @@ function ProfilePage() {
             </Typography>
             <PasswordInput
               label="Current Password"
-              value={currentPassword}
+              value={pass.currentPassword}
               onChange={handleCurrentPassword}
               v="#e65100"
               variant="standard"
             />
             <PasswordInput
               label="New Password"
-              value={newPassword}
+              value={pass.newPassword}
               onChange={handleNewPassword}
+              v="#e65100"
+              variant="standard"
+            />
+            <PasswordInput
+              label="Confirm New Password"
+              value={pass.confirmPassword}
+              onChange={handleConfirmPassword}
               v="#e65100"
               variant="standard"
             />
