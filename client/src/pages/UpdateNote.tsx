@@ -94,9 +94,11 @@ function UpdateNote() {
       const updatedNote = await updateNote({ ...state, isPublic });
       if (updatedNote) {
         setSuccess(true);
+        setError("");
         client.invalidateQueries({ queryKey: ["updateNote", id] });
       }
     } catch (err) {
+      setSuccess(false)
       if (isAxiosError(err))
         setError(err.response?.data.message || "Unknown error");
       else {
@@ -218,10 +220,10 @@ function UpdateNote() {
               variant="h6"
               className="text-gray-700"
               fontWeight={"bold"}
-              fontSize={"1.5rem"}
+              fontSize={"1.35rem"}
               gutterBottom
             >
-              Update this Note (use Markdown)
+              Update this Note (Supports Markdown)
             </Typography>
             {error && (
               <Alert severity="error">

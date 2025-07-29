@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Delete, Notes, Dashboard, Edit, Cancel } from "@mui/icons-material";
+import { Delete, Notes, Dashboard, Edit, Cancel, Settings, Password, Person } from "@mui/icons-material";
 import ToggleSideBar from "../components/ToggleSideBar";
 import React, { useEffect, useReducer, useRef, useState } from "react";
 import { useGetUserDetails } from "../services/fetchRequests";
@@ -61,6 +61,7 @@ function ProfilePage() {
   const [state, alter] = useReducer(controlUserInfoInputs, initialState);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [profSetting, setProfSetting] = useState(true);
 
   const { mutateAsync: updateInfo, isPending } = useGenericUser(
     "updateUserInfo",
@@ -136,10 +137,12 @@ function ProfilePage() {
     try {
       const updatedUser = await updateInfo(state);
       if (updatedUser) {
+        setError("");
         setSuccess("Profile information updated successfully");
         client.invalidateQueries({ queryKey: ["GetUserDetails"] });
       }
     } catch (err) {
+      setSuccess("");
       if (isAxiosError(err))
         setError(err.response?.data.message || "Unknown Error!!");
       else {
@@ -153,12 +156,14 @@ function ProfilePage() {
     e.preventDefault();
     try {
       if (!isStrongPassword(newPassword)) {
+        setSuccessPass("")
         setPasswordError("Choose a stronger password!!");
         return;
       }
       const updatedPass = await updatePass({ currentPassword, newPassword });
       if (updatedPass) setSuccessPass("Password changed successfully!");
     } catch (err) {
+      setSuccessPass("")
       if (isAxiosError(err))
         setPasswordError(
           err.response?.data.message || "Unknown password error",
@@ -332,7 +337,36 @@ function ProfilePage() {
           </Stack>
         </Box>
         <Stack direction={{ xs: "column", md: "row" }} className="p-4" gap={8}>
-          <Box
+          <Stack component={"section"} 
+            className="border-2 border-gray-300 rounded-xl shadow p-2 gap-6 h-60">
+           <Box component={"div"} className="pl-2">
+              <Typography variant="h6" fontWeight={"bold"} color="secondary">
+                <Settings/> Profile Settings 
+              </Typography>
+              <Typography variant="body2" gutterBottom>
+                Choose a Settings Action below
+              </Typography>
+           </Box>
+           <Stack>
+              <Button color="secondary" variant="contained" size="large"
+                sx={{m: 1, borderRadius: ".5rem"}}
+                startIcon={<Person/>}
+                disabled={profSetting}
+                onClick={() => setProfSetting(true)}
+              >
+                Update Your Profile Info
+              </Button>
+              <Button color="warning" variant="outlined" size="large"
+                startIcon={<Password/>}
+                disabled={!profSetting}
+                onClick={() => setProfSetting(false)}
+                sx={{m: 1, borderRadius: ".5rem", borderWidth: "2px", borderColor: "#ed6c02"}}
+              >
+                Change Your Password
+              </Button>
+           </Stack>
+          </Stack>
+          {profSetting? <Box
             component={"form"}
             onSubmit={handleUpdateUserInfo}
             className="bg-red border border-gray-300 p-6
@@ -444,7 +478,7 @@ function ProfilePage() {
             >
               Save Changes
             </Button>
-          </Box>
+          </Box> :
           <Box
             component={"form"}
             onSubmit={handleUpdateUserPassword}
@@ -515,7 +549,7 @@ function ProfilePage() {
             >
               Change password
             </Button>
-          </Box>
+          </Box>}
         </Stack>
       </Stack>
     </Box>

@@ -24,13 +24,14 @@ function DashboardPage() {
   const [isFiltering, setIsFiltering] = useState(false);
   const [goBackHidden, setGoBackHidden] = useState(true);
   const [noteTitle, setNoteTitle] = useState("Recent Notes");
-  const summaryInfo = info && getNotesPerDuration(info);
-
+  
   useEffect(() => {
     if (info && !isFiltering) setData(info);
     else if(noteTitle === ("Pinned Notes")) setData(filterPinned(info))
-    else if(noteTitle === ("Public Notes")) setData(filterPublic(info))    
+      else if(noteTitle === ("Public Notes")) setData(filterPublic(info))    
   }, [info, isFiltering]);
+
+const summaryInfo = info && getNotesPerDuration(info);
 
   function handleShowAllNotes() {
     setIsFiltering(false);

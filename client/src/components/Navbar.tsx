@@ -1,8 +1,7 @@
-import { Box, Button, Drawer, IconButton, Stack } from "@mui/material";
+import { Box, Button, IconButton, Stack, Menu, MenuItem } from "@mui/material";
 import {
   AppRegistration,
   Dashboard,
-  Menu,
   Home,
   Login,
   Logout,
@@ -10,6 +9,7 @@ import {
   Notes,
   Person,
 } from "@mui/icons-material";
+import MenuIcon from "@mui/icons-material/Menu"
 import useNote from "../store/notelyStore";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -27,6 +27,7 @@ function Navbar() {
   } = useNote();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null> (null);
   const [imageAvailable, setImageAvailable] = useState(false);
   const imageUrl = "/Notely1.png";
 
@@ -38,8 +39,9 @@ function Navbar() {
     setPath(path);
   }, []);
 
-  function handleToggleProfile() {
+  function handleToggleProfile(e: React.MouseEvent<HTMLElement>) {
     setIsOpen(true);
+    setAnchorEl(e.currentTarget);
   }
 
   function handleLogOut() {
@@ -72,7 +74,7 @@ function Navbar() {
             title="Open Side bar"
             className="w-9 h-9"
           >
-            <Menu className="text-gray-50" />
+            <MenuIcon className="text-gray-50" />
           </IconButton>
         ) : (
           ""
@@ -129,30 +131,40 @@ function Navbar() {
           >
             <Person />
           </IconButton>
-          <Drawer
+          <Menu
+            anchorEl={anchorEl}
             open={isOpen}
-            anchor="right"
-            sx={{ p: 2, height: "10rem" }}
+            component={"div"}
+            sx={{
+              '& .MuiPaper-root':{
+                height: "7rem",
+                 display: 'flex',
+                 flexDirection: 'column',
+                 gap: "1rem"
+              }
+             }}
             onClick={() => setIsOpen(false)}
           >
-            <NavButton
-              label="My profile"
-              startIcon={<Person />}
-              href="/dashboard/profile"
-              m={2}
-              def="My profile"
-            />
-            <Button
-              startIcon={<Logout />}
-              onClick={handleLogOut}
-              title="Sign Out"
-              variant="outlined"
-              sx={{ m: 2 }}
-              color="error"
-            >
-              Logout
-            </Button>
-          </Drawer>
+           <MenuItem>
+              <NavButton
+                label="My profile"
+                startIcon={<Person />}
+                href="/dashboard/profile"
+                def="My profile"
+              />
+           </MenuItem>
+           <MenuItem>
+              <Button
+                startIcon={<Logout />}
+                onClick={handleLogOut}
+                title="Sign Out"
+                variant="outlined"
+                color="error"
+              >
+                Logout
+              </Button>
+           </MenuItem>
+          </Menu>
         </Stack>
       ) : (
         <>

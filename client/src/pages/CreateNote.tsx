@@ -10,6 +10,7 @@ import {
   MenuItem,
   type SelectChangeEvent,
   Alert,
+  IconButton,
 } from "@mui/material";
 import { Cancel, Dashboard, Delete, Notes } from "@mui/icons-material";
 import ToggleSideBar from "../components/ToggleSideBar";
@@ -62,8 +63,10 @@ function CreateNote() {
       const newNote = await createNote(newNoteData);
       if (newNote) {
         setHide(false);
+        setError("");
       }
     } catch (err) {
+      setHide(true);
       if (isAxiosError(err)) {
         setError(err.response?.data.message);
       } else {
@@ -183,27 +186,37 @@ function CreateNote() {
               variant="h6"
               className="text-gray-700"
               fontWeight={"bold"}
-              fontSize={"1.5rem"}
+              fontSize={"1.3rem"}
               gutterBottom
             >
-              Write a new Note (use Markdown)
+              Write a new Note (Supports markdown)
             </Typography>
-            {error && <Alert severity="error">{error}</Alert>}
-            <Alert
+            {error && <Alert severity="error">{error} 
+                <IconButton color="error"
+                  title="Hide this alert"
+                  onClick={() => setError("")}
+                >
+                  <Cancel/>
+                </IconButton>
+              </Alert>
+            }
+            {
+              !hide && <Alert
               severity="success"
-              hidden={hide}
               className="flex items-center"
               id="success"
             >
               Note successfully created :)
-              <Button
+              <IconButton 
+                color="success"
                 onClick={() => setHide(!hide)}
                 className="relative right-0"
+                title="Hide this alert"
                 sx={{ position: "relative", right: 0 }}
               >
                 <Cancel />
-              </Button>
-            </Alert>
+              </IconButton>
+            </Alert>}
             <Stack
               component={"form"}
               onSubmit={handleCreateNote}
