@@ -25,16 +25,18 @@ function SideBar(props?: {
         elevation={0}
         sx={{ bgcolor: "transparent" }}
       >
-        <CardMedia
-          component={"img"}
-          image="/me.png"
-          alt="DP"
-          className="h-20 max-w-20 rounded-2xl"
-        />
+       <a href="/dashboard/profile">
+          <CardMedia
+            component={"img"}
+            image="/meDefault.png"
+            alt="DP"
+            className="h-20 max-w-20 rounded-2xl"
+          />
+       </a>
         <Typography
           variant="subtitle1"
           fontWeight={"bold"}
-          className="text-lime-400 my-0 py-0 text-nowrap"
+          className="text-purple-500 my-0 py-0 text-nowrap"
         >
           Hello {user?.firstName}
         </Typography>

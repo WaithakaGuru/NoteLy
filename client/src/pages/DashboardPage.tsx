@@ -63,8 +63,8 @@ const summaryInfo = info && getNotesPerDuration(info);
   return (
     <Box
       component={"main"}
-      className="w-full h-[36rem] py-2 gap-2 flex"
-      sx={{ background: "#011611", height: { xs: "max-content" } }}
+      className="w-full h-[105dvh] py-2 gap-2 flex"
+      sx={{ background: "#011611", height:{xs:"max-content", md: "92.4dvh"} }}
     >
       <ToggleSideBar
         handlePinned={handleFilterPinnedNotes}
@@ -72,8 +72,8 @@ const summaryInfo = info && getNotesPerDuration(info);
       />
       <Stack
         component={"section"}
-        className="bg-gray-50 w-full h-[35rem] overflow-auto p-4 rounded"
-        sx={{ ml: { sm: "9rem" }, height: { xs: "100dvh", md: "35rem" } }}
+        className="bg-gray-100 w-full overflow-auto p-4 rounded"
+        sx={{ ml: { sm: "9rem" }, height:"100%" }}
       >
         <Box
           component={"section"}

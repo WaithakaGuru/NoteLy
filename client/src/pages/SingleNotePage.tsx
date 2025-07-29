@@ -41,14 +41,14 @@ function SingleNotePage() {
   return (
     <Box
       component={"main"}
-      className="w-full h-[36rem] py-2 gap-2 flex"
-      sx={{ background: "#011611", height: { xs: "fit-content" } }}
+      className="w-full py-2 gap-2 flex"
+      sx={{ background: "#011611", height: { xs: "fit-content", md: "92.4dvh" } }}
     >
       <ToggleSideBar />
       <Stack
         component={"section"}
         className="bg-gray-50 w-full h-[35rem] overflow-auto rounded p-4"
-        sx={{ ml: { sm: "9rem" }, height: { xs: "100dvh", md: "35rem" } }}
+        sx={{ ml: { sm: "9rem" }, height:"100%" }}
       >
         <Box
           component={"section"}

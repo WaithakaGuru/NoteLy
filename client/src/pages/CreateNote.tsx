@@ -84,13 +84,13 @@ function CreateNote() {
     <Box
       component={"main"}
       className="w-full gap-2 flex h-[36rem] py-2"
-      sx={{ background: "#011611", height: { xs: "max-content" } }}
+      sx={{ background: "#011611", height: { xs: "max-content", md: "92.4dvh" } }}
     >
       <ToggleSideBar />
       <Stack
         component={"section"}
         className="bg-gray-50 w-full overflow-auto rounded p-4"
-        sx={{ ml: { sm: "9rem" }, height: { xs: "100dvh", md: "35rem" } }}
+        sx={{ ml: { sm: "9rem" }, height:"100%"}}
       >
         <Box
           component={"section"}

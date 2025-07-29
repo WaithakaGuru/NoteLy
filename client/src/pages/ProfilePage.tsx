@@ -178,14 +178,14 @@ function ProfilePage() {
   return (
     <Box
       component={"main"}
-      className="w-full gap-2 flex h-[36rem] py-2"
-      sx={{ background: "#011611", height: { xs: "max-content" } }}
+      className="w-full gap-2 flex py-2"
+      sx={{ background: "#011611", height: { xs: "max-content", md: "92.4dvh" } }}
     >
       <ToggleSideBar />
       <Stack
         component={"section"}
         className="bg-gray-50 w-full overflow-auto rounded p-4"
-        sx={{ ml: { sm: "9rem" }, height: { xs: "100dvh", md: "35rem" } }}
+        sx={{ ml: { sm: "9rem" }, height: "100%" }}
       >
         <Box
           component={"section"}
@@ -284,7 +284,7 @@ function ProfilePage() {
             >
               <CardMedia
                 component={"img"}
-                image="../../me.png"
+                image="../../meDefault.png"
                 className="h-30 max-w-30 rounded-full"
               />
               <IconButton
@@ -336,9 +336,9 @@ function ProfilePage() {
             </Box>
           </Stack>
         </Box>
-        <Stack direction={{ xs: "column", md: "row" }} className="p-4" gap={8}>
+        <Stack direction={{ xs: "column", md: "row"}} ml={{md: "6rem" }} className="p-4" gap={8}>
           <Stack component={"section"} 
-            className="border-2 border-gray-300 rounded-xl shadow p-2 gap-6 h-60">
+            className="border-2 border-gray-300 rounded-xl shadow p-2 gap-6 h-max">
            <Box component={"div"} className="pl-2">
               <Typography variant="h6" fontWeight={"bold"} color="secondary">
                 <Settings/> Profile Settings 
@@ -347,7 +347,7 @@ function ProfilePage() {
                 Choose a Settings Action below
               </Typography>
            </Box>
-           <Stack>
+           <Stack direction={{md: "row"}}>
               <Button color="secondary" variant="contained" size="large"
                 sx={{m: 1, borderRadius: ".5rem"}}
                 startIcon={<Person/>}
@@ -365,7 +365,6 @@ function ProfilePage() {
                 Change Your Password
               </Button>
            </Stack>
-          </Stack>
           {profSetting? <Box
             component={"form"}
             onSubmit={handleUpdateUserInfo}
@@ -550,6 +549,7 @@ function ProfilePage() {
               Change password
             </Button>
           </Box>}
+          </Stack>
         </Stack>
       </Stack>
     </Box>

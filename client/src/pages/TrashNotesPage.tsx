@@ -58,8 +58,8 @@ function TrashNotesPage() {
   return (
     <Box
       component={"main"}
-      className="w-full h-[36rem] py-2 gap-2 flex"
-      sx={{ background: "#011611", height: { xs: "max-content" } }}
+      className="w-full py-2 gap-2 flex"
+      sx={{ background: "#011611", height: { xs: "max-content", md: "92.4dvh" } }}
     >
       <ToggleSideBar
         handlePinned={handleFilterPinnedNotes}
@@ -68,7 +68,7 @@ function TrashNotesPage() {
       <Stack
         component={"section"}
         className="bg-gray-50 w-full overflow-auto rounded p-4"
-        sx={{ ml: { sm: "9rem" }, height: { xs: "100dvh", md: "35rem" } }}
+        sx={{ ml: { sm: "9rem" }, height: "100%" }}
       >
         <Stack direction={{ md: "row" }} className="justify-around min-w-1/2">
           <Box component={"div"} className="flex flex-col">
