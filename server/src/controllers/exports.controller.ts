@@ -11,6 +11,7 @@ import getTrashNotes from "./getAllTrashNotes.controller";
 import restoreDeletedNote from "./restoreDeletedNote.controller";
 import registerNewUser from "./registerNewUser.controller";
 import createJWebToken from "./loginUser.controller";
+import updateUserAvatar from "./updateAvatar.controller";
 import updateUserInfo from "./updateUserInfo.controller";
 import updatePassword from "./updateUserPassword.controller";
 import logoutUser from "./logoutUser.controller";
@@ -29,6 +30,7 @@ export {
   restoreDeletedNote,
   registerNewUser,
   createJWebToken,
+  updateUserAvatar,
   updateUserInfo,
   updatePassword,
   logoutUser,

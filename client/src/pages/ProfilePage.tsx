@@ -11,10 +11,10 @@ import {
 import { Delete, Notes, Dashboard, Edit, Cancel, Settings, Password, Person } from "@mui/icons-material";
 import ToggleSideBar from "../components/ToggleSideBar";
 import React, { useEffect, useReducer, useRef, useState } from "react";
-import { useGetUserDetails } from "../services/fetchRequests";
+import { useGetUserDetails, useGetUploadInfo } from "../services/fetchRequests";
 import PasswordInput from "../components/PasswordInput";
 import { useGenericUser } from "../services/patchRequests";
-import { isAxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
 import { client } from "../main";
 import isStrongPassword from "../utils/checkPasswordStrength";
 
@@ -86,6 +86,10 @@ function ProfilePage() {
   const [profSetting, setProfSetting] = useState(true);
   const [currentUserInfo, setCurrentInfo] = useState<UserInfo | null>(null);
 
+  const { mutateAsync: updateAvatar, isPending: avatarPending } = useGenericUser(
+    "updateUserAvatar",
+    "/user/avatar",
+  );
   const { mutateAsync: updateInfo, isPending } = useGenericUser(
     "updateUserInfo",
     "/user",
@@ -94,7 +98,7 @@ function ProfilePage() {
     "updateUserPassword",
     "/auth/password",
   );
-
+  const {data: signature} = useGetUploadInfo();
   const { data } = useGetUserDetails();
 
   useEffect(() => {
@@ -117,7 +121,7 @@ function ProfilePage() {
     fileInputRef.current?.click();
   }
 
-  function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file?.type.startsWith("image/")) {
       setImageError("File must be an image!!");
@@ -128,6 +132,29 @@ function ProfilePage() {
       return;
     }
     if (file) setImage(file);
+    try{
+      const imageInfo = await signature();
+      const imageForm = new FormData();
+      imageForm.append("file", image!);
+      imageForm.append("api_key", imageInfo.apiKey);
+      imageForm.append("timestamp", imageInfo.timestamp);
+      imageForm.append("signature", imageInfo.signature); 
+      imageForm.append("folder", imageInfo.folder); 
+      
+      const cloudinaryResponse = await axios.post(
+        `https://api.cloudinary.com/v1_1/${imageInfo.data.cloudName}/image/upload`,
+        imageForm,
+      );
+      if(cloudinaryResponse) {
+        updateAvatar(cloudinaryResponse.data.secure_url);
+        client.invalidateQueries({queryKey: ['']})
+      }else setImageError("Failed to reach upload cloud. Try again later!!")
+    }catch(err){
+      console.log(err);
+      if(isAxiosError(err)){
+        setError("Something went wrong. Try updating later!")
+      }
+    }
     console.log(image);
   }
 
@@ -328,7 +355,7 @@ function ProfilePage() {
             >
               <CardMedia
                 component={"img"}
-                image="../../meDefault.png"
+                image={data?.avatarUrl || "../../meDefault.png"}
                 className="h-30 max-w-30 rounded-full"
               />
               <IconButton

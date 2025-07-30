@@ -70,10 +70,24 @@ const useGetUserDetails = () => {
     },
   });
 };
+
+const useGetUploadInfo = () => {
+  const {token} = useNote();
+  return useQuery({
+    queryKey: ["GetUplaodInfo"],
+    queryFn: async()=>{
+      const info = await ax.get("/user/upload", {
+        headers: {Authorization: `Author ${token}`}
+      })
+      return info.data
+    }
+  })
+}
 export {
   useGetAllNotes,
   useGetAllUserNotes,
   useGetSpecificNote,
   useGetTrashNotes,
   useGetUserDetails,
+  useGetUploadInfo,
 };

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { v2 as cloudinary } from "cloudinary";
 
-export default function getUploadInfo(req: Request, res: Response) {
+export default function getUploadInfo(_req: Request, res: Response) {
   const timestamp = Math.round(Date.now() / 1000);
   const folder = "Notely_Users_Avatar_Image_Uploads";
 

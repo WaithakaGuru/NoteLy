@@ -11,9 +11,15 @@ configDotenv({ path: "./.env" });
 const app = express();
 const port = process.env.PORT_NUMBER;
 
-app.get("/", (_req: Request, res: Response) =>
-  res.send("Welcome to the Notely Server"),
-);
+app.get("/ping", (req: Request, res: Response) =>{
+  const requestSecret = req.headers["secret"];
+  const secret = process.env.Secret;
+  if(requestSecret !== secret){
+    res.status(403).send("Access is forbidden");;
+    return;
+  }
+  res.status(200).send("Welcome to the Notely Server")
+});
 
 app.use(express.json());
 

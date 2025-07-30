@@ -28,7 +28,7 @@ function SideBar(props?: {
        <a href="/dashboard/profile">
           <CardMedia
             component={"img"}
-            image="/meDefault.png"
+            image={user?.avatarUrl || "/meDefault.png"}
             alt="DP"
             className="h-20 max-w-20 rounded-2xl"
           />
