@@ -361,6 +361,7 @@ function ProfilePage() {
               <IconButton
                 onClick={handleCallHiddenInput}
                 title="Update Profile Photo"
+                loading = {avatarPending}
                 className="w-10 h-10 z-50 bottom-[.4rem]"
                 sx={{
                   bgcolor: "#6d28d9",
