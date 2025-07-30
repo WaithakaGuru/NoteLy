@@ -11,30 +11,8 @@ import Restricted from "./components/Restricted";
 import SingleNotePage from "./pages/SingleNotePage";
 import AllUserNotesPage from "./pages/AllUserNotes";
 import TrashNotesPage from "./pages/TrashNotesPage";
-import axios from "axios";
-import { useEffect } from "react";
-
 
 function App() {
-  useEffect(()=>{
-    const ping = async () => {
-      try{
-        const response = await axios.get("https://notely-server-r48z.onrender.com/ping",
-          {headers: {
-            "secret": import.meta.env.PING_SECRET
-          }
-        })
-        if(response) console.log(response);
-      }catch(err) {
-        console.log(err);
-      }
-    }
-    ping();
-  
-    const pingInterval = setInterval(ping , 10 * 60 * 1000)
-  
-    return clearInterval(pingInterval)
-  }, [])
   return (
     <>
       <Router>

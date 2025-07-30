@@ -21,6 +21,9 @@ type UpdateProfileInfo = {
   emailAddress: string;
 };
 
+type UpdateAvatar = {
+  avatarURL: string
+}
 type PinNote = {
   isPinned: boolean;
 };
@@ -29,6 +32,7 @@ type UpdateTypes =
   | UpdateNote
   | UpdatePassword
   | UpdateProfileInfo
+  | UpdateAvatar
   | PinNote
   | {};
 

@@ -74,7 +74,6 @@ const initialPass = {
 }
 
 function ProfilePage() {
-  const [image, setImage] = useState<File | undefined>();
   const [imageError, setImageError] = useState("");
   const [error, setError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -131,31 +130,34 @@ function ProfilePage() {
       setImageError("Choose an image less than 5mb!!");
       return;
     }
-    if (file) setImage(file);
-    try{
-      const imageInfo = await signature();
-      const imageForm = new FormData();
-      imageForm.append("file", image!);
-      imageForm.append("api_key", imageInfo.apiKey);
-      imageForm.append("timestamp", imageInfo.timestamp);
-      imageForm.append("signature", imageInfo.signature); 
-      imageForm.append("folder", imageInfo.folder); 
-      
-      const cloudinaryResponse = await axios.post(
-        `https://api.cloudinary.com/v1_1/${imageInfo.data.cloudName}/image/upload`,
-        imageForm,
-      );
-      if(cloudinaryResponse) {
-        updateAvatar(cloudinaryResponse.data.secure_url);
-        client.invalidateQueries({queryKey: ['']})
-      }else setImageError("Failed to reach upload cloud. Try again later!!")
-    }catch(err){
-      console.log(err);
-      if(isAxiosError(err)){
-        setError("Something went wrong. Try updating later!")
+    if (file) {
+      try{
+        const imageForm = new FormData();
+        imageForm.append("file", file);
+        imageForm.append("api_key", signature.apiKey);
+        imageForm.append("timestamp", signature.timestamp);
+        imageForm.append("signature", signature.signature); 
+        imageForm.append("folder", signature.folder); 
+        console.log(imageForm);
+        console.log(file.name, file.type);
+        const cloudinaryResponse = await axios.post(
+          `https://api.cloudinary.com/v1_1/${signature.cloudName}/image/upload`,
+          imageForm,
+        );
+        if(cloudinaryResponse) {
+          console.log(cloudinaryResponse.data.secure_url);
+        const avatar =  await updateAvatar({avatarUrl: cloudinaryResponse.data.secure_url}); 
+        if(avatar)
+          client.invalidateQueries({queryKey: ['GetUserDetails']})
+        }else setImageError("Failed to reach upload cloud. Try again later!!")
+      }catch(err){
+        console.log(err);
+        if(isAxiosError(err)){
+          setImageError("Something went wrong. Try updating later!")
+        }
       }
+     
     }
-    console.log(image);
   }
 
   function handleFirstName(e: React.ChangeEvent<HTMLInputElement>) {
@@ -336,19 +338,19 @@ function ProfilePage() {
               </Stack>
             </Box>
           </Stack>
+          {imageError && (
+            <Alert severity="error">
+              {imageError}
+              <IconButton color="secondary" onClick={() => setImageError("")}>
+                <Cancel />
+              </IconButton>
+            </Alert>
+          )}
           <Stack
             component={"section"}
             className="border border-gray-300 w-full p-2 m-2 rounded-xl shadow-2xs gap-12 items-center"
             direction={"row"}
           >
-            {imageError && (
-              <Alert severity="error">
-                {imageError}
-                <IconButton color="secondary" onClick={() => setImageError("")}>
-                  <Cancel />
-                </IconButton>
-              </Alert>
-            )}
             <Box
               className="w-30 h-30 rounded-full bg-transparent shadow relative z-0"
               sx={{ borderRadius: "50%" }}

@@ -15,7 +15,7 @@ app.get("/ping", (req: Request, res: Response) =>{
   const requestSecret = req.headers["secret"];
   const secret = process.env.Secret;
   if(requestSecret !== secret){
-    res.status(403).send("Access is forbidden");;
+    res.status(403).send("Access is forbidden");
     return;
   }
   res.status(200).send("Welcome to the Notely Server")
