@@ -21,7 +21,6 @@ import { isAxiosError } from "axios";
 import { useCreateNote } from "../services/postRequests";
 import MkEditor from "../components/MkEditor";
 
-
 type StateType = {
   title: string;
   synopsis: string;
@@ -257,10 +256,11 @@ function CreateNote() {
         <Box
           component={"section"}
           className="w-full p-2 items-center flex  mb-12 border-2 border-gray-400 mx-auto my-6 rounded-2xl"
-          sx={{ flexDirection: "column", width: {xs: "95%", md: "75%"}}}
+          sx={{ flexDirection: "column", width: {xs: "27.8rem", md: "75%"}}}
         > 
           <MkEditor handlePreview={handlePreview} handleWrite={handleWrite} Ref={currentRef} insert={insertAtCursor}/>
-           {!preview? <Stack
+          {!preview? 
+          <Stack
             fontFamily={"cursive"}
             className="min-w-[55%]"
             sx={{ width:"100%" }}

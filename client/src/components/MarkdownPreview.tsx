@@ -14,7 +14,7 @@ function MarkdownPreview(info: MarkdownContent) {
   return (
     <Box
       component={"section"}
-      sx={{ minWidth: { xs: "28rem", sm: "98%" }, placeSelf: "center" }}
+      sx={{ minWidth: "100%", placeSelf: "center" }}
       className="border border-gray-300 rounded bg-white p-4 m-1 gap-2 flex flex-col shadow-md min-h-[34rem]"
     >
       <Box component={"div"}>

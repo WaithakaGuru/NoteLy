@@ -276,8 +276,8 @@ function UpdateNote() {
         </Box>
         <Box
           component={"section"}
-          className="w-full p-2 flex items-center gap-6 mb-12 mx-auto my-6 rounded border-2 border-gray-400"
-          sx={{ flexDirection:"column", width: {xs: "95%", md: "75%"} }}
+          className="p-2 flex items-center gap-6 mb-12 mx-auto my-6 rounded border-2 border-gray-400"
+          sx={{ flexDirection:"column", width: {xs: "27.8rem", md: "75%"} }}
         >
           <MkEditor handlePreview={handlePreview} handleWrite={handleWrite} Ref={currentRef} insert={insertAtCursor}/>
           {!preview?
