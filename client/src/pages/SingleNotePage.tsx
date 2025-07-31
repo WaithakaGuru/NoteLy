@@ -12,8 +12,9 @@ import { useGeneric } from "../services/patchRequests";
 function SingleNotePage() {
   const { id } = useParams();
   const { data } = useGetSpecificNote(id!);
-  console.log(data);
+  const userId = localStorage.getItem("userId");
   const [fullNote, setFullNote] = useState(data!);
+  const [uId, setUId] = useState(userId);
   const { mutateAsync: pinNote } = useGeneric(
     data?.id,
     "PinNote",
@@ -22,7 +23,10 @@ function SingleNotePage() {
 
   useEffect(() => {
     if (data) setFullNote(data);
-  }, [data]);
+    if(userId) setUId(userId);{
+      client.invalidateQueries({queryKey: ["GetSpecificNote", id]})
+    }
+  }, [data, userId]);
 
   async function handlePinNote() {
     try {
@@ -96,15 +100,12 @@ function SingleNotePage() {
                     color="warning"
                     startIcon={<Delete className="mr-[-.5rem]" />}
                     variant="outlined"
+                    hidden ={ !(data?.creator === uId)}
                     sx={{
                       my: "1rem",
                       textTransform: "none",
                       fontWeight: "bold",
                       fontSize: "1.1rem",
-                      display:
-                        data?.creator === localStorage.getItem("userId")
-                          ? "flex"
-                          : "none",
                     }}
                     className="w-40 text-gray-50 text-nowrap"
                     title="Delete this note"
@@ -117,15 +118,12 @@ function SingleNotePage() {
                     startIcon={<Edit className="mr-[-.5rem]" />}
                     variant="outlined"
                     title="Update this note"
+                    hidden=  {!(data?.creator ===  uId)}
                     sx={{
                       my: "1rem",
                       textTransform: "none",
                       fontWeight: "bold",
                       fontSize: "1.1rem",
-                      display:
-                        data?.creator === localStorage.getItem("userId")
-                          ? "flex"
-                          : "none",
                     }}
                     className="w-28 text-gray-50 text-nowrap"
                   >
@@ -135,6 +133,12 @@ function SingleNotePage() {
               </Stack>
             </Box>
           </Stack>
+          <Box component={"div"} className="">
+            <Typography variant="h6" color="secondary" fontWeight={"bold"} fontFamily={"cursive"}>
+              Author: 
+              <i>{fullNote?.NoteCreator.userName} - {fullNote?.NoteCreator.firstName}</i> 
+            </Typography>
+          </Box>
         </Box>
         <Box component={"section"} className="w-full p-2 mt-8">
           <Typography

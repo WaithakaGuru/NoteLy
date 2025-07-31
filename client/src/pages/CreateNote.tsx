@@ -12,21 +12,42 @@ import {
   Alert,
   IconButton,
 } from "@mui/material";
-import { Cancel, Dashboard, Delete, Notes } from "@mui/icons-material";
+import { Cancel, Dashboard, Delete, Notes} from "@mui/icons-material";
 import ToggleSideBar from "../components/ToggleSideBar";
 import MarkdownGuide from "../components/MarkdownGuide";
-import { useReducer, useState } from "react";
+import { useReducer, useRef, useState } from "react";
 import MarkdownPreview from "../components/MarkdownPreview";
 import { isAxiosError } from "axios";
 import { useCreateNote } from "../services/postRequests";
+import MkEditor from "../components/MkEditor";
 
-type ActionType = {
+
+type StateType = {
+  title: string;
+  synopsis: string;
+  content: string;
+};
+
+type InputAction = {
   type: "input";
   vals: {
+    component: keyof StateType; 
     value: string;
-    component: string;
   };
 };
+
+type InsertAction = {
+  type: "insert";
+  payload: {
+    component: keyof StateType;
+    before: string;
+    after?: string;
+    ref: React.RefObject<HTMLInputElement | null>;
+  };
+};
+
+type ActionType = InputAction | InsertAction;
+
 
 type CreateNoteStateType = {
   title: string;
@@ -38,23 +59,61 @@ const reducerFunc = (
   state: CreateNoteStateType,
   action: ActionType,
 ): CreateNoteStateType => {
-  if (action.type === "input") {
+
+  switch (action.type) {
+    case "input":
     return { ...state, [action.vals.component]: action.vals.value };
-  }
-  return state;
-};
+    case "insert":
+      const { component, before, after } = action.payload;
+      const ref = action.payload.ref?.current;
+      if (!ref) return state;
+
+      const start = ref.selectionStart ?? 0;
+      const end = ref.selectionEnd ?? 0;
+      const selected = state[component].substring(start, end);
+      const newText =
+        state[component].substring(0, start) +
+        before +
+        selected +
+        after +
+        state[component].substring(end);
+  
+      setTimeout(() => {
+        ref.focus();
+        const cursorPos = start + before.length;
+        ref.setSelectionRange(cursorPos, cursorPos + selected.length);
+      }, 0);
+
+      return {
+        ...state,
+        [component]: newText,
+      };
+
+    default: 
+      return state;
+}
+}
 
 function CreateNote() {
   const [visibility, setVisibility] = useState<"public" | "private">("public");
   const [error, setError] = useState("");
   const [hide, setHide] = useState(true);
+  const [preview, setPreview] = useState(false);
+
+  const { mutateAsync: createNote, isPending } = useCreateNote();
+  const isPublic = visibility === "public" ? true : false;
+  
+  const titleRef = useRef<HTMLInputElement>(null);
+  const synopsisRef = useRef<HTMLInputElement>(null);
+  const contentRef = useRef<HTMLInputElement>(null);
+
+  const [currentRef, setCurentRef] = useState <React.RefObject<HTMLInputElement  | null> | null>(null);
+
   const [state, alter] = useReducer(reducerFunc, {
     title: "",
     synopsis: "",
     content: "",
   });
-  const { mutateAsync: createNote, isPending } = useCreateNote();
-  const isPublic = visibility === "public" ? true : false;
 
   async function handleCreateNote(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -75,9 +134,32 @@ function CreateNote() {
       }
     }
   }
-
+  
   function handleVisibility(e: SelectChangeEvent) {
     setVisibility(e.target.value as "public" | "private");
+  }
+  
+  function handlePreview() {
+    setPreview(!preview)
+  }
+  function handleWrite() {
+    setPreview(!preview)
+  }
+
+  function insertAtCursor(before: string, after="") {
+    const ref = currentRef?.current;
+    if (!ref) return;
+
+    let component: "title" | "synopsis" | "content" = "title";
+
+    if (ref === titleRef.current) component = "title";
+    else if (ref === synopsisRef.current) component = "synopsis";
+    else if (ref === contentRef.current) component = "content";
+
+    alter({
+      type: "insert",
+      payload: { component, before, after, ref: currentRef },
+    });
   }
 
   return (
@@ -174,28 +256,20 @@ function CreateNote() {
         </Box>
         <Box
           component={"section"}
-          className="w-full p-2 items-center flex gap-6 my-12"
-          sx={{ flexDirection: { xs: "column", md: "row" } }}
-        >
-          <Stack
+          className="w-full p-2 items-center flex  mb-12 border-2 border-gray-400 mx-auto my-6 rounded-2xl"
+          sx={{ flexDirection: "column", width: {xs: "95%", md: "75%"}}}
+        > 
+          <MkEditor handlePreview={handlePreview} handleWrite={handleWrite} Ref={currentRef} insert={insertAtCursor}/>
+           {!preview? <Stack
             fontFamily={"cursive"}
             className="min-w-[55%]"
-            sx={{ width: { xs: "100%", md: "50%" } }}
+            sx={{ width:"100%" }}
           >
-            <Typography
-              variant="h6"
-              className="text-gray-700"
-              fontWeight={"bold"}
-              fontSize={"1.3rem"}
-              gutterBottom
-            >
-              Write a new Note (Supports markdown)
-            </Typography>
             {error && <Alert severity="error">{error} 
                 <IconButton color="error"
                   title="Hide this alert"
                   onClick={() => setError("")}
-                >
+                  >
                   <Cancel/>
                 </IconButton>
               </Alert>
@@ -205,7 +279,7 @@ function CreateNote() {
               severity="success"
               className="flex items-center"
               id="success"
-            >
+              >
               Note successfully created :)
               <IconButton 
                 color="success"
@@ -213,7 +287,7 @@ function CreateNote() {
                 className="relative right-0"
                 title="Hide this alert"
                 sx={{ position: "relative", right: 0 }}
-              >
+                >
                 <Cancel />
               </IconButton>
             </Alert>}
@@ -221,48 +295,7 @@ function CreateNote() {
               component={"form"}
               onSubmit={handleCreateNote}
               className="bg-white border border-gray-300 p-4 m-1 gap-2 rounded shadow-md"
-            >
-              <TextField
-                required
-                sx={{ my: ".4rem" }}
-                label="Enter a title for your notes"
-                value={state.title}
-                fullWidth
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  alter({
-                    type: "input",
-                    vals: { component: "title", value: e.target.value },
-                  })
-                }
-              />
-              <TextField
-                required
-                sx={{ my: ".4rem" }}
-                label="Write the synopsis of your notes"
-                multiline
-                minRows={3}
-                value={state.synopsis}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  alter({
-                    type: "input",
-                    vals: { component: "synopsis", value: e.target.value },
-                  })
-                }
-              />
-              <TextField
-                required
-                sx={{ my: ".4rem" }}
-                label="Write the content of your notes"
-                multiline
-                minRows={5}
-                value={state.content}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  alter({
-                    type: "input",
-                    vals: { component: "content", value: e.target.value },
-                  })
-                }
-              />
+              >
               <Typography variant="h6" color="warning">
                 (Public notes are available to all Notely users)
               </Typography>
@@ -280,6 +313,53 @@ function CreateNote() {
                   <MenuItem value="private">Private</MenuItem>
                 </Select>
               </FormControl>
+              <TextField
+                required
+                sx={{ my: ".4rem" }}
+                label="Enter a title for your notes"
+                value={state.title}
+                inputRef={titleRef}
+                onFocus={() => setCurentRef(titleRef)}
+                fullWidth
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  alter({
+                    type: "input",
+                    vals: { component: "title", value: e.target.value },
+                  })
+                }
+              />
+              <TextField
+                required
+                sx={{ my: ".4rem" }}
+                label="Write the synopsis of your notes"
+                inputRef={synopsisRef}
+                onFocus={() => setCurentRef(synopsisRef)}
+                multiline
+                minRows={3}
+                value={state.synopsis}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  alter({
+                    type: "input",
+                    vals: { component: "synopsis", value: e.target.value },
+                  })
+                }
+              />
+              <TextField
+                required
+                sx={{ my: ".4rem" }}
+                label="Write the content of your notes"
+                inputRef={contentRef}
+                onFocus={() => setCurentRef(contentRef)}
+                multiline
+                minRows={5}
+                value={state.content}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  alter({
+                    type: "input",
+                    vals: { component: "content", value: e.target.value },
+                  })
+                }
+              />
               <Button
                 type="submit"
                 variant="contained"
@@ -291,22 +371,24 @@ function CreateNote() {
                 Create Note
               </Button>
             </Stack>
-          </Stack>
+          </Stack> :
           <Stack
+
             className="bg-gray-50"
-            sx={{ width: { xs: "100%", md: "50%" } }}
+            fontFamily={"cursive"}
+            sx={{ width: { xs: "100%" }}}
           >
             <Typography
               variant="h6"
               className="text-gray-700"
               fontWeight={"bold"}
               fontSize={"1.5rem"}
-              gutterBottom
+              ml={2}
             >
               Live preview your work
             </Typography>
             <MarkdownPreview state={state} visibility={isPublic} />
-          </Stack>
+          </Stack> }
         </Box>
       </Stack>
     </Box>

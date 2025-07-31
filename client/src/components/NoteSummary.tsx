@@ -135,10 +135,10 @@ function NoteSummary({ noteData, currentUserId }: FullNoteType) {
         <Button
           color="secondary"
           startIcon={<Edit />}
+          hidden={!(noteData.creator === currentUserId)}
           sx={{
             bgcolor: "#f0e5ff",
             textTransform: "none",
-            display: noteData.creator === currentUserId ? "flex" : "none",
           }}
           href={`/dashboard/update/${noteData.id}`}
           title="Edit this note"
@@ -151,8 +151,8 @@ function NoteSummary({ noteData, currentUserId }: FullNoteType) {
           disabled={false}
           onClick={handleDeleteNote}
           loading={isPending}
+          hidden={!(noteData.creator === currentUserId)}
           style={{
-            display: noteData.creator === currentUserId ? "flex" : "none",
             color: "oklch(50.5% 0.213 27.518)",
             backgroundColor: "oklch(88.5% 0.062 18.334)",
           }}

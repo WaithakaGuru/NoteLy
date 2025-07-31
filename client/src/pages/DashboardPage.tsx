@@ -17,11 +17,14 @@ import getNotesPerDuration from "../utils/notesPerDuration";
 import React, { useEffect, useState } from "react";
 import liveSearch from "../utils/liveSearch.";
 import { filterPinned, filterPublic } from "../utils/filterNote";
+import { client } from "../main";
 
 function DashboardPage() {
   const { data: info } = useGetAllNotes();
   const [data, setData] = useState<NoteType[] | undefined>(undefined);
   const [isFiltering, setIsFiltering] = useState(false);
+  const id = localStorage.getItem("userId")
+  const [currentUserId, setCurrentUserId] = useState(id);
   const [goBackHidden, setGoBackHidden] = useState(true);
   const [noteTitle, setNoteTitle] = useState("Recent Notes");
   
@@ -30,6 +33,11 @@ function DashboardPage() {
     else if(noteTitle === ("Pinned Notes")) setData(filterPinned(info))
       else if(noteTitle === ("Public Notes")) setData(filterPublic(info))    
   }, [info, isFiltering]);
+
+  useEffect(()=>{
+    setCurrentUserId(id);
+    client.invalidateQueries({queryKey: ["GetAllNotes"]})
+  }, [id])
 
 const summaryInfo = info && getNotesPerDuration(info);
 
@@ -180,7 +188,7 @@ const summaryInfo = info && getNotesPerDuration(info);
             {data?.map((note: NoteType) => (
               <NoteSummary
                 key={note.id}
-                currentUserId={localStorage.getItem("userId")!}
+                currentUserId={currentUserId!}
                 noteData={note}
               />
             ))}

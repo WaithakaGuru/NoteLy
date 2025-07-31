@@ -15,35 +15,74 @@ import {
 import { Cancel, Dashboard, Delete, Notes } from "@mui/icons-material";
 import ToggleSideBar from "../components/ToggleSideBar";
 import MarkdownGuide from "../components/MarkdownGuide";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import MarkdownPreview from "../components/MarkdownPreview";
 import { useGetSpecificNote } from "../services/fetchRequests";
 import { useParams } from "react-router-dom";
 import { isAxiosError } from "axios";
 import { useGeneric } from "../services/patchRequests";
 import { client } from "../main";
+import MkEditor from "../components/MkEditor";
 
-type ActionType = {
-  type: string;
+type InputAction = {
+  type: "input";
   vals: {
+    component: keyof StateType; 
     value: string;
-    component: string;
   };
 };
 
-type CreateNoteStateType = {
+type InsertAction = {
+  type: "insert";
+  payload: {
+    component: keyof StateType;
+    before: string;
+    after?: string;
+    ref: React.RefObject<HTMLInputElement | null>;
+  };
+};
+
+type ActionType = InputAction | InsertAction;
+
+type StateType = {
   title: string;
   synopsis: string;
   content: string;
 };
 
 const reducerFunc = (
-  state: CreateNoteStateType,
+  state: StateType,
   action: ActionType,
-): CreateNoteStateType => {
+): StateType => {
   switch (action.type) {
     case "input":
       return { ...state, [action.vals.component]: action.vals.value };
+
+    case "insert":
+      const { component, before, after } = action.payload;
+      const ref = action.payload.ref?.current;
+      if (!ref) return state;
+
+      const start = ref.selectionStart ?? 0;
+      const end = ref.selectionEnd ?? 0;
+      const selected = state[component].substring(start, end);
+      const newText =
+        state[component].substring(0, start) +
+        before +
+        selected +
+        after +
+        state[component].substring(end);
+  
+      setTimeout(() => {
+        ref.focus();
+        const cursorPos = start + before.length;
+        ref.setSelectionRange(cursorPos, cursorPos + selected.length);
+      }, 0);
+
+      return {
+        ...state,
+        [component]: newText,
+      };
 
     default:
       return state;
@@ -55,6 +94,13 @@ function UpdateNote() {
   const { data } = useGetSpecificNote(id!);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  
+  const titleRef = useRef<HTMLInputElement>(null);
+  const synopsisRef = useRef<HTMLInputElement>(null);
+  const contentRef = useRef<HTMLInputElement>(null);
+  const [preview, setPreview] = useState(false);
+  const [currentRef, setCurentRef] = useState <React.RefObject<HTMLInputElement  | null> | null>(null);
+
   const { mutateAsync: updateNote, isPending } = useGeneric(
     id!,
     "UpdateNote",
@@ -111,6 +157,30 @@ function UpdateNote() {
   function handleVisibility(e: SelectChangeEvent) {
     setVisibility(e.target.value as "public" | "private");
   }
+  
+  function handlePreview() {
+    setPreview(!preview)
+  }
+  function handleWrite() {
+    setPreview(!preview)
+  }
+
+  function insertAtCursor(before: string, after="") {
+    const ref = currentRef?.current;
+    if (!ref) return;
+
+    let component: "title" | "synopsis" | "content" = "title";
+
+    if (ref === titleRef.current) component = "title";
+    else if (ref === synopsisRef.current) component = "synopsis";
+    else if (ref === contentRef.current) component = "content";
+
+    alter({
+      type: "insert",
+      payload: { component, before, after, ref: currentRef },
+    });
+  }
+
 
   return (
     <Box
@@ -206,12 +276,14 @@ function UpdateNote() {
         </Box>
         <Box
           component={"section"}
-          className="w-full p-2 flex items-start gap-6 my-12"
-          sx={{ flexDirection: { xs: "column", md: "row" } }}
+          className="w-full p-2 flex items-center gap-6 mb-12 mx-auto my-6 rounded border-2 border-gray-400"
+          sx={{ flexDirection:"column", width: {xs: "95%", md: "75%"} }}
         >
+          <MkEditor handlePreview={handlePreview} handleWrite={handleWrite} Ref={currentRef} insert={insertAtCursor}/>
+          {!preview?
           <Stack
             fontFamily={"cursive"}
-            sx={{ minWidth: { xs: "28rem", md: "45%" } }}
+            sx={{ width:  "100%" }}
             width={"100%"}
             component={"div"}
             id="update"
@@ -221,6 +293,7 @@ function UpdateNote() {
               className="text-gray-700"
               fontWeight={"bold"}
               fontSize={"1.35rem"}
+              ml={2}
               gutterBottom
             >
               Update this Note (Supports Markdown)
@@ -246,46 +319,6 @@ function UpdateNote() {
               onSubmit={handleUpdateNote}
               className="bg-white border border-gray-300 p-4 m-1 gap-2 rounded shadow-md"
             >
-              <TextField
-                required
-                sx={{ my: ".4rem" }}
-                label="Enter a title for your notes"
-                value={state.title}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  alter({
-                    type: "input",
-                    vals: { component: "title", value: e.target.value },
-                  })
-                }
-              />
-              <TextField
-                required
-                sx={{ my: ".4rem" }}
-                label="Write the synopsis of your notes"
-                multiline
-                minRows={3}
-                value={state.synopsis}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  alter({
-                    type: "input",
-                    vals: { component: "synopsis", value: e.target.value },
-                  })
-                }
-              />
-              <TextField
-                required
-                sx={{ my: ".4rem" }}
-                label="Write the content of your notes"
-                multiline
-                minRows={5}
-                value={state.content}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  alter({
-                    type: "input",
-                    vals: { component: "content", value: e.target.value },
-                  })
-                }
-              />
               <Typography variant="h6" color="warning">
                 (Public notes are available to all Notely users)
               </Typography>
@@ -303,6 +336,52 @@ function UpdateNote() {
                   <MenuItem value="private">Private</MenuItem>
                 </Select>
               </FormControl>
+              <TextField
+                required
+                inputRef={titleRef}
+                sx={{ my: ".4rem" }}
+                label="Enter a title for your notes"
+                value={state.title}
+                onFocus={() => setCurentRef(titleRef)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  alter({
+                    type: "input",
+                    vals: { component: "title", value: e.target.value },
+                  })
+                }
+              />
+              <TextField
+                required
+                inputRef={synopsisRef}
+                sx={{ my: ".4rem" }}
+                label="Write the synopsis of your notes"
+                multiline
+                minRows={3}
+                value={state.synopsis}
+                onFocus={() => setCurentRef(synopsisRef)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  alter({
+                    type: "input",
+                    vals: { component: "synopsis", value: e.target.value },
+                  })
+                }
+              />
+              <TextField
+                required
+                inputRef={contentRef}
+                sx={{ my: ".4rem" }}
+                label="Write the content of your notes"
+                multiline
+                minRows={5}
+                value={state.content}
+                onFocus={() => setCurentRef(contentRef)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  alter({
+                    type: "input",
+                    vals: { component: "content", value: e.target.value },
+                  })
+                }
+              />
               <Button
                 type="submit"
                 variant="contained"
@@ -313,7 +392,7 @@ function UpdateNote() {
                 Save changes
               </Button>
             </Stack>
-          </Stack>
+          </Stack> :
           <Stack
             className="bg-gray-50  min-w-[45%]"
             sx={{ minWidth: { xs: "28rem", md: "45%" } }}
@@ -329,6 +408,7 @@ function UpdateNote() {
             </Typography>
             <MarkdownPreview state={state} visibility={data?.isPublic} />
           </Stack>
+          }
         </Box>
       </Stack>
     </Box>

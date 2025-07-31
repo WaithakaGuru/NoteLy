@@ -36,7 +36,8 @@ function SideBar(props?: {
         <Typography
           variant="subtitle1"
           fontWeight={"bold"}
-          className="text-purple-500 my-0 py-0 text-nowrap"
+          color="secondary"
+          className="my-0 py-0 text-nowrap"
         >
           Hello {user?.firstName}
         </Typography>

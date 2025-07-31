@@ -6,7 +6,7 @@ export default async function getSpecificNote(req: Request, res: Response) {
   try {
     const specificNote = await client.notes.findFirst({
       where: { id },
-      include: { NoteCreator: true },
+      include: { NoteCreator: {omit: {password: true, avatarUrl: true}}},
     });
     if (specificNote) {
       res.status(200).json(specificNote);

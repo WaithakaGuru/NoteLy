@@ -79,6 +79,7 @@ function ProfilePage() {
   const [passwordError, setPasswordError] = useState("");
   const [successPass, setSuccessPass] = useState("");
   const [success, setSuccess] = useState("");
+  const [fullImageView, setFullImageView] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [state, alter] = useReducer(controlUserInfoInputs, initialState);
   const [pass, alterPass] = useReducer(changePassword, initialPass);
@@ -338,79 +339,91 @@ function ProfilePage() {
               </Stack>
             </Box>
           </Stack>
-          {imageError && (
-            <Alert severity="error">
-              {imageError}
-              <IconButton color="secondary" onClick={() => setImageError("")}>
-                <Cancel />
-              </IconButton>
-            </Alert>
-          )}
-          <Stack
-            component={"section"}
-            className="border border-gray-300 w-full p-2 m-2 rounded-xl shadow-2xs gap-12 items-center"
-            direction={"row"}
-          >
-            <Box
-              className="w-30 h-30 rounded-full bg-transparent shadow relative z-0"
-              sx={{ borderRadius: "50%" }}
+          <Stack>
+            {imageError && (
+              <Alert severity="error" sx={{display: "flex", alignItems:"center", maxHeight: "3rem"}}>
+                {imageError}
+                <IconButton color="error" onClick={() => setImageError("")}>
+                  <Cancel />
+                </IconButton>
+              </Alert>
+            )}
+            <Stack
+              component={"section"}
+              className="border border-gray-300 w-full p-2 m-2 rounded-xl shadow-2xs gap-12 items-center"
+              direction={"row"}
             >
-              <CardMedia
-                component={"img"}
-                image={data?.avatarUrl || "../../meDefault.png"}
-                className="h-30 max-w-30 rounded-full"
-              />
-              <IconButton
-                onClick={handleCallHiddenInput}
-                title="Update Profile Photo"
-                loading = {avatarPending}
-                className="w-10 h-10 z-50 bottom-[.4rem]"
-                sx={{
-                  bgcolor: "#6d28d9",
-                  color: "#f9fafb",
-                  right: "-.5rem",
-                  position: "absolute",
-                  "&:hover": {
-                    bgcolor: "oklch(52.7% 0.265 303.9)",
-                  },
-                  border: ".3rem solid #e5e7eb",
-                }}
+              <Box
+                className="w-30 h-30 rounded-full bg-transparent shadow relative z-0"
+                sx={{ borderRadius: "50%" }}
               >
-                <Edit />
-                <input
-                  type="file"
-                  className="hidden"
-                  onChange={handleFileUpload}
-                  ref={fileInputRef}
+                <CardMedia
+                  onClick={()=>{setFullImageView(!fullImageView)}}
+                  component={"img"}
+                  image={data?.avatarUrl || "../../meDefault.png"}
+                  className="h-30 max-w-30 rounded-full"
                 />
-              </IconButton>
-            </Box>
-            <Box>
-              <Typography variant="body1" gutterBottom>
-                {" "}
-                <strong>
-                  <i>Name:</i>
-                </strong>{" "}
-                {data?.firstName} {data?.lastName}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {" "}
-                <strong>
-                  <i>Username:</i>
-                </strong>{" "}
-                {data?.userName}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {" "}
-                <strong>
-                  <i>Emali:</i>
-                </strong>{" "}
-                {data?.emailAddress}
-              </Typography>
-            </Box>
+                <IconButton
+                  onClick={handleCallHiddenInput}
+                  title="Update Profile Photo"
+                  loading = {avatarPending}
+                  className="w-10 h-10 z-50 bottom-[.4rem]"
+                  sx={{
+                    bgcolor: "#6d28d9",
+                    color: "#f9fafb",
+                    right: "-.5rem",
+                    position: "absolute",
+                    "&:hover": {
+                      bgcolor: "oklch(52.7% 0.265 303.9)",
+                    },
+                    border: ".3rem solid #e5e7eb",
+                  }}
+                >
+                  <Edit />
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={handleFileUpload}
+                    ref={fileInputRef}
+                  />
+                </IconButton>
+              </Box>
+              <Box>
+                <Typography variant="body1" gutterBottom>
+                  {" "}
+                  <strong>
+                    <i>Name:</i>
+                  </strong>{" "}
+                  {data?.firstName} {data?.lastName}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {" "}
+                  <strong>
+                    <i>Username:</i>
+                  </strong>{" "}
+                  {data?.userName}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {" "}
+                  <strong>
+                    <i>Emali:</i>
+                  </strong>{" "}
+                  {data?.emailAddress}
+                </Typography>
+              </Box>
+            </Stack>
           </Stack>
         </Box>
-        <Stack direction={{ xs: "column", md: "row"}} ml={{md: "6rem" }} className="p-4" gap={8}>
+        <Stack component={"div"}direction={"row"} hidden={!fullImageView}
+          className="w-80 absolute items-center bg-[rgba(0,0,0,.2)] right-48 top-[35%]">
+          <CardMedia
+            onClick={()=>{setFullImageView(!fullImageView)}}
+            component={"img"}
+            image={data?.avatarUrl || "../../meDefault.png"}
+            className="h-80 max-w-80 rounded"
+          />
+        </Stack>
+        <Stack direction={{ xs: "column", md: "row"}} ml={{md: "4rem" }} className="p-4" gap={8}>
           <Stack component={"section"} 
             className="border-2 border-gray-300 rounded-xl shadow p-2 gap-6 h-max">
            <Box component={"div"} className="pl-2">
@@ -454,6 +467,7 @@ function ProfilePage() {
                   display: "flex",
                   alignItems: "center",
                   maxWidth: "25rem",
+                  maxHeight:"3rem"
                 }}
               >
                 {error}{" "}
@@ -469,6 +483,7 @@ function ProfilePage() {
                   display: "flex",
                   alignItems: "center",
                   maxWidth: "25rem",
+                  maxHeight:"3rem"
                 }}
               >
                 {success}{" "}
@@ -567,6 +582,7 @@ function ProfilePage() {
                   display: "flex",
                   alignItems: "center",
                   maxWidth: "25rem",
+                  maxHeight: "3rem"
                 }}
               >
                 {passwordError}{" "}
@@ -582,6 +598,7 @@ function ProfilePage() {
                   display: "flex",
                   alignItems: "center",
                   maxWidth: "25rem",
+                  maxHeight: "3rem"
                 }}
               >
                 {successPass}{" "}
