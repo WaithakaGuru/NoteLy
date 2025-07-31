@@ -17,7 +17,7 @@ function SideBar(props?: {
   return (
     <Stack
       component={"aside"}
-      className="max-w-42 fixed top-14 h-full w-64 overflow-hidden ml-[-1.2rem] sm:border-r sm:border-t border-gray-400 rounded"
+      className="max-w-42 fixed top-14 h-full w-64 overflow-hidden ml-[-1.2rem] md:border-r md:border-t border-gray-400 rounded"
       sx={{ zIndex: { xs: -1, sm: 1 } }}
     >
       <Card

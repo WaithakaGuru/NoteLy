@@ -17,10 +17,12 @@ import NoteSummary from "../components/NoteSummary";
 import NotesCreationSummary from "../components/NotesCreationSummary";
 import getNotesPerDuration from "../utils/notesPerDuration";
 import { filterPinned, filterPublic } from "../utils/filterNote";
+import { client } from "../main";
 
 function AllUserNotesPage() {
   const { data: info } = useGetAllUserNotes();
   const [data, setData] = useState<NoteType[] | undefined>(undefined);
+  const id = localStorage.getItem("userId")
   const [isFiltering, setIsFiltering] = useState(false);
   const [goBackHidden, setGoBackHidden] = useState(true);
   const [noteTitle, setNoteTitle] = useState("Your Recent Notes");
@@ -28,6 +30,10 @@ function AllUserNotesPage() {
   useEffect(() => {
     if (info && !isFiltering) setData(info);
   }, [info, isFiltering]);
+
+  useEffect(()=>{
+    client.invalidateQueries({queryKey: ["GetAllUserNotes"]})
+  }, [id])
 
   function handleShowAllNotes() {
     setGoBackHidden(true);
@@ -177,8 +183,7 @@ function AllUserNotesPage() {
             {data?.map((note: NoteType) => (
               <NoteSummary
                 key={note.id}
-                currentUserId={localStorage.getItem("userId")!}
-                noteData={note}
+                {...note}
               />
             ))}
             {data?.length === 0 && <NoNote />}

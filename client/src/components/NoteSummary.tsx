@@ -14,15 +14,15 @@ import { isAxiosError } from "axios";
 import { client } from "../main";
 import { useGeneric } from "../services/patchRequests";
 
-type FullNoteType = { noteData: NoteType; currentUserId: string };
-
-function NoteSummary({ noteData, currentUserId }: FullNoteType) {
+function NoteSummary(noteData: NoteType) {
+  const currentUserId = localStorage.getItem("userId");
   const { mutateAsync: deletNote, isPending } = useDeleteNote(noteData.id);
   const { mutateAsync: pinNote } = useGeneric(
     noteData.id,
     "PinNote",
     "/note/pin/",
   );
+ 
   async function handleDeleteNote() {
     try {
       const deletedNote = await deletNote();
@@ -48,6 +48,8 @@ function NoteSummary({ noteData, currentUserId }: FullNoteType) {
       else console.log(err);
     }
   }
+
+  console.log(currentUserId, noteData.creator);
 
   return (
     <Stack
@@ -135,7 +137,7 @@ function NoteSummary({ noteData, currentUserId }: FullNoteType) {
         <Button
           color="secondary"
           startIcon={<Edit />}
-          hidden={!(noteData.creator === currentUserId)}
+          hidden={!!(noteData.creator !== currentUserId)}
           sx={{
             bgcolor: "#f0e5ff",
             textTransform: "none",
@@ -151,7 +153,7 @@ function NoteSummary({ noteData, currentUserId }: FullNoteType) {
           disabled={false}
           onClick={handleDeleteNote}
           loading={isPending}
-          hidden={!(noteData.creator === currentUserId)}
+          hidden={!!(noteData.creator !== currentUserId)}
           style={{
             color: "oklch(50.5% 0.213 27.518)",
             backgroundColor: "oklch(88.5% 0.062 18.334)",

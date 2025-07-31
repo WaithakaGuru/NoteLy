@@ -24,7 +24,6 @@ function DashboardPage() {
   const [data, setData] = useState<NoteType[] | undefined>(undefined);
   const [isFiltering, setIsFiltering] = useState(false);
   const id = localStorage.getItem("userId")
-  const [currentUserId, setCurrentUserId] = useState(id);
   const [goBackHidden, setGoBackHidden] = useState(true);
   const [noteTitle, setNoteTitle] = useState("Recent Notes");
   
@@ -35,7 +34,6 @@ function DashboardPage() {
   }, [info, isFiltering]);
 
   useEffect(()=>{
-    setCurrentUserId(id);
     client.invalidateQueries({queryKey: ["GetAllNotes"]})
   }, [id])
 
@@ -188,8 +186,7 @@ const summaryInfo = info && getNotesPerDuration(info);
             {data?.map((note: NoteType) => (
               <NoteSummary
                 key={note.id}
-                currentUserId={currentUserId!}
-                noteData={note}
+                {...note}
               />
             ))}
           </Stack>

@@ -48,6 +48,7 @@ function Navbar() {
     setIsOpen(false);
 
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     setIsLoggedIn(0);
     addToken("");
     navigate("/", { replace: true });
