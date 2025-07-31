@@ -415,7 +415,7 @@ function ProfilePage() {
           </Stack>
         </Box>
         <Stack component={"div"}direction={"row"} hidden={!fullImageView}
-          className="w-80 absolute items-center bg-[rgba(0,0,0,.2)] right-48 top-[35%]">
+          className="w-81 absolute items-center border border-gray-300 right-30 top-[35%]">
           <CardMedia
             onClick={()=>{setFullImageView(!fullImageView)}}
             component={"img"}

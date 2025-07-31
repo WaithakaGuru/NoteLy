@@ -256,7 +256,7 @@ function CreateNote() {
         <Box
           component={"section"}
           className="w-full p-2 items-center flex  mb-12 border-2 border-gray-400 mx-auto my-6 rounded-2xl"
-          sx={{ flexDirection: "column", width: {xs: "27.8rem", md: "75%"}}}
+          sx={{ flexDirection: "column", width: {xs: "27.8rem", sm:"100%", md: "75%"}}}
         > 
           <MkEditor handlePreview={handlePreview} handleWrite={handleWrite} Ref={currentRef} insert={insertAtCursor}/>
           {!preview? 
