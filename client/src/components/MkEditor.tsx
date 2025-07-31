@@ -18,7 +18,7 @@ function MkEditor({handleWrite, handlePreview, insert, Ref}: MDEditor) {
   const [show, setShow] = useState(false);
 
   return (
-    <Stack direction={"row"} className="w-[100%]">
+    <Stack direction={"row"} className="w-[100%] border border-gray-300 rounded">
       <Box component={"div"} className="flex gap-2 h-11 pr-1 items-center">
         <Tooltip title="Continue writing">
             <IconButton disabled={!show? true : false} color="primary"
