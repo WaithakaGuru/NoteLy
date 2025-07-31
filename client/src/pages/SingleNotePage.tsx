@@ -24,7 +24,7 @@ function SingleNotePage() {
   useEffect(() => {
     if (data) setFullNote(data);
     if(userId) setUId(userId);{
-      client.invalidateQueries({queryKey: ["GetSpecificNote", id]})
+      client.invalidateQueries({queryKey: ['GetSpecificNote', id]})
     }
   }, [data, userId]);
 
